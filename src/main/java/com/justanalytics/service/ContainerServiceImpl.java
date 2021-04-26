@@ -1,0 +1,79 @@
+package com.justanalytics.service;
+
+import com.justanalytics.entity.Container;
+import com.justanalytics.repository.ContainerRepository;
+import com.justanalytics.repository.DataRepository;
+import com.justanalytics.types.ContainerType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class ContainerServiceImpl implements ContainerService {
+
+    Logger logger = LoggerFactory.getLogger(ContainerServiceImpl.class);
+
+    @Autowired
+    private ContainerRepository containerRepository;
+
+    @Autowired
+    private DataRepository dataRepository;
+
+    private static final String API_EMPTY_CTR_QUERY = "SELECT TOP %s * FROM dbo.container c LEFT JOIN dbo.vessel_visit vv ON c.PlannedOBVisitUniqueKey = vv.UniqueKey";
+    private static final String API_EXPORT_CTR_QUERY = "SELECT TOP %s * FROM dbo.container c LEFT JOIN dbo.bill_of_ladings bol on c.GoodsGkey = bol.Goods_UniqueKey LEFT JOIN dbo.vessel_visit vv on c.PlannedOBVisitUniqueKey = vv.UniqueKey";
+    private static final String API_IMPORT_CTR_QUERY = "SELECT TOP %s * FROM dbo.container c LEFT JOIN dbo.bill_of_ladings bol on c.GoodsGkey = bol.Goods_UniqueKey LEFT JOIN dbo.vessel_visit vv on c.ActualIBVisitUniqueKey = vv.UniqueKey";
+    private static final String API_SIMPLE_CTR_QUERY = "SELECT TOP %s * FROM dbo.container c LEFT JOIN dbo.bill_of_ladings bol ON c.GoodsGkey = bol.Goods_UniqueKey";
+
+    private static final String BOL_CONDITION = "(c.BillofLadingNbr = '%s' OR bol.House_BLNbr = '%s')";
+    private static final String CONTAINER_CONDITION = "('%s' IS NULL OR c.ContainerNbr = '%s')";
+    private static final String DEFAULT_CONDITION = "1=1";
+
+    @Override
+    public List<Container> getTopContainer() {
+        return containerRepository.findTopContainer();
+    }
+
+    @Override
+    public List<Container> getTopContainerCustom(String containerNumber) {
+        return containerRepository.findTopContainerCustom(containerNumber);
+    }
+
+    private StringBuilder buildSimpleContainerQuery(String query, String size) {
+        StringBuilder queryBuilder = new StringBuilder();
+        return queryBuilder.append(String.format(query, size));
+    }
+
+    @Override
+    public List<Map<String, Object>> findContainerBol(String containerType, String containerName, String billOfLadingNbr, String size) {
+        StringBuilder queryBuilder = new StringBuilder();
+        String bolFilter = "";
+        String containerFilter = "";
+
+        if (ContainerType.EXPORT.getContainerType().equalsIgnoreCase(containerType))
+            queryBuilder = buildSimpleContainerQuery(API_EXPORT_CTR_QUERY, size);
+        else if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType))
+            queryBuilder = buildSimpleContainerQuery(API_IMPORT_CTR_QUERY, size);
+        else queryBuilder = buildSimpleContainerQuery(API_SIMPLE_CTR_QUERY, size);
+
+        if (billOfLadingNbr != null && !billOfLadingNbr.isBlank())
+            bolFilter = String.format(BOL_CONDITION, billOfLadingNbr, billOfLadingNbr);
+        else bolFilter = DEFAULT_CONDITION;
+
+        if (containerName != null && !containerName.isBlank())
+            containerFilter = String.format(CONTAINER_CONDITION, containerName, containerName);
+        else containerFilter = DEFAULT_CONDITION;
+
+        queryBuilder.append(String.format(" WHERE %s AND %s", bolFilter, containerFilter));
+
+        String sql = queryBuilder.toString();
+        logger.info("Querying sql statement: {}", sql);
+
+        return dataRepository.getData(sql);
+    }
+
+
+}
