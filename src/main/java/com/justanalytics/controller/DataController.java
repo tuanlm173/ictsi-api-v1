@@ -44,7 +44,7 @@ public class DataController {
 //    }
 
     @GetMapping(path = "/api/v1/getContainerBol", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestEnvelope> getExportContainer(
+    public ResponseEntity<RestEnvelope> getCustomContainer(
             @RequestHeader(PRODUCT_ID_HEADER) String subscriptionId,
             @RequestParam(value = "container-type", defaultValue = "simple") String containerType,
             @RequestParam(value = "container-number", required = false) String containerNumber,
