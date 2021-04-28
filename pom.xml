@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.justanalytics</groupId>
 	<artifactId>ictsiapi-synapse</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>ictsiapi-synapse</name>
 	<description>ictsi synapse demo</description>
 	<properties>
@@ -54,6 +54,19 @@
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
 			<version>9.2.1.jre11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>azure-cosmosdb-spring-boot-starter</artifactId>
+			<version>3.0.0-beta.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>azure-cosmosdb</artifactId>
+			<version>2.4.3</version>
 		</dependency>
 
 		<dependency>
@@ -103,6 +116,36 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-webapp-maven-plugin</artifactId>
+				<version>1.11.0</version>
+				<configuration>
+					<schemaVersion>v2</schemaVersion>
+					<subscriptionId>da2a7767-6a99-4b7a-8ecd-b1a6f265d721</subscriptionId>
+					<resourceGroup>edp-dev-sea-rg-dataplatform</resourceGroup>
+					<appName>ictsi-restapi-v1</appName>
+					<pricingTier>P1v2</pricingTier>
+					<region>southeastasia</region>
+					<appServicePlanName>ASP-edpdevseargdataplatform-aea6</appServicePlanName>
+					<appServicePlanResourceGroup>edp-dev-sea-rg-dataplatform</appServicePlanResourceGroup>
+					<runtime>
+						<os>Windows</os>
+						<javaVersion>java11</javaVersion>
+						<webContainer>java11</webContainer>
+					</runtime>
+					<deployment>
+						<resources>
+							<resource>
+								<directory>${project.basedir}/target</directory>
+								<includes>
+									<include>*.jar</include>
+								</includes>
+							</resource>
+						</resources>
+					</deployment>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

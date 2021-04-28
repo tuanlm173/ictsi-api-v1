@@ -1,9 +1,8 @@
 package com.justanalytics.service;
 
-import com.justanalytics.entity.Container;
-import com.justanalytics.repository.ContainerRepository;
 import com.justanalytics.repository.DataRepository;
 import com.justanalytics.types.ContainerType;
+import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ public class ContainerServiceImpl implements ContainerService {
     Logger logger = LoggerFactory.getLogger(ContainerServiceImpl.class);
 
     @Autowired
-    private ContainerRepository containerRepository;
-
-    @Autowired
     private DataRepository dataRepository;
 
     private static final String API_EMPTY_CTR_QUERY = "SELECT TOP %s * FROM dbo.container c LEFT JOIN dbo.vessel_visit vv ON c.PlannedOBVisitUniqueKey = vv.UniqueKey";
@@ -32,15 +28,8 @@ public class ContainerServiceImpl implements ContainerService {
     private static final String CONTAINER_CONDITION = "('%s' IS NULL OR c.ContainerNbr = '%s')";
     private static final String DEFAULT_CONDITION = "1=1";
 
-    @Override
-    public List<Container> getTopContainer() {
-        return containerRepository.findTopContainer();
-    }
-
-    @Override
-    public List<Container> getTopContainerCustom(String containerNumber) {
-        return containerRepository.findTopContainerCustom(containerNumber);
-    }
+    private static final String COSMOS_QUERY = "SELECT TOP %s * FROM %s c";
+    private static final String COSMOS_CONTAINER = "container_api";
 
     private StringBuilder buildSimpleContainerQuery(String query, String size) {
         StringBuilder queryBuilder = new StringBuilder();
@@ -48,7 +37,9 @@ public class ContainerServiceImpl implements ContainerService {
     }
 
     @Override
-    public List<Map<String, Object>> findContainerBol(String containerType, String containerName, String billOfLadingNbr, String size) {
+    public List<Map<String, Object>> findContainerBol(
+            String containerType, String containerName, String billOfLadingNbr, String size
+    ) {
         StringBuilder queryBuilder = new StringBuilder();
         String bolFilter = "";
         String containerFilter = "";
@@ -75,5 +66,11 @@ public class ContainerServiceImpl implements ContainerService {
         return dataRepository.getData(sql);
     }
 
+    @Override
+    public List<JSONObject> findContainerBolCosmos(String size) {
+        String sql = String.format(COSMOS_QUERY, size, COSMOS_CONTAINER);
+        logger.info("Cosmos SQL statement: {}", sql);
+        return dataRepository.getSimpleDataFromCosmos(COSMOS_CONTAINER, sql);
+    }
 
 }

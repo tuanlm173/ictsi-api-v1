@@ -1,10 +1,9 @@
 package com.justanalytics.controller;
 
-
-import com.justanalytics.entity.Container;
 import com.justanalytics.response.RestEnvelope;
 import com.justanalytics.service.ContainerService;
 import com.justanalytics.types.CtxPath;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,22 +26,6 @@ public class DataController {
         this.containerService = containerService;
     }
 
-
-//    @GetMapping(path = "/api/v1/getTopContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<RestEnvelope> getTopContainerDetails() {
-//        List<Container> containers = containerService.getTopContainer();
-//        return ResponseEntity.ok(RestEnvelope.of(containers));
-//    }
-//
-//    @GetMapping(path = "/api/v1/getTopContainerDetailsCustom", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<RestEnvelope> getTopContainerDetails(
-//            @RequestHeader(PRODUCT_ID_HEADER) String subscriptionId,
-//            @RequestParam(value = "container-number", required = false) String containerNumber
-//    ) {
-//        List<Container> containers = containerService.getTopContainerCustom(containerNumber);
-//        return ResponseEntity.ok(RestEnvelope.of(containers));
-//    }
-
     @GetMapping(path = "/api/v1/getContainerBol", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getCustomContainer(
             @RequestHeader(PRODUCT_ID_HEADER) String subscriptionId,
@@ -52,6 +35,17 @@ public class DataController {
             @RequestParam(value = "size", required = false, defaultValue = "10") String size
     ) {
         List<Map<String, Object>> containers = containerService.findContainerBol(containerType, containerNumber, billOfLadingNbr, size);
+        return ResponseEntity.ok()
+                .header("row-count", "" + containers.size())
+                .body(RestEnvelope.of(containers));
+    }
+
+    @GetMapping(path = "/api/v1/getContainerBolv2", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getCustomContainerv2(
+            @RequestHeader(PRODUCT_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "size", required = false, defaultValue = "10") String size
+    ) {
+        List<JSONObject> containers = containerService.findContainerBolCosmos(size);
         return ResponseEntity.ok()
                 .header("row-count", "" + containers.size())
                 .body(RestEnvelope.of(containers));
