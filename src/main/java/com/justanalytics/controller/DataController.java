@@ -26,11 +26,6 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
-//    @Autowired
-//    public DataController(ContainerService containerService) {
-//        this.containerService = containerService;
-//    }
-
     @GetMapping(path = "/api/v1/getContainerBol", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getCustomContainer(
             @RequestHeader(PRODUCT_ID_HEADER) String subscriptionId,
@@ -52,10 +47,12 @@ public class DataController {
     @GetMapping(path = "/api/v1/getContainerBolv2", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getCustomContainerv2(
             @RequestHeader(PRODUCT_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "container-number", required = false) String containerNumber,
+            @RequestParam(value = "bol", required = false) String billOfLadingNbr,
             @RequestParam(value = "size", required = false, defaultValue = "10") String size
     ) {
         if (dataService.checkAccess(subscriptionId)) {
-            List<JSONObject> containers = containerService.findContainerBolCosmos(size);
+            List<JSONObject> containers = containerService.findContainerBolCosmos(containerNumber, billOfLadingNbr, size);
             return ResponseEntity.ok()
                     .header("row-count", "" + containers.size())
                     .body(RestEnvelope.of(containers));
