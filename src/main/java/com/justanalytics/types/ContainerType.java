@@ -4,7 +4,8 @@ public enum ContainerType {
 
     EXPORT("export"),
     IMPORT("import"),
-    SIMPLE("simple");
+    EMPTY("empty"),
+    ALL("all");
 
     private String ContainerType;
 

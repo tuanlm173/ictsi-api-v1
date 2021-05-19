@@ -1,15 +1,57 @@
 package com.justanalytics.service;
 
-import net.minidev.json.JSONObject;
+import com.justanalytics.dto.ContainerDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public interface ContainerService {
 
-    List<Map<String, Object>> findContainerBol(String containerType, String containerName, String billOfLadingNbr, String size);
+    List<ContainerDto> findContainer(
+            String containerType,
+            String containerNumber,
+            String containerOperationLineId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String containerFreightKind,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            String containerBookingNumber,
+            String bolNumber,
+            String impedType,
+            String size
+    );
 
-    List<JSONObject> findContainerBolCosmos(String containerName, String billOfLadingNbr, String size);
+    List<ContainerDto> findEmptyContainer(
+            String containerType,
+            String containerNumber,
+            String containerOperationLineId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String containerFreightKind,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            String containerBookingNumber,
+            String bolNumber,
+            String impedType,
+            String size
+    );
 }

@@ -8,4 +8,10 @@ import org.springframework.stereotype.Repository;
 public interface ApiRegistrationRepository extends CrudRepository<ApiRegistration, Integer> {
 
     Boolean existsBySubscriptionId(String subscriptionId);
+
+    Boolean existsByProductId(String productId);
+
+    Boolean existsByProductIdAndEntityAndSubscriptionId(String productId, String apiId, String subscriptionId);
+
+    Boolean existsByProductIdAndEntity(String productId, String apiId);
 }

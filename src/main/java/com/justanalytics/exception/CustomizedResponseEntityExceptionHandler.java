@@ -54,5 +54,15 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return exceptionResponse;
     }
 
+    @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
+    @ExceptionHandler(RequestTooLargeException.class)
+    @ResponseBody
+    public final ExceptionResponse unAccessSystemException(RequestTooLargeException ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+                request.getDescription(false), HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase(), HttpStatus.TOO_MANY_REQUESTS.value());
+        logger.debug(ex.getMessage(), exceptionResponse);
+        return exceptionResponse;
+    }
+
 }
 
