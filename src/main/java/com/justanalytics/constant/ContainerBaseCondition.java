@@ -54,7 +54,7 @@ public final class ContainerBaseCondition {
             "c.reefer_type,\n" +
             "c.iso_group " +
             "FROM container c " +
-            "WHERE (((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND (c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind))) OR (c.category = 'EXPRT' AND IS_DEFINED(c.category)) OR (c.category = 'IMPRT' AND IS_DEFINED(c.category)))";
+            "WHERE (1=1)";
     public static final String ALL_CONTAINER_NAME = "container";
 
     public static final String ALL_CONTAINER_VISIT_STATE = "(c.visit_state = '%s' AND IS_DEFINED(c.visit_state))";

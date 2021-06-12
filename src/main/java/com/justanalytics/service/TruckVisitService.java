@@ -1,7 +1,6 @@
 package com.justanalytics.service;
 
 import com.justanalytics.dto.TruckVisitDto;
-import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

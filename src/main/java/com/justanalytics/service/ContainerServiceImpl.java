@@ -1,6 +1,8 @@
 package com.justanalytics.service;
 
 import com.justanalytics.dto.ContainerDto;
+import com.justanalytics.dto.EmptyContainerDto;
+import com.justanalytics.dto.ExportContainerDto;
 import com.justanalytics.repository.DataRepository;
 import com.justanalytics.types.ContainerImped;
 import com.justanalytics.types.ContainerType;
@@ -220,6 +222,253 @@ public class ContainerServiceImpl implements ContainerService {
                     .cargoShipperName(cargoShipperName)
                     .cargoOrigin(cargoOrigin)
                     .build());
+
+        }
+
+        return results;
+    }
+
+    private List<EmptyContainerDto> getEmptyContainerDto(List<JSONObject> rawData) {
+
+        List<EmptyContainerDto> results = new ArrayList<>(rawData.size());
+
+        for (JSONObject data: rawData) {
+            String uniqueKey = String.valueOf(data.get("UniqueKey"));
+            String operatorId = String.valueOf(data.get("OperatorID"));
+            String complexId = String.valueOf(data.get("ComplexID"));
+            String facilityId = String.valueOf(data.get("FacilityID"));
+            String visitState = String.valueOf(data.get("visit_state"));
+            String containerNbr = String.valueOf(data.get("ContainerNbr"));
+            String equipmentType = String.valueOf(data.get("EquipmentType"));
+            Integer teu = Integer.valueOf(String.valueOf(data.get("TEU")));
+            String operatorLineId = String.valueOf(data.get("OperatorLineID"));
+            String operatorName = String.valueOf(data.get("OperatorName"));
+            String createTime = String.valueOf(data.get("create_time"));
+            String category = String.valueOf(data.get("category"));
+            String freightKind = String.valueOf(data.get("freight_kind"));
+            String sealNbr1 = String.valueOf(data.get("seal_nbr1"));
+            String sealNbr2 = String.valueOf(data.get("seal_nbr2"));
+            String sealNbr3 = String.valueOf(data.get("seal_nbr3"));
+            String sealNbr4 = String.valueOf(data.get("seal_nbr4"));
+            String stoppedVessel = String.valueOf(data.get("stopped_vessel"));
+            String stoppedRail = String.valueOf(data.get("stopped_rail"));
+            String stoppedRoad = String.valueOf(data.get("stopped_road"));
+            String impedVessel = String.valueOf(data.get("imped_vessel"));
+            String impedRail = String.valueOf(data.get("imped_rail"));
+            String impedRoad = String.valueOf(data.get("imped_road"));
+            String arrivePosLoctype = String.valueOf(data.get("arrive_pos_loctype"));
+            String arrivePosLocId = String.valueOf(data.get("arrive_pos_locid"));
+            String arrivePosSlot = String.valueOf(data.get("arrive_pos_slot"));
+            String lastPosLoctype = String.valueOf(data.get("last_pos_loctype"));
+            String lastPosLocId = String.valueOf(data.get("last_pos_locid"));
+            String lastPosSlot = String.valueOf(data.get("last_pos_slot"));
+            String timeIn = String.valueOf(data.get("time_in"));
+            String timeOut = String.valueOf(data.get("time_out"));
+            String flexString01 = String.valueOf(data.get("flex_string01"));
+            String flexString02 = String.valueOf(data.get("flex_string02"));
+            String flexString03 = String.valueOf(data.get("flex_string03"));
+            String flexString04 = String.valueOf(data.get("flex_string04"));
+            String flexString05 = String.valueOf(data.get("flex_string05"));
+            String flexString06 = String.valueOf(data.get("flex_string06"));
+            String flexString07 = String.valueOf(data.get("flex_string07"));
+            String flexString08 = String.valueOf(data.get("flex_string08"));
+            String flexString09 = String.valueOf(data.get("flex_string09"));
+            String flexString10 = String.valueOf(data.get("flex_string10"));
+            String flexString11 = String.valueOf(data.get("flex_string11"));
+            String flexString12 = String.valueOf(data.get("flex_string12"));
+            String flexString13 = String.valueOf(data.get("flex_string13"));
+            String flexString14 = String.valueOf(data.get("flex_string14"));
+            String flexString15 = String.valueOf(data.get("flex_string15"));
+            String timeStateChange = String.valueOf(data.get("time_state_change"));
+            String transitState = String.valueOf(data.get("transit_state"));
+            String nominalLength = String.valueOf(data.get("nominal_length"));
+            String reeferType = String.valueOf(data.get("reefer_type"));
+            String isoGroup = String.valueOf(data.get("iso_group"));
+
+            results.add(EmptyContainerDto.builder()
+                    .uniqueKey(uniqueKey)
+                    .operatorId(operatorId)
+                    .complexId(complexId)
+                    .facilityId(facilityId)
+                    .visitState(visitState)
+                    .containerNbr(containerNbr)
+                    .equipmentType(equipmentType)
+                    .teu(teu)
+                    .operatorLineId(operatorLineId)
+                    .operatorName(operatorName)
+                    .createTime(createTime)
+                    .category(category)
+                    .freightKind(freightKind)
+                    .sealNbr1(sealNbr1)
+                    .sealNbr2(sealNbr2)
+                    .sealNbr3(sealNbr3)
+                    .sealNbr4(sealNbr4)
+                    .stoppedVessel(stoppedVessel)
+                    .stoppedRail(stoppedRail)
+                    .stoppedRoad(stoppedRoad)
+                    .impedVessel(impedVessel)
+                    .impedRail(impedRail)
+                    .impedRoad(impedRoad)
+                    .arrivePosLoctype(arrivePosLoctype)
+                    .arrivePosLocId(arrivePosLocId)
+                    .arrivePosSlot(arrivePosSlot)
+                    .lastPosLoctype(lastPosLoctype)
+                    .lastPosLocId(lastPosLocId)
+                    .lastPosSlot(lastPosSlot)
+                    .timeIn(timeIn)
+                    .timeOut(timeOut)
+                    .flexString01(flexString01)
+                    .flexString02(flexString02)
+                    .flexString03(flexString03)
+                    .flexString04(flexString04)
+                    .flexString05(flexString05)
+                    .flexString06(flexString06)
+                    .flexString07(flexString07)
+                    .flexString08(flexString08)
+                    .flexString09(flexString09)
+                    .flexString10(flexString10)
+                    .flexString11(flexString11)
+                    .flexString12(flexString12)
+                    .flexString13(flexString13)
+                    .flexString14(flexString14)
+                    .flexString15(flexString15)
+                    .timeStateChange(timeStateChange)
+                    .transitState(transitState)
+                    .nominalLength(nominalLength)
+                    .reeferType(reeferType)
+                    .isoGroup(isoGroup)
+                    .build());
+
+        }
+
+        return results;
+    }
+
+    private List<ExportContainerDto> getExportContainerDto(List<JSONObject> rawData) {
+
+        List<ExportContainerDto> results = new ArrayList<>(rawData.size());
+
+        for (JSONObject data: rawData) {
+            String uniqueKey = String.valueOf(data.get("UniqueKey"));
+            String operatorId = String.valueOf(data.get("OperatorID"));
+            String complexId = String.valueOf(data.get("ComplexID"));
+            String facilityId = String.valueOf(data.get("FacilityID"));
+            String visitState = String.valueOf(data.get("visit_state"));
+            String containerNbr = String.valueOf(data.get("ContainerNbr"));
+            String equipmentType = String.valueOf(data.get("EquipmentType"));
+            Integer teu = Integer.valueOf(String.valueOf(data.get("TEU")));
+            String operatorLineId = String.valueOf(data.get("OperatorLineID"));
+            String operatorName = String.valueOf(data.get("OperatorName"));
+            String createTime = String.valueOf(data.get("create_time"));
+            String category = String.valueOf(data.get("category"));
+            String freightKind = String.valueOf(data.get("freight_kind"));
+            Float goodsAndCtrWtKg = Objects.nonNull(data.get("goods_and_ctr_wt_kg")) ? Float.parseFloat(String.valueOf(data.get("goods_and_ctr_wt_kg"))) : null;
+            Float goodsCtrWtKgAdvised = Objects.nonNull(data.get("goods_ctr_wt_kg_advised")) ? Float.parseFloat(String.valueOf(data.get("goods_ctr_wt_kg_advised"))) : null;
+            Float goodsCtrWtKgGateMeasured = Objects.nonNull(data.get("goods_ctr_wt_kg_gate_measured")) ? Float.parseFloat(String.valueOf(data.get("goods_ctr_wt_kg_gate_measured"))) : null;
+            Float goodsCtrWtKgYardMeasured = Objects.nonNull(data.get("goods_ctr_wt_kg_yard_measured")) ? Float.parseFloat(String.valueOf(data.get("goods_ctr_wt_kg_yard_measured"))) : null;
+            String sealNbr1 = String.valueOf(data.get("seal_nbr1"));
+            String sealNbr2 = String.valueOf(data.get("seal_nbr2"));
+            String sealNbr3 = String.valueOf(data.get("seal_nbr3"));
+            String sealNbr4 = String.valueOf(data.get("seal_nbr4"));
+            String stoppedVessel = String.valueOf(data.get("stopped_vessel"));
+            String stoppedRail = String.valueOf(data.get("stopped_rail"));
+            String stoppedRoad = String.valueOf(data.get("stopped_road"));
+            String impedVessel = String.valueOf(data.get("imped_vessel"));
+            String impedRail = String.valueOf(data.get("imped_rail"));
+            String impedRoad = String.valueOf(data.get("imped_road"));
+            String arrivePosLoctype = String.valueOf(data.get("arrive_pos_loctype"));
+            String arrivePosLocId = String.valueOf(data.get("arrive_pos_locid"));
+            String arrivePosSlot = String.valueOf(data.get("arrive_pos_slot"));
+            String lastPosLoctype = String.valueOf(data.get("last_pos_loctype"));
+            String lastPosLocId = String.valueOf(data.get("last_pos_locid"));
+            String lastPosSlot = String.valueOf(data.get("last_pos_slot"));
+            String timeIn = String.valueOf(data.get("time_in"));
+            String timeOut = String.valueOf(data.get("time_out"));
+            String bookingNumber = String.valueOf(data.get("BookingNumber"));
+            String requiresPower = String.valueOf(data.get("requires_power"));
+            String flexString01 = String.valueOf(data.get("flex_string01"));
+            String flexString02 = String.valueOf(data.get("flex_string02"));
+            String flexString03 = String.valueOf(data.get("flex_string03"));
+            String flexString04 = String.valueOf(data.get("flex_string04"));
+            String flexString05 = String.valueOf(data.get("flex_string05"));
+            String flexString06 = String.valueOf(data.get("flex_string06"));
+            String flexString07 = String.valueOf(data.get("flex_string07"));
+            String flexString08 = String.valueOf(data.get("flex_string08"));
+            String flexString09 = String.valueOf(data.get("flex_string09"));
+            String flexString10 = String.valueOf(data.get("flex_string10"));
+            String flexString11 = String.valueOf(data.get("flex_string11"));
+            String flexString12 = String.valueOf(data.get("flex_string12"));
+            String flexString13 = String.valueOf(data.get("flex_string13"));
+            String flexString14 = String.valueOf(data.get("flex_string14"));
+            String flexString15 = String.valueOf(data.get("flex_string15"));
+            String timeStateChange = String.valueOf(data.get("time_state_change"));
+            String pod = String.valueOf(data.get("POD"));
+            String transitState = String.valueOf(data.get("transit_state"));
+            String nominalLength = String.valueOf(data.get("nominal_length"));
+            String reeferType = String.valueOf(data.get("reefer_type"));
+            String isoGroup = String.valueOf(data.get("iso_group"));
+
+            results.add(ExportContainerDto.builder()
+                    .uniqueKey(uniqueKey)
+                    .operatorId(operatorId)
+                    .complexId(complexId)
+                    .facilityId(facilityId)
+                    .visitState(visitState)
+                    .containerNbr(containerNbr)
+                    .equipmentType(equipmentType)
+                    .teu(teu)
+                    .operatorLineId(operatorLineId)
+                    .operatorName(operatorName)
+                    .createTime(createTime)
+                    .category(category)
+                    .freightKind(freightKind)
+                    .goodsAndCtrWtKg(goodsAndCtrWtKg)
+                    .goodsCtrWtKgAdvised(goodsCtrWtKgAdvised)
+                    .goodsCtrWtKgGateMeasured(goodsCtrWtKgGateMeasured)
+                    .goodsCtrWtKgYardMeasured(goodsCtrWtKgYardMeasured)
+                    .sealNbr1(sealNbr1)
+                    .sealNbr2(sealNbr2)
+                    .sealNbr3(sealNbr3)
+                    .sealNbr4(sealNbr4)
+                    .stoppedVessel(stoppedVessel)
+                    .stoppedRail(stoppedRail)
+                    .stoppedRoad(stoppedRoad)
+                    .impedVessel(impedVessel)
+                    .impedRail(impedRail)
+                    .impedRoad(impedRoad)
+                    .arrivePosLoctype(arrivePosLoctype)
+                    .arrivePosLocId(arrivePosLocId)
+                    .arrivePosSlot(arrivePosSlot)
+                    .lastPosLoctype(lastPosLoctype)
+                    .lastPosLocId(lastPosLocId)
+                    .lastPosSlot(lastPosSlot)
+                    .timeIn(timeIn)
+                    .timeOut(timeOut)
+                    .bookingNumber(bookingNumber)
+                    .requiresPower(requiresPower)
+                    .flexString01(flexString01)
+                    .flexString02(flexString02)
+                    .flexString03(flexString03)
+                    .flexString04(flexString04)
+                    .flexString05(flexString05)
+                    .flexString06(flexString06)
+                    .flexString07(flexString07)
+                    .flexString08(flexString08)
+                    .flexString09(flexString09)
+                    .flexString10(flexString10)
+                    .flexString11(flexString11)
+                    .flexString12(flexString12)
+                    .flexString13(flexString13)
+                    .flexString14(flexString14)
+                    .flexString15(flexString15)
+                    .timeStateChange(timeStateChange)
+                    .pod(pod)
+                    .transitState(transitState)
+                    .nominalLength(nominalLength)
+                    .reeferType(reeferType)
+                    .isoGroup(isoGroup)
+                    .build());
+
         }
 
         return results;
@@ -482,73 +731,7 @@ public class ContainerServiceImpl implements ContainerService {
         List<String> filters = new ArrayList<>();
         List<JSONObject> results = new ArrayList<>();
 
-        if (ContainerType.EMPTY.getContainerType().equalsIgnoreCase(containerType)) {
-            StringBuilder queryBuilder = buildSimpleContainerQuery(EMPTY_CONTAINER_BASE_QUERY, size);
-            filters = buildEmptyContainerConditions(
-                    containerVisitState,
-                    containerTransitState,
-                    containerIsoGroup,
-                    containerArrivePosLocType,
-                    containerDepartPosLocType,
-                    containerDepartPosLocId,
-                    containerArrivePosLocId,
-                    containerNumber,
-                    containerEquipmentType,
-                    containerOperationLineId,
-                    arriveFrom,
-                    arriveTo,
-                    departFrom,
-                    departTo
-            );
-
-            filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
-
-            if (filters.size() == 0) {
-                queryBuilder.append("");
-            } else {
-                queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
-            }
-            String sql = queryBuilder.toString();
-            logger.info("Cosmos SQL statement: {}", sql);
-            results = dataRepository.getSimpleDataFromCosmos(EMPTY_CONTAINER_NAME, sql);
-        }
-
-        else if (ContainerType.EXPORT.getContainerType().equalsIgnoreCase(containerType)) {
-            StringBuilder queryBuilder = buildSimpleContainerQuery(EXPORT_CONTAINER_BASE_QUERY, size);
-            filters = buildExportContainerConditions(
-                    containerFreightKind,
-                    containerVisitState,
-                    containerTransitState,
-                    containerIsoGroup,
-                    containerArrivePosLocType,
-                    containerDepartPosLocType,
-                    containerDepartPosLocId,
-                    containerArrivePosLocId,
-                    containerNumber,
-                    containerEquipmentType,
-                    containerOperationLineId,
-                    arriveFrom,
-                    arriveTo,
-                    departFrom,
-                    departTo,
-                    containerBookingNumber,
-                    impedType
-
-            );
-
-            filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
-
-            if (filters.size() == 0) {
-                queryBuilder.append("");
-            } else {
-                queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
-            }
-            String sql = queryBuilder.toString();
-            logger.info("Cosmos SQL statement: {}", sql);
-            results = dataRepository.getSimpleDataFromCosmos(EXPORT_CONTAINER_NAME, sql);
-        }
-
-        else if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType)) {
+        if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType)) {
             StringBuilder queryBuilder = buildSimpleContainerQuery(IMPORT_CONTAINER_BASE_QUERY, size);
             filters = buildImportContainerConditions(
                     containerFreightKind,
@@ -577,6 +760,10 @@ public class ContainerServiceImpl implements ContainerService {
                 queryBuilder.append("");
             } else {
                 queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
+            }
+
+            if (size.equalsIgnoreCase("1")) {
+                queryBuilder.append(" ORDER BY c.changed DESC");
             }
             String sql = queryBuilder.toString();
             logger.info("Cosmos SQL statement: {}", sql);
@@ -609,6 +796,10 @@ public class ContainerServiceImpl implements ContainerService {
             } else {
                 queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
             }
+
+            if (size.equalsIgnoreCase("1")) {
+                queryBuilder.append(" ORDER BY c.changed DESC");
+            }
             String sql = queryBuilder.toString();
             logger.info("Cosmos SQL statement: {}", sql);
             results = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
@@ -620,7 +811,7 @@ public class ContainerServiceImpl implements ContainerService {
     }
 
     @Override
-    public List<ContainerDto> findEmptyContainer(
+    public List<EmptyContainerDto> findEmptyContainer(
             String containerType,
             String containerNumber,
             String containerOperationLineId,
@@ -642,58 +833,112 @@ public class ContainerServiceImpl implements ContainerService {
             String impedType,
             String size
     ) {
-        List<String> filters = new ArrayList<>();
-        List<JSONObject> results = new ArrayList<>();
+        List<String> filters;
+        List<JSONObject> results;
 
-        if (ContainerType.EMPTY.getContainerType().equalsIgnoreCase(containerType)) {
-            StringBuilder queryBuilder = buildSimpleContainerQuery(EMPTY_CONTAINER_BASE_QUERY, size);
-            filters = buildEmptyContainerConditions(
-                    containerVisitState,
-                    containerTransitState,
-                    containerIsoGroup,
-                    containerArrivePosLocType,
-                    containerDepartPosLocType,
-                    containerDepartPosLocId,
-                    containerArrivePosLocId,
-                    containerNumber,
-                    containerEquipmentType,
-                    containerOperationLineId,
-                    arriveFrom,
-                    arriveTo,
-                    departFrom,
-                    departTo
-            );
+        StringBuilder queryBuilder = buildSimpleContainerQuery(EMPTY_CONTAINER_BASE_QUERY, size);
+        filters = buildEmptyContainerConditions(
+                containerVisitState,
+                containerTransitState,
+                containerIsoGroup,
+                containerArrivePosLocType,
+                containerDepartPosLocType,
+                containerDepartPosLocId,
+                containerArrivePosLocId,
+                containerNumber,
+                containerEquipmentType,
+                containerOperationLineId,
+                arriveFrom,
+                arriveTo,
+                departFrom,
+                departTo
+        );
 
-            filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
+        filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
 
-            if (filters.size() == 0) {
-                queryBuilder.append("");
-            } else {
-                queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
-            }
-            String sql = queryBuilder.toString();
-            logger.info("Cosmos SQL statement: {}", sql);
-            results = dataRepository.getSimpleDataFromCosmos(EMPTY_CONTAINER_NAME, sql);
+        if (filters.size() == 0) {
+            queryBuilder.append("");
+        } else {
+            queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
         }
 
-        List<ContainerDto> finals = new ArrayList<>(results.size());
-        for (JSONObject object: results) {
-            String uniqueKey = String.valueOf(object.get("UniqueKey"));
-            String operatorId = String.valueOf(object.get("OperatorID"));
-            String complexId = String.valueOf(object.get("ComplexID"));
-            String facilityId = String.valueOf(object.get("FacilityID"));
-            String visitState = String.valueOf(object.get("visit_state"));
-            Integer teu = Integer.valueOf(String.valueOf(object.get("TEU")));
-            finals.add(ContainerDto.builder().uniqueKey(uniqueKey).operatorId(operatorId).complexId(complexId).facilityId(facilityId).visitState(visitState).teu(teu).build());
+        if (size.equalsIgnoreCase("1")) {
+            queryBuilder.append(" ORDER BY c.changed DESC");
         }
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        results = dataRepository.getSimpleDataFromCosmos(EMPTY_CONTAINER_NAME, sql);
 
-        return finals;
+        return getEmptyContainerDto(results);
 
     }
 
+    @Override
+    public List<ExportContainerDto> findExportContainer(
+            String containerType,
+            String containerNumber,
+            String containerOperationLineId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String containerFreightKind,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            String containerBookingNumber,
+            String bolNumber,
+            String impedType,
+            String size
+    ) {
+        List<String> filters;
+        List<JSONObject> results;
 
+        StringBuilder queryBuilder = buildSimpleContainerQuery(EXPORT_CONTAINER_BASE_QUERY, size);
+        filters = buildExportContainerConditions(
+                containerFreightKind,
+                containerVisitState,
+                containerTransitState,
+                containerIsoGroup,
+                containerArrivePosLocType,
+                containerDepartPosLocType,
+                containerDepartPosLocId,
+                containerArrivePosLocId,
+                containerNumber,
+                containerEquipmentType,
+                containerOperationLineId,
+                arriveFrom,
+                arriveTo,
+                departFrom,
+                departTo,
+                containerBookingNumber,
+                impedType
 
+        );
 
+        filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
+
+        if (filters.size() == 0) {
+            queryBuilder.append("");
+        } else {
+            queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
+        }
+
+        if (size.equalsIgnoreCase("1")) {
+            queryBuilder.append(" ORDER BY c.changed DESC");
+        }
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        results = dataRepository.getSimpleDataFromCosmos(EXPORT_CONTAINER_NAME, sql);
+
+        return getExportContainerDto(results);
+
+    }
 
 
 }

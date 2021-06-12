@@ -200,10 +200,13 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         if (filters.size() == 0) {
             queryBuilder.append(" WHERE 1=1");
         } else {
-            queryBuilder.append(String.format(" WHERE %s", String.join(" AND ", filters)));
+            queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
 
         }
 
+        if (size.equalsIgnoreCase("1")) {
+            queryBuilder.append(" ORDER BY c.ETA DESC");
+        }
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
         List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);

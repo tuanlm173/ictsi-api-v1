@@ -48,8 +48,8 @@ public final class VesselVisitBaseCondition {
             "c.Quay_ID,\n" +
             "c.Quay_Name,\n" +
             "c.service_ID,\n" +
-            "c.service_Name" +
-            "FROM vessel_visit c";
+            "c.service_Name " +
+            "FROM vessel_visit c WHERE (1=1)";
     public static final String CONTAINER_NAME = "vessel_visit";
 
     public static final String CARRIER_OPERATOR_ID = "(c.Carrier_Operator_ID = '%s' AND IS_DEFINED(c.Carrier_Operator_ID))";
@@ -58,7 +58,7 @@ public final class VesselVisitBaseCondition {
     public static final String VISIT_PHASE = "(c.Visit_Phase = '%s' AND IS_DEFINED(c.Visit_Phase))";
 
     public static final String ETA = "(('%s' <= TimestampToDateTime(c.ETA) AND TimestampToDateTime(c.ETA) <= '%s') AND IS_DEFINED(c.ETA))";
-    public static final String ATA = "(('%s' <= TimestampToDateTime(c.ATA) AND TimestampToDateTime(c.ATA) <= '%s') AND IS_DEFINED(c.ATA))'";
+    public static final String ATA = "(('%s' <= TimestampToDateTime(c.ATA) AND TimestampToDateTime(c.ATA) <= '%s') AND IS_DEFINED(c.ATA))";
     public static final String ETD = "(('%s' <= TimestampToDateTime(c.ETD) AND TimestampToDateTime(c.ETD) <= '%s') AND IS_DEFINED(c.ETD))";
     public static final String ATD = "(('%s' <= TimestampToDateTime(c.ATD) AND TimestampToDateTime(c.ATD) <= '%s') AND IS_DEFINED(c.ATD))";
 

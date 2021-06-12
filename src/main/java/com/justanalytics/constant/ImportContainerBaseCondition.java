@@ -74,9 +74,9 @@ public final class ImportContainerBaseCondition {
             "c.Cargo_Shipper_ID,\n" +
             "c.Cargo_Shipper_Name,\n" +
             "c.Cargo_Origin " +
-            "FROM container_api c " +
+            "FROM container_import c " +
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category))";
-    public static final String IMPORT_CONTAINER_NAME = "container_api";
+    public static final String IMPORT_CONTAINER_NAME = "container_import";
 
     public static final String IMPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";
     public static final String IMPORT_IMPED_TYPE_NONE = "((c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state)) AND (c.stopped_road = false AND IS_DEFINED(c.stopped_road)) AND (c.stopped_rail = false AND IS_DEFINED(c.stopped_rail)) AND IS_DEFINED(c.imped_road) = false AND IS_DEFINED(c.imped_rail) = false)";

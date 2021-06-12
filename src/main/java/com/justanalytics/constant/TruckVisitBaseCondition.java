@@ -15,8 +15,8 @@ public final class TruckVisitBaseCondition {
             "TimestampToDateTime(c.ATD) as ATD,\n" +
             "c.Driver_License_Nbr,\n" +
             "c.Truck_License_Nbr,\n" +
-            "c.Entered_Yard,\n" +
-            "c.Exited_Yard,\n" +
+            "TimestampToDateTime(c.Entered_Yard) as Entered_Yard,\n" +
+            "TimestampToDateTime(c.Exited_Yard) as Exited_Yard,\n" +
             "TimestampToDateTime(c.PlacedTime) as PlacedTime,\n" +
             "c.ToLocation,\n" +
             "c.MoveKind,\n" +

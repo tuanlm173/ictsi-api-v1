@@ -140,6 +140,9 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         }
 
+        if (size.equalsIgnoreCase("1")) {
+            queryBuilder.append(" ORDER BY c.PlacedTime DESC");
+        }
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
         List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);

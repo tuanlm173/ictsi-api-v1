@@ -1,0 +1,129 @@
+package com.justanalytics.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.*;
+
+@Data
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonPropertyOrder({"UniqueKey", "OperatorID", "ComplexID", "FacilityID", "visit_state", "ContainerNbr", "EquipmentType",
+        "TEU", "OperatorLineID", "OperatorName", "create_time", "category", "freight_kind", "seal_nbr1", "seal_nbr2",
+        "seal_nbr3", "seal_nbr4", "stopped_vessel", "stopped_rail", "stopped_road", "imped_vessel", "imped_rail", "imped_road",
+        "arrive_pos_loctype", "arrive_pos_locid", "arrive_pos_slot", "last_pos_loctype", "last_pos_locid", "last_pos_slot",
+        "time_in", "time_out", "BookingNumber", "requires_power", "flex_string01", "flex_string02", "flex_string03", "flex_string04",
+        "flex_string05", "flex_string06", "flex_string07", "flex_string08", "flex_string09", "flex_string10", "flex_string11",
+        "flex_string12", "flex_string13", "flex_string14", "flex_string15", "time_state_change", "POD", "transit_state",
+        "nominal_length", "reefer_type", "iso_group", "Master_BLNbr", "Origin", "Destination", "Consignee_ID", "Consignee_Name",
+        "Shipper_ID", "Shipper_Name", "House_BLNbr", "Cargo_Category", "Cargo_Consignee_ID", "Cargo_Consignee_Name",
+        "Cargo_Shipper_ID", "Cargo_Shipper_Name", "Cargo_Origin"})
+public class EmptyContainerDto {
+
+    @JsonProperty(value = "UniqueKey")
+    private String uniqueKey;
+    @JsonProperty(value = "OperatorID")
+    private String operatorId;
+    @JsonProperty(value = "ComplexID")
+    private String complexId;
+    @JsonProperty(value = "FacilityID")
+    private String facilityId;
+    @JsonProperty(value = "visit_state")
+    private String visitState;
+    @JsonProperty(value = "ContainerNbr")
+    private String containerNbr;
+    @JsonProperty(value = "EquipmentType")
+    private String equipmentType;
+    @JsonProperty(value = "TEU")
+    private Integer teu;
+    @JsonProperty(value = "OperatorLineID")
+    private String operatorLineId;
+    @JsonProperty(value = "OperatorName")
+    private String operatorName;
+    @JsonProperty(value = "create_time")
+    private String createTime;
+    @JsonProperty(value = "category")
+    private String category;
+    @JsonProperty(value = "freight_kind")
+    private String freightKind;
+    @JsonProperty(value = "seal_nbr1")
+    private String sealNbr1;
+    @JsonProperty(value = "seal_nbr2")
+    private String sealNbr2;
+    @JsonProperty(value = "seal_nbr3")
+    private String sealNbr3;
+    @JsonProperty(value = "seal_nbr4")
+    private String sealNbr4;
+    @JsonProperty(value = "stopped_vessel")
+    private String stoppedVessel;
+    @JsonProperty(value = "stopped_rail")
+    private String stoppedRail;
+    @JsonProperty(value = "stopped_road")
+    private String stoppedRoad;
+    @JsonProperty(value = "imped_vessel")
+    private String impedVessel;
+    @JsonProperty(value = "imped_rail")
+    private String impedRail;
+    @JsonProperty(value = "imped_road")
+    private String impedRoad;
+    @JsonProperty(value = "arrive_pos_loctype")
+    private String arrivePosLoctype;
+    @JsonProperty(value = "arrive_pos_locid")
+    private String arrivePosLocId;
+    @JsonProperty(value = "arrive_pos_slot")
+    private String arrivePosSlot;
+    @JsonProperty(value = "last_pos_loctype")
+    private String lastPosLoctype;
+    @JsonProperty(value = "last_pos_locid")
+    private String lastPosLocId;
+    @JsonProperty(value = "last_pos_slot")
+    private String lastPosSlot;
+    @JsonProperty(value = "time_in")
+    private String timeIn;
+    @JsonProperty(value = "time_out")
+    private String timeOut;
+    @JsonProperty(value = "flex_string01")
+    private String flexString01;
+    @JsonProperty(value = "flex_string02")
+    private String flexString02;
+    @JsonProperty(value = "flex_string03")
+    private String flexString03;
+    @JsonProperty(value = "flex_string04")
+    private String flexString04;
+    @JsonProperty(value = "flex_string05")
+    private String flexString05;
+    @JsonProperty(value = "flex_string06")
+    private String flexString06;
+    @JsonProperty(value = "flex_string07")
+    private String flexString07;
+    @JsonProperty(value = "flex_string08")
+    private String flexString08;
+    @JsonProperty(value = "flex_string09")
+    private String flexString09;
+    @JsonProperty(value = "flex_string10")
+    private String flexString10;
+    @JsonProperty(value = "flex_string11")
+    private String flexString11;
+    @JsonProperty(value = "flex_string12")
+    private String flexString12;
+    @JsonProperty(value = "flex_string13")
+    private String flexString13;
+    @JsonProperty(value = "flex_string14")
+    private String flexString14;
+    @JsonProperty(value = "flex_string15")
+    private String flexString15;
+    @JsonProperty(value = "time_state_change")
+    private String timeStateChange;
+    @JsonProperty(value = "transit_state")
+    private String transitState;
+    @JsonProperty(value = "nominal_length")
+    private String nominalLength;
+    @JsonProperty(value = "reefer_type")
+    private String reeferType;
+    @JsonProperty(value = "iso_group")
+    private String isoGroup;
+
+
+}

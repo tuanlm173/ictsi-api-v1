@@ -1,16 +1,15 @@
 package com.justanalytics.controller;
 
-import com.justanalytics.dto.ContainerDto;
-import com.justanalytics.dto.TruckVisitDto;
-import com.justanalytics.dto.VesselVisitDto;
+import com.justanalytics.dto.*;
+import com.justanalytics.exception.InvalidParameterException;
 import com.justanalytics.exception.UnAccessibleSystemException;
 import com.justanalytics.response.RestEnvelope;
 import com.justanalytics.service.ContainerService;
 import com.justanalytics.service.DataService;
 import com.justanalytics.service.TruckVisitService;
 import com.justanalytics.service.VesselVisitService;
+import com.justanalytics.types.ContainerType;
 import com.justanalytics.types.CtxPath;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -45,51 +44,108 @@ public class DataController {
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestParam(value = "container-type") String containerType,
             @RequestParam(value = "container-number", required = false) String containerNumber,
-            @RequestParam(value = "container-operation-line-id", required = false) String containerOperationLineId,
+            @RequestParam(value = "operation-line-id", required = false) String containerOperationLineId,
             @RequestParam(value = "arrive-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime arriveFrom,
             @RequestParam(value = "arrive-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime arriveTo,
             @RequestParam(value = "depart-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departFrom,
             @RequestParam(value = "depart-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departTo,
-            @RequestParam(value = "container-freightkind", required = false) String containerFreightKind,
-            @RequestParam(value = "container-visit-state", required = false) String containerVisitState,
-            @RequestParam(value = "container-transit-state", required = false) String containerTransitState,
-            @RequestParam(value = "container-equipment-type", required = false) String containerEquipmentType,
-            @RequestParam(value = "container-iso-group", required = false) String containerIsoGroup,
-            @RequestParam(value = "container-arrive-pos-loctype", required = false) String containerArrivePosLocType,
-            @RequestParam(value = "container-depart-pos-loctype", required = false) String containerDepartPosLocType,
-            @RequestParam(value = "container-depart-pos-locid", required = false) String containerDepartPosLocId,
-            @RequestParam(value = "container-arrive-pos-locid", required = false) String containerArrivePosLocId,
-            @RequestParam(value = "container-booking-number", required = false) String containerBookingNumber,
+            @RequestParam(value = "freightkind", required = false) String containerFreightKind,
+            @RequestParam(value = "visit-state", required = false) String containerVisitState,
+            @RequestParam(value = "transit-state", required = false) String containerTransitState,
+            @RequestParam(value = "equipment-type", required = false) String containerEquipmentType,
+            @RequestParam(value = "iso-group", required = false) String containerIsoGroup,
+            @RequestParam(value = "arrive-pos-loctype", required = false) String containerArrivePosLocType,
+            @RequestParam(value = "depart-pos-loctype", required = false) String containerDepartPosLocType,
+            @RequestParam(value = "depart-pos-locid", required = false) String containerDepartPosLocId,
+            @RequestParam(value = "arrive-pos-locid", required = false) String containerArrivePosLocId,
+            @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
             @RequestParam(value = "bol-number", required = false) String bolNumber,
             @RequestParam(value = "imped-type", required = false) String impedType,
             @RequestParam(value = "size", required = false, defaultValue = "10") String size
     ) {
         if (dataService.checkAccessv3(productId, apiId)) {
-            List<ContainerDto> containers = containerService.findContainer(
-                    containerType,
-                    containerNumber,
-                    containerOperationLineId,
-                    arriveFrom,
-                    arriveTo,
-                    departFrom,
-                    departTo,
-                    containerFreightKind,
-                    containerVisitState,
-                    containerTransitState,
-                    containerEquipmentType,
-                    containerIsoGroup,
-                    containerArrivePosLocType,
-                    containerDepartPosLocType,
-                    containerDepartPosLocId,
-                    containerArrivePosLocId,
-                    containerBookingNumber,
-                    bolNumber,
-                    impedType,
-                    size
-            );
-            return ResponseEntity.ok()
-                    .header("row-count", "" + containers.size())
-                    .body(RestEnvelope.of(containers));
+            if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType) || ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
+                List<ContainerDto> containers = containerService.findContainer(
+                        containerType,
+                        containerNumber,
+                        containerOperationLineId,
+                        arriveFrom,
+                        arriveTo,
+                        departFrom,
+                        departTo,
+                        containerFreightKind,
+                        containerVisitState,
+                        containerTransitState,
+                        containerEquipmentType,
+                        containerIsoGroup,
+                        containerArrivePosLocType,
+                        containerDepartPosLocType,
+                        containerDepartPosLocId,
+                        containerArrivePosLocId,
+                        containerBookingNumber,
+                        bolNumber,
+                        impedType,
+                        size
+                );
+                return ResponseEntity.ok()
+                        .header("row-count", "" + containers.size())
+                        .body(RestEnvelope.of(containers));
+            }
+            else if (ContainerType.EMPTY.getContainerType().equalsIgnoreCase(containerType)) {
+                List<EmptyContainerDto> emptyContainer = containerService.findEmptyContainer(
+                        containerType,
+                        containerNumber,
+                        containerOperationLineId,
+                        arriveFrom,
+                        arriveTo,
+                        departFrom,
+                        departTo,
+                        containerFreightKind,
+                        containerVisitState,
+                        containerTransitState,
+                        containerEquipmentType,
+                        containerIsoGroup,
+                        containerArrivePosLocType,
+                        containerDepartPosLocType,
+                        containerDepartPosLocId,
+                        containerArrivePosLocId,
+                        containerBookingNumber,
+                        bolNumber,
+                        impedType,
+                        size
+                );
+                return ResponseEntity.ok()
+                        .header("row-count", "" + emptyContainer.size())
+                        .body(RestEnvelope.of(emptyContainer));
+            }
+            else if (ContainerType.EXPORT.getContainerType().equalsIgnoreCase(containerType)) {
+                List<ExportContainerDto> exportContainer = containerService.findExportContainer(
+                        containerType,
+                        containerNumber,
+                        containerOperationLineId,
+                        arriveFrom,
+                        arriveTo,
+                        departFrom,
+                        departTo,
+                        containerFreightKind,
+                        containerVisitState,
+                        containerTransitState,
+                        containerEquipmentType,
+                        containerIsoGroup,
+                        containerArrivePosLocType,
+                        containerDepartPosLocType,
+                        containerDepartPosLocId,
+                        containerArrivePosLocId,
+                        containerBookingNumber,
+                        bolNumber,
+                        impedType,
+                        size
+                );
+                return ResponseEntity.ok()
+                        .header("row-count", "" + exportContainer.size())
+                        .body(RestEnvelope.of(exportContainer));
+            }
+            throw new InvalidParameterException("container type must be empty, export, import, all");
         }
         throw new UnAccessibleSystemException();
 
