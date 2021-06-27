@@ -31,7 +31,8 @@ public interface ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String impedType,
-            String size
+            String size,
+            String terminalCondition
     );
 
     List<EmptyContainerDto> findEmptyContainer(
@@ -54,7 +55,8 @@ public interface ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String impedType,
-            String size
+            String size,
+            String terminalCondition
     );
 
     List<ExportContainerDto> findExportContainer(
@@ -77,7 +79,8 @@ public interface ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String impedType,
-            String size
+            String size,
+            String terminalCondition
     );
 
 

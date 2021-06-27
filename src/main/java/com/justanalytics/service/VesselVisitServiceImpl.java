@@ -170,7 +170,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             LocalDateTime etdTo,
             LocalDateTime atdFrom,
             LocalDateTime atdTo,
-            String size
+            String size,
+            String terminalCondition
     ) {
         List<String> filters = new ArrayList<>();
 
@@ -198,11 +199,13 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
 
         if (filters.size() == 0) {
-            queryBuilder.append(" WHERE 1=1");
+            queryBuilder.append("");
         } else {
             queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
-
         }
+
+        if (!terminalCondition.isEmpty() || !terminalCondition.isBlank())
+            queryBuilder.append(String.format(" AND c.Facility_ID = '%s'", terminalCondition));
 
         if (size.equalsIgnoreCase("1")) {
             queryBuilder.append(" ORDER BY c.ETA DESC");

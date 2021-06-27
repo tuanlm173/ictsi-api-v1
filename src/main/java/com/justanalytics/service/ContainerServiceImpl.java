@@ -726,7 +726,8 @@ public class ContainerServiceImpl implements ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String impedType,
-            String size
+            String size,
+            String terminalCondition
     ) {
         List<String> filters = new ArrayList<>();
         List<JSONObject> results = new ArrayList<>();
@@ -761,6 +762,9 @@ public class ContainerServiceImpl implements ContainerService {
             } else {
                 queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
             }
+
+            if (!terminalCondition.isEmpty() || !terminalCondition.isBlank())
+                queryBuilder.append(String.format(" AND c.FacilityID = '%s'", terminalCondition));
 
             if (size.equalsIgnoreCase("1")) {
                 queryBuilder.append(" ORDER BY c.changed DESC");
@@ -797,6 +801,9 @@ public class ContainerServiceImpl implements ContainerService {
                 queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
             }
 
+            if (!terminalCondition.isEmpty() || !terminalCondition.isBlank())
+                queryBuilder.append(String.format(" AND c.FacilityID = '%s'", terminalCondition));
+
             if (size.equalsIgnoreCase("1")) {
                 queryBuilder.append(" ORDER BY c.changed DESC");
             }
@@ -831,7 +838,8 @@ public class ContainerServiceImpl implements ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String impedType,
-            String size
+            String size,
+            String terminalCondition
     ) {
         List<String> filters;
         List<JSONObject> results;
@@ -861,6 +869,9 @@ public class ContainerServiceImpl implements ContainerService {
         } else {
             queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
         }
+
+        if (!terminalCondition.isEmpty() || !terminalCondition.isBlank())
+            queryBuilder.append(String.format(" AND c.FacilityID = '%s'", terminalCondition));
 
         if (size.equalsIgnoreCase("1")) {
             queryBuilder.append(" ORDER BY c.changed DESC");
@@ -894,7 +905,8 @@ public class ContainerServiceImpl implements ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String impedType,
-            String size
+            String size,
+            String terminalCondition
     ) {
         List<String> filters;
         List<JSONObject> results;
@@ -928,6 +940,10 @@ public class ContainerServiceImpl implements ContainerService {
         } else {
             queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
         }
+
+        //TODO: implement for empty, import, all as well
+        if (!terminalCondition.isEmpty() || !terminalCondition.isBlank())
+            queryBuilder.append(String.format(" AND c.FacilityID = '%s'", terminalCondition));
 
         if (size.equalsIgnoreCase("1")) {
             queryBuilder.append(" ORDER BY c.changed DESC");

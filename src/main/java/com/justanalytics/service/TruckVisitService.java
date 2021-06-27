@@ -14,6 +14,7 @@ public interface TruckVisitService {
         String moveKind,
         LocalDateTime visitTimeFrom,
         LocalDateTime visitTimeTo,
-        String size
+        String size,
+        String terminalCondition
     );
 }

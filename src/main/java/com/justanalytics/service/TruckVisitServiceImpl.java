@@ -116,7 +116,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             String moveKind,
             LocalDateTime visitTimeFrom,
             LocalDateTime visitTimeTo,
-            String size
+            String size,
+            String terminalCondition
     ) {
 
         List<String> filters = new ArrayList<>();
@@ -137,8 +138,10 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             queryBuilder.append("");
         } else {
             queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
-
         }
+
+        if (!terminalCondition.isEmpty() || !terminalCondition.isBlank())
+            queryBuilder.append(String.format(" AND c.Facility_ID = '%s'", terminalCondition));
 
         if (size.equalsIgnoreCase("1")) {
             queryBuilder.append(" ORDER BY c.PlacedTime DESC");

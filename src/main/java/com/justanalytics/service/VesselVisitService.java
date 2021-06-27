@@ -22,6 +22,7 @@ public interface VesselVisitService {
             LocalDateTime etdTo,
             LocalDateTime atdFrom,
             LocalDateTime atdTo,
-            String size
+            String size,
+            String terminalCondition
     );
 }

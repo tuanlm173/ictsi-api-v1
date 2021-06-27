@@ -25,6 +25,7 @@ public class DataController {
 
     private static final String PRODUCT_ID_HEADER = "x-request-product-id";
     private static final String API_ID_HEADER = "x-api-id";
+    private static final String SUBSCRIPTION_ID_HEADER = "x-subscription-id";
 
     @Autowired
     private ContainerService containerService;
@@ -42,6 +43,7 @@ public class DataController {
     public ResponseEntity<RestEnvelope> getContainerDetails(
             @RequestHeader(PRODUCT_ID_HEADER) String productId,
             @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "container-type") String containerType,
             @RequestParam(value = "container-number", required = false) String containerNumber,
             @RequestParam(value = "operation-line-id", required = false) String containerOperationLineId,
@@ -64,6 +66,7 @@ public class DataController {
             @RequestParam(value = "size", required = false, defaultValue = "10") String size
     ) {
         if (dataService.checkAccessv3(productId, apiId)) {
+            String terminalCondition = dataService.findCondition(productId, apiId, subscriptionId);
             if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType) || ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
                 List<ContainerDto> containers = containerService.findContainer(
                         containerType,
@@ -85,7 +88,8 @@ public class DataController {
                         containerBookingNumber,
                         bolNumber,
                         impedType,
-                        size
+                        size,
+                        terminalCondition
                 );
                 return ResponseEntity.ok()
                         .header("row-count", "" + containers.size())
@@ -112,7 +116,8 @@ public class DataController {
                         containerBookingNumber,
                         bolNumber,
                         impedType,
-                        size
+                        size,
+                        terminalCondition
                 );
                 return ResponseEntity.ok()
                         .header("row-count", "" + emptyContainer.size())
@@ -139,7 +144,8 @@ public class DataController {
                         containerBookingNumber,
                         bolNumber,
                         impedType,
-                        size
+                        size,
+                        terminalCondition
                 );
                 return ResponseEntity.ok()
                         .header("row-count", "" + exportContainer.size())
@@ -155,6 +161,7 @@ public class DataController {
     public ResponseEntity<RestEnvelope> getVesselVisitDetails(
             @RequestHeader(PRODUCT_ID_HEADER) String productId,
             @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "carrier-operator-id", required = false) String carrierOperatorId,
             @RequestParam(value = "carrier-visit-id", required = false) String carrierVisitId,
             @RequestParam(value = "service-id", required = false) String serviceId,
@@ -170,6 +177,7 @@ public class DataController {
             @RequestParam(value = "size", required = false, defaultValue = "10") String size
     ) {
         if (dataService.checkAccessv3(productId, apiId)) {
+            String terminalCondition = dataService.findCondition(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
                     carrierOperatorId,
                     carrierVisitId,
@@ -183,7 +191,8 @@ public class DataController {
                     etdTo,
                     atdFrom,
                     atdTo,
-                    size
+                    size,
+                    terminalCondition
             );
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselVisits.size())
@@ -198,6 +207,7 @@ public class DataController {
     public ResponseEntity<RestEnvelope> getTruckVisitDetails(
             @RequestHeader(PRODUCT_ID_HEADER) String productId,
             @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "truck-license-number", required = false) String truckLicenseNbr,
             @RequestParam(value = "move-kind", required = false) String moveKind,
             @RequestParam(value = "visit-time-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeFrom,
@@ -206,12 +216,14 @@ public class DataController {
     ) {
 
         if (dataService.checkAccessv3(productId, apiId)) {
+            String terminalCondition = dataService.findCondition(productId, apiId, subscriptionId);
             List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisit(
                     truckLicenseNbr,
                     moveKind,
                     visitTimeFrom,
                     visitTimeTo,
-                    size
+                    size,
+                    terminalCondition
             );
             return ResponseEntity.ok()
                     .header("row-count", "" + truckVisits.size())
@@ -221,5 +233,18 @@ public class DataController {
         throw new UnAccessibleSystemException();
 
     }
+
+    //Test
+//    @GetMapping(path = "api/v1/testCondition", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<RestEnvelope> getCondition(
+//            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+//            @RequestHeader(API_ID_HEADER) String apiId,
+//            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId
+//    ) {
+//        String condition = dataService.findCondition(productId, apiId, subscriptionId);
+//        System.out.println(condition);
+//
+//        return ResponseEntity.ok().body(RestEnvelope.of(condition));
+//    }
 
 }
