@@ -65,8 +65,8 @@ public class DataController {
             @RequestParam(value = "imped-type", required = false) String impedType,
             @RequestParam(value = "size", required = false, defaultValue = "10") String size
     ) {
-        if (dataService.checkAccessv3(productId, apiId)) {
-            String terminalCondition = dataService.findCondition(productId, apiId, subscriptionId);
+        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType) || ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
                 List<ContainerDto> containers = containerService.findContainer(
                         containerType,
@@ -89,7 +89,7 @@ public class DataController {
                         bolNumber,
                         impedType,
                         size,
-                        terminalCondition
+                        terminalConditions
                 );
                 return ResponseEntity.ok()
                         .header("row-count", "" + containers.size())
@@ -117,7 +117,7 @@ public class DataController {
                         bolNumber,
                         impedType,
                         size,
-                        terminalCondition
+                        terminalConditions
                 );
                 return ResponseEntity.ok()
                         .header("row-count", "" + emptyContainer.size())
@@ -145,7 +145,7 @@ public class DataController {
                         bolNumber,
                         impedType,
                         size,
-                        terminalCondition
+                        terminalConditions
                 );
                 return ResponseEntity.ok()
                         .header("row-count", "" + exportContainer.size())
@@ -177,7 +177,7 @@ public class DataController {
             @RequestParam(value = "size", required = false, defaultValue = "10") String size
     ) {
         if (dataService.checkAccessv3(productId, apiId)) {
-            String terminalCondition = dataService.findCondition(productId, apiId, subscriptionId);
+            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
                     carrierOperatorId,
                     carrierVisitId,
@@ -192,7 +192,7 @@ public class DataController {
                     atdFrom,
                     atdTo,
                     size,
-                    terminalCondition
+                    terminalConditions
             );
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselVisits.size())
@@ -216,14 +216,14 @@ public class DataController {
     ) {
 
         if (dataService.checkAccessv3(productId, apiId)) {
-            String terminalCondition = dataService.findCondition(productId, apiId, subscriptionId);
+            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisit(
                     truckLicenseNbr,
                     moveKind,
                     visitTimeFrom,
                     visitTimeTo,
                     size,
-                    terminalCondition
+                    terminalConditions
             );
             return ResponseEntity.ok()
                     .header("row-count", "" + truckVisits.size())
@@ -235,16 +235,16 @@ public class DataController {
     }
 
     //Test
-//    @GetMapping(path = "api/v1/testCondition", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<RestEnvelope> getCondition(
-//            @RequestHeader(PRODUCT_ID_HEADER) String productId,
-//            @RequestHeader(API_ID_HEADER) String apiId,
-//            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId
-//    ) {
-//        String condition = dataService.findCondition(productId, apiId, subscriptionId);
-//        System.out.println(condition);
-//
-//        return ResponseEntity.ok().body(RestEnvelope.of(condition));
-//    }
+    @GetMapping(path = "api/v1/testCondition", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getCondition(
+            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+            @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId
+    ) {
+        List<String> condition = dataService.findCondition(productId, apiId, subscriptionId);
+        System.out.println(condition);
+
+        return ResponseEntity.ok().body(RestEnvelope.of(condition));
+    }
 
 }

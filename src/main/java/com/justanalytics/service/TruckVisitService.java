@@ -15,6 +15,6 @@ public interface TruckVisitService {
         LocalDateTime visitTimeFrom,
         LocalDateTime visitTimeTo,
         String size,
-        String terminalCondition
+        List<String> terminalConditions
     );
 }

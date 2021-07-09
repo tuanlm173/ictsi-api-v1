@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DataService {
@@ -26,9 +27,8 @@ public class DataService {
         return apiRegistrationRepository.existsByProductIdAndEntity(productId, apiId);
     }
 
-    public String findCondition(String productId, String apiId, String subscriptionId) {
+    public List<String> findCondition(String productId, String apiId, String subscriptionId) {
         List<ApiRegistration> conditions = apiRegistrationRepository.findByProductIdAndEntityAndSubscriptionId(productId, apiId, subscriptionId);
-        if (conditions.size() == 0) return "";
-        else return conditions.stream().findFirst().get().getCondition();
+        return conditions.stream().map(ApiRegistration::getCondition).collect(Collectors.toList());
     }
 }
