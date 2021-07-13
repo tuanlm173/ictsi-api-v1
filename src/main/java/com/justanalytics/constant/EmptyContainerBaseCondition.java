@@ -56,7 +56,7 @@ public final class EmptyContainerBaseCondition {
             "c.reefer_type,\n" +
             "c.iso_group " +
             "FROM container c " +
-            "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND (c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind)))";
+            "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND (c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind))) AND IS_DEFINED(c.TEU)";
     public static final String EMPTY_CONTAINER_NAME = "container";
 
     public static final String EMPTY_CONTAINER_VISIT_STATE = "(c.visit_state = '%s' AND IS_DEFINED(c.visit_state))";

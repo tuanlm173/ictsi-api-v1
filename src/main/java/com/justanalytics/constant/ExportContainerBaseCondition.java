@@ -61,7 +61,7 @@ public final class ExportContainerBaseCondition {
                     "c.nominal_length,\n" +
                     "c.reefer_type,\n" +
                     "c.iso_group " +
-                    "FROM container c WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category))";
+                    "FROM container c WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.TEU)";
     public static final String EXPORT_CONTAINER_NAME = "container";
 
     public static final String EXPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";

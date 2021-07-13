@@ -75,7 +75,7 @@ public final class ImportContainerBaseCondition {
             "c.Cargo_Shipper_Name,\n" +
             "c.Cargo_Origin " +
             "FROM container_import c " +
-            "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category))";
+            "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.TEU)";
     public static final String IMPORT_CONTAINER_NAME = "container_import";
 
     public static final String IMPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";

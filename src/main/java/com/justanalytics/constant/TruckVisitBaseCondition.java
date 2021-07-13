@@ -26,8 +26,8 @@ public final class TruckVisitBaseCondition {
             "c.Placed_By,\n" +
             "c.Event_Type,\n" +
             "c.Applied_To_ID " +
-            "FROM truck_visit_api c WHERE ((c.FromLocation = 'TRUCK' AND IS_DEFINED(c.FromLocation)) OR (c.ToLocation = 'TRUCK' AND IS_DEFINED(c.ToLocation)))";
-    public static final String CONTAINER_NAME = "truck_visit_api";
+            "FROM truck_visit c WHERE ((c.FromLocation = 'TRUCK' AND IS_DEFINED(c.FromLocation)) OR (c.ToLocation = 'TRUCK' AND IS_DEFINED(c.ToLocation)))";
+    public static final String CONTAINER_NAME = "truck_visit";
 
     public static final String TRUCK_LICENSE_NBR = "(c.Truck_License_Nbr = '%s' AND IS_DEFINED(c.Truck_License_Nbr))";
     public static final String MOVE_KIND = "(c.MoveKind = '%s' AND IS_DEFINED(c.MoveKind))";

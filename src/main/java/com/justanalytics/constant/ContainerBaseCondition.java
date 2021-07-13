@@ -54,7 +54,7 @@ public final class ContainerBaseCondition {
             "c.reefer_type,\n" +
             "c.iso_group " +
             "FROM container c " +
-            "WHERE (1=1)";
+            "WHERE (1=1) AND IS_DEFINED(c.TEU)";
     public static final String ALL_CONTAINER_NAME = "container";
 
     public static final String ALL_CONTAINER_VISIT_STATE = "(c.visit_state = '%s' AND IS_DEFINED(c.visit_state))";
