@@ -1,7 +1,9 @@
 package com.justanalytics.service;
 
-import com.justanalytics.dto.ContainerDto;
+import com.justanalytics.query.filter.LogicalOperator;
+import com.justanalytics.utils.QueryBuilder;
 import com.justanalytics.dto.TruckVisitDto;
+import com.justanalytics.query.Query;
 import com.justanalytics.repository.DataRepository;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
@@ -12,9 +14,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+
 
 import static com.justanalytics.constant.TruckVisitBaseCondition.*;
 
@@ -52,6 +57,27 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         return DEFAULT_CONDITION;
     }
 
+//    private String parseParams(List<String> params) {
+//        if (params.size() == 0)
+//            return "";
+//        return String.join(", ", params);
+//    }
+
+    private String parseParams(String params) {
+        if (params != null && !params.isBlank())
+            return String.join(", ",
+                    Arrays.stream(params.split(","))
+                        .map(element -> ("'" + element + "'"))
+                        .collect(Collectors.toList()));
+        else return "";
+
+    }
+
+    private String buildFilter(String filter, String input) {
+        if (input != null && !input.isBlank())
+            return String.format(filter, input);
+        else return "";
+    }
 
     private List<TruckVisitDto> getTruckVisitDto(List<JSONObject> rawData) {
 
@@ -156,5 +182,110 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         logger.info("Cosmos SQL statement: {}", sql);
         List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
         return getTruckVisitDto(rawData);
+    }
+
+    @Override
+    public List<TruckVisitDto> findTruckVisitV2(
+            String truckLicenseNbrs,
+            String moveKinds,
+            LocalDateTime visitTimeFrom,
+            LocalDateTime visitTimeTo,
+            String filterTruckLicenseNbrs,
+            String filterMoveKinds,
+            String operationType,
+            String size,
+            List<String> terminalConditions
+    ) {
+
+        List<String> mandatoryFilters = new ArrayList<>();
+        List<String> optionalFilters = new ArrayList<>();
+
+        StringBuilder queryBuilder = buildSimpleTruckVisitQuery(TRUCK_VISIT_BASE_QUERY, size);
+
+        String mandatoryTruckLicenseNbrFilter = buildFilter(TRUCK_LICENSE_NBR, parseParams(filterTruckLicenseNbrs));
+        String mandatoryTruckMoveKindFilter = buildFilter(MOVE_KIND, parseParams(filterMoveKinds));
+
+        mandatoryFilters.add(mandatoryTruckLicenseNbrFilter);
+        mandatoryFilters.add(mandatoryTruckMoveKindFilter);
+
+        mandatoryFilters = mandatoryFilters.stream().filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
+
+        String optionalTruckLicenseNbrFilter = buildFilter(TRUCK_LICENSE_NBR, parseParams(truckLicenseNbrs));
+        String optionalTruckMoveKindFilter = buildFilter(MOVE_KIND, parseParams(moveKinds));
+        String truckVisitTimeFilter = buildSimpleTimeframeTruckParam(VISIT_TIME, visitTimeFrom, visitTimeTo);
+
+        optionalFilters.add(optionalTruckLicenseNbrFilter);
+        optionalFilters.add(optionalTruckMoveKindFilter);
+        optionalFilters.add(truckVisitTimeFilter);
+
+        optionalFilters = optionalFilters.stream().filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
+
+        if (mandatoryFilters.size() == 0) {
+            queryBuilder.append("");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", mandatoryFilters) + ")"));
+        }
+
+        if (optionalFilters.size() == 0) {
+            queryBuilder.append("");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" OR ", optionalFilters) + ")"));
+        }
+
+        if(!terminalConditions.contains("ALL")) {
+            queryBuilder.append(" AND ");
+            List<String> conditions = new ArrayList<>();
+            for (String terminalCondition : terminalConditions) {
+                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+            }
+            queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
+        }
+
+        queryBuilder.append(" ORDER BY c.PlacedTime DESC");
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        return getTruckVisitDto(rawData);
+
+    }
+
+    @Override
+    public List<TruckVisitDto> findTruckVisitV3(
+            Query query,
+            String size,
+            List<String> terminalConditions
+    ) {
+
+        // Main query
+        StringBuilder queryBuilder = buildSimpleTruckVisitQuery(TRUCK_VISIT_BASE_QUERY, size);
+
+        queryBuilder.append(" AND ");
+
+        // Filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+        String filter = filterBuilder.buildTruckVisitFilter(query);
+        queryBuilder.append(filter);
+
+        // Terminal condition
+        if(!terminalConditions.contains("ALL")) {
+            queryBuilder.append(" AND ");
+            List<String> conditions = new ArrayList<>();
+            for (String terminalCondition : terminalConditions) {
+                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+            }
+            queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
+        }
+
+        // Order
+        queryBuilder.append(" ORDER BY c.PlacedTime DESC");
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        return getTruckVisitDto(rawData);
+
     }
 }

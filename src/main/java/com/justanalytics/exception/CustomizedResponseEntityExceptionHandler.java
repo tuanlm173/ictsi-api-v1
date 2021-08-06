@@ -15,24 +15,24 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     Logger logger = LoggerFactory.getLogger(CustomizedResponseEntityExceptionHandler.class);
 
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public final ExceptionResponse handleAllExceptions(Exception ex, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-                request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.value());
-        logger.debug(ex.getMessage(), exceptionResponse);
-        return exceptionResponse;
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseBody
+//    public final ExceptionResponse handleAllExceptions(Exception ex, WebRequest request) {
+//        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+//                request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+//        logger.debug(ex.getMessage(), exceptionResponse);
+//        return exceptionResponse;
+//    }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(InvalidParameterException.class)
-    @ResponseBody
-    public final ExceptionResponse invalidParameterException(InvalidParameterException ex, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-                request.getDescription(false), HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
-        logger.debug(ex.getMessage(), exceptionResponse);
-        return exceptionResponse;
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(InvalidParameterException.class)
+//    @ResponseBody
+//    public final ExceptionResponse invalidParameterException(InvalidParameterException ex, WebRequest request) {
+//        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+//                request.getDescription(false), HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
+//        logger.debug(ex.getMessage(), exceptionResponse);
+//        return exceptionResponse;
+//    }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotExistException.class)

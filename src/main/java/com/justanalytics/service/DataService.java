@@ -31,4 +31,6 @@ public class DataService {
         List<ApiRegistration> conditions = apiRegistrationRepository.findByProductIdAndEntityAndSubscriptionId(productId, apiId, subscriptionId);
         return conditions.stream().map(ApiRegistration::getCondition).collect(Collectors.toList());
     }
+
+
 }

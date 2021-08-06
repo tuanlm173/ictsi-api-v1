@@ -3,6 +3,7 @@ package com.justanalytics.controller;
 import com.justanalytics.dto.*;
 import com.justanalytics.exception.InvalidParameterException;
 import com.justanalytics.exception.UnAccessibleSystemException;
+import com.justanalytics.query.Query;
 import com.justanalytics.response.RestEnvelope;
 import com.justanalytics.service.ContainerService;
 import com.justanalytics.service.DataService;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -234,17 +236,79 @@ public class DataController {
 
     }
 
-    //Test
-    @GetMapping(path = "api/v1/testCondition", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestEnvelope> getCondition(
+    @GetMapping(path = "/api/v1/getTruckVisitDetailsV2", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getTruckVisitDetailsV2(
             @RequestHeader(PRODUCT_ID_HEADER) String productId,
             @RequestHeader(API_ID_HEADER) String apiId,
-            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "truck-license-number", required = false) String truckLicenseNbrs,
+            @RequestParam(value = "move-kind", required = false) String moveKinds,
+            @RequestParam(value = "visit-time-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeFrom,
+            @RequestParam(value = "visit-time-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeTo,
+            @RequestParam(value = "filter-truck-license-number", required = false) String filterTruckLicenseNbrs,
+            @RequestParam(value = "filter-move-kind", required = false) String filterMoveKinds,
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestParam(value = "order-by", required = false, defaultValue = "") String orderBy,
+            @RequestParam(value = "size", required = false, defaultValue = "10") String size
     ) {
-        List<String> condition = dataService.findCondition(productId, apiId, subscriptionId);
-        System.out.println(condition);
 
-        return ResponseEntity.ok().body(RestEnvelope.of(condition));
+        if (dataService.checkAccessv3(productId, apiId)) {
+            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
+            List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisitV2(
+                    truckLicenseNbrs,
+                    moveKinds,
+                    visitTimeFrom,
+                    visitTimeTo,
+                    filterTruckLicenseNbrs,
+                    filterMoveKinds,
+                    operationType,
+                    size,
+                    terminalConditions
+            );
+            return ResponseEntity.ok()
+                    .header("row-count", "" + truckVisits.size())
+                    .body(RestEnvelope.of(truckVisits));
+
+        }
+        throw new UnAccessibleSystemException();
+
     }
+
+
+    @PostMapping(path = "/api/v1/getTruckVisitDetailsV3", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getTruckVisitDetailsV3(
+            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+            @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
+            @RequestParam(name = "format", required = false, defaultValue = "json") String format,
+            @RequestBody Query query
+    ) {
+
+        if (dataService.checkAccessv3(productId, apiId)) {
+            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
+            List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisitV3(query, size, terminalConditions);
+            return ResponseEntity.ok()
+                    .header("row-count", "" + truckVisits.size())
+                    .body(RestEnvelope.of(truckVisits));
+        }
+        throw new UnAccessibleSystemException();
+
+    }
+
+
+
+    //Test
+//    @GetMapping(path = "api/v1/testCondition", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<RestEnvelope> getCondition(
+//            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+//            @RequestHeader(API_ID_HEADER) String apiId,
+//            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId
+//    ) {
+//        List<String> condition = dataService.findCondition(productId, apiId, subscriptionId);
+//        System.out.println(condition);
+//
+//        return ResponseEntity.ok().body(RestEnvelope.of(condition));
+//    }
 
 }
