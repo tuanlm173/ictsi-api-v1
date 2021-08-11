@@ -33,7 +33,10 @@ public interface TruckVisitService {
 
     List<TruckVisitDto> findTruckVisitV3(
             Query query,
+            String truckLicenseNbrs,
+            String moveKinds,
             String size,
+            String operationType,
             List<String> terminalConditions
     );
 }

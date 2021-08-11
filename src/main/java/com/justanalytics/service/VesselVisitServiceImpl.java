@@ -158,6 +158,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
     @Override
     public List<VesselVisitDto> findVesselVisit(
+            String carrierName,
             String carrierOperatorId,
             String carrierVisitId,
             String serviceId,
@@ -177,6 +178,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
         StringBuilder queryBuilder = buildSimpleVesselVisitQuery(VESSEL_VISIT_BASE_QUERY, size);
 
+        // TODO: change to parse parameters for 'IN' condition (same as truck visit)
+        String vesselVisitCarrierNameFilter = buildSimpleVesselParam(CARRIER_NAME, carrierName);
         String vesselVisitCarrierOperatorIdFilter = buildSimpleVesselParam(CARRIER_OPERATOR_ID, carrierOperatorId);
         String vesselVisitCarrierVisitIdFilter = buildSimpleVesselParam(CARRIER_VISIT_ID, carrierVisitId);
         String vesselVisitServiceIdFilter = buildSimpleVesselParam(SERVICE_ID, serviceId);
@@ -187,6 +190,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         String vesselVisitEtdFilter = buildSimpleTimeframeVesselParam(ETD, etdFrom, etdTo);
         String vesselVisitAtdFilter = buildSimpleTimeframeVesselParam(ATD, atdFrom, atdTo);
 
+        filters.add(vesselVisitCarrierNameFilter);
         filters.add(vesselVisitCarrierOperatorIdFilter);
         filters.add(vesselVisitCarrierVisitIdFilter);
         filters.add(vesselVisitServiceIdFilter);

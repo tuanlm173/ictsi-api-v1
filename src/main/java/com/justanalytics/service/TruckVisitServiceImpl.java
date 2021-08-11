@@ -255,16 +255,40 @@ public class TruckVisitServiceImpl implements TruckVisitService {
     @Override
     public List<TruckVisitDto> findTruckVisitV3(
             Query query,
+            String truckLicenseNbrs,
+            String moveKinds,
             String size,
+            String operationType,
             List<String> terminalConditions
     ) {
 
         // Main query
         StringBuilder queryBuilder = buildSimpleTruckVisitQuery(TRUCK_VISIT_BASE_QUERY, size);
 
-        queryBuilder.append(" AND ");
+//        queryBuilder.append(" AND ");
 
-        // Filter
+        // Persona filter
+        List<String> personaFilters = new ArrayList<>();
+
+        String personaTruckLicenseNbrFilter = buildFilter(TRUCK_LICENSE_NBR, parseParams(truckLicenseNbrs));
+        String personaTruckMoveKindFilter = buildFilter(MOVE_KIND, parseParams(moveKinds));
+
+        personaFilters.add(personaTruckLicenseNbrFilter);
+        personaFilters.add(personaTruckMoveKindFilter);
+
+        personaFilters = personaFilters.stream()
+                .filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DEFAULT_CONDITION))
+                .collect(Collectors.toList());
+
+        if (personaFilters.size() == 0) {
+            queryBuilder.append(" AND ");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+            queryBuilder.append(" AND ");
+        }
+
+        // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();
         String filter = filterBuilder.buildTruckVisitFilter(query);
         queryBuilder.append(filter);

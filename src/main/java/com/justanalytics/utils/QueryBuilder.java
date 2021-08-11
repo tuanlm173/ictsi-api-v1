@@ -1,5 +1,6 @@
 package com.justanalytics.utils;
 
+import com.justanalytics.exception.InvalidParameterException;
 import com.justanalytics.query.Query;
 import com.justanalytics.query.Sort;
 import com.justanalytics.query.filter.*;
@@ -7,6 +8,7 @@ import com.justanalytics.query.schema.DatabricksDataType;
 import com.justanalytics.query.schema.DatasetSchema;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -38,6 +40,17 @@ public class QueryBuilder {
                 .map(value -> "'" + value.toString() + "'")
                 .collect(Collectors.joining(", ", "(", ")"));
         return String.format("%s in %s", inFilter.getField(), values);
+    }
+
+    private String buildBetweenCosmosFilter(BetweenFilter betweenFilter) {
+        String fromString = betweenFilter.getFrom().toString();
+        String toString = betweenFilter.getTo().toString();
+        List<String> betweenFields = Arrays.asList(betweenFilter.getField().split(","));
+        if (betweenFields.size() != 2) {
+            throw new InvalidParameterException("Between filter parameters must be two (2)");
+        }
+        return String.format("'%s' >= TimestampToDateTime(%s) AND '%s' <= TimestampToDateTime(%s)",
+                fromString, betweenFields.get(0), toString, betweenFields.get(1));
     }
 
 
@@ -85,6 +98,8 @@ public class QueryBuilder {
         switch(simpleFilter.getType()) {
             case IN:
                 return buildINCosmosFilter((INFilter) simpleFilter);
+            case BETWEEN:
+                return buildBetweenCosmosFilter((BetweenFilter) simpleFilter);
             default:
                 return null;
         }

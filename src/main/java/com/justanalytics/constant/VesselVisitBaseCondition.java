@@ -52,6 +52,7 @@ public final class VesselVisitBaseCondition {
             "FROM vessel_visit c WHERE (1=1)";
     public static final String CONTAINER_NAME = "vessel_visit";
 
+    public static final String CARRIER_NAME = "(c.Carrier_Name = '%s' AND IS_DEFINED(c.Carrier_Name))";
     public static final String CARRIER_OPERATOR_ID = "(c.Carrier_Operator_ID = '%s' AND IS_DEFINED(c.Carrier_Operator_ID))";
     public static final String CARRIER_VISIT_ID = "(c.Carrier_Visit_ID = '%s' AND IS_DEFINED(c.Carrier_Visit_ID))";
     public static final String SERVICE_ID = "(c.service_ID = '%s' AND IS_DEFINED(c.service_ID))";

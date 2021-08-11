@@ -10,6 +10,7 @@ import java.util.List;
 public interface VesselVisitService {
 
     List<VesselVisitDto> findVesselVisit(
+            String carrierName,
             String carrierOperatorId,
             String carrierVisitId,
             String serviceId,
