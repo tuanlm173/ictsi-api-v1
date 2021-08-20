@@ -13,10 +13,12 @@ public class Query {
     @NotNull
     private String dataset;
     public Filter filter;
-    public List<Sort> orderBy = new ArrayList<>();
+    public List<Sort> sort = new ArrayList<>();
     public List<String> select = Collections.singletonList("*");
     public Integer top = 50;
     public Boolean count = false;
+    public Integer offset = 0;
+    public Integer limit = 50;
 
     @JsonIgnore
     public Set<String> getAllFields() {
@@ -24,7 +26,7 @@ public class Query {
         if(this.filter != null) {
             fields.addAll(this.filter.getFieldValueMap().keySet());
         }
-        fields.addAll(this.orderBy.stream().map(sort -> sort.by).collect(Collectors.toList()));
+        fields.addAll(this.sort.stream().map(sort -> sort.by).collect(Collectors.toList()));
         if(!(this.select.size() == 1 && this.select.get(0).equals("*"))) {
             fields.addAll(this.select);
         }

@@ -182,7 +182,7 @@ public class QueryBuilder {
         return selectedFields.stream().collect(Collectors.joining(", "));
     }
 
-    private String buildOrderByString(List<Sort> orderBy) {
+    public String buildOrderByString(List<Sort> orderBy) {
         return orderBy.stream().map(sort -> String.format("%s %s", sort.by, sort.order.value))
                 .collect(Collectors.joining(", "));
     }
@@ -200,8 +200,8 @@ public class QueryBuilder {
             queryString.append(String.format(" WHERE %s", filterQuery));
         }
         //Sort
-        if(!query.orderBy.isEmpty()) {
-            String sortByString = buildOrderByString(query.orderBy);
+        if(!query.sort.isEmpty()) {
+            String sortByString = buildOrderByString(query.sort);
             queryString.append(String.format(" ORDER BY %s", sortByString));
         }
 

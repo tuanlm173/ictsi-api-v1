@@ -263,8 +263,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
     ) {
 
         // Main query
-        StringBuilder queryBuilder = buildSimpleTruckVisitQuery(TRUCK_VISIT_BASE_QUERY, size);
-
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(TRUCK_VISIT_BASE_QUERY);
 //        queryBuilder.append(" AND ");
 
         // Persona filter
@@ -304,7 +304,13 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         }
 
         // Order
-        queryBuilder.append(" ORDER BY c.PlacedTime DESC");
+        if (!query.sort.isEmpty()) {
+            String sortBy = filterBuilder.buildOrderByString(query.sort);
+            queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+        }
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);

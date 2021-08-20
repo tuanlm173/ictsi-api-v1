@@ -3,9 +3,9 @@ package com.justanalytics.query;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum SortOrder {
-    @JsonProperty(value = "ascending")
+    @JsonProperty(value = "ASC")
     Ascending("ASC"),
-    @JsonProperty(value = "descending")
+    @JsonProperty(value = "DESC")
     Descending("DESC");
 
     public String value;

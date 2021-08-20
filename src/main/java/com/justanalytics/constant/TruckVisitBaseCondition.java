@@ -4,7 +4,7 @@ public final class TruckVisitBaseCondition {
 
     public static final String DEFAULT_CONDITION = "1=1";
 
-    public static final String TRUCK_VISIT_BASE_QUERY = "SELECT TOP %s c.UniqueKey,\n" +
+    public static final String TRUCK_VISIT_BASE_QUERY = "SELECT c.UniqueKey,\n" +
             "c.Facility_ID,\n" +
             "c.TruckID,\n" +
             "c.Visit_Nbr,\n" +
