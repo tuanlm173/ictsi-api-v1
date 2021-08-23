@@ -210,7 +210,7 @@ public class QueryBuilder {
         return queryString.toString();
     }
 
-    public String buildTruckVisitFilter(Query query) {
+    public String buildCosmosSearchFilter(Query query) {
         StringBuilder filterString = new StringBuilder("");
         if (query.filter != null) {
             Filter filter = query.filter;

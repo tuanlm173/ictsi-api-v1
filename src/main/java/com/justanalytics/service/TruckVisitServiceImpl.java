@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.query.filter.DefaultFilter;
 import com.justanalytics.query.filter.LogicalOperator;
 import com.justanalytics.utils.QueryBuilder;
 import com.justanalytics.dto.TruckVisitDto;
@@ -277,7 +278,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         personaFilters.add(personaTruckMoveKindFilter);
 
         personaFilters = personaFilters.stream()
-                .filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DEFAULT_CONDITION))
+                .filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
                 .collect(Collectors.toList());
 
         if (personaFilters.size() == 0) {
@@ -290,7 +291,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();
-        String filter = filterBuilder.buildTruckVisitFilter(query);
+        String filter = filterBuilder.buildCosmosSearchFilter(query);
         queryBuilder.append(filter);
 
         // Terminal condition

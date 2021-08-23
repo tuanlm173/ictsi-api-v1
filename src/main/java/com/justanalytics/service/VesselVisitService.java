@@ -1,6 +1,7 @@
 package com.justanalytics.service;
 
 import com.justanalytics.dto.VesselVisitDto;
+import com.justanalytics.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,18 @@ public interface VesselVisitService {
             LocalDateTime atdFrom,
             LocalDateTime atdTo,
             String size,
+            List<String> terminalConditions
+    );
+
+    List<VesselVisitDto> findVesselVisitV2(
+            Query query,
+            String carrierName,
+            String carrierOperatorId,
+            String carrierVisitId,
+            String serviceId,
+            String visitPhase,
+            String size,
+            String operationType,
             List<String> terminalConditions
     );
 }

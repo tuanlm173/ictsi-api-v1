@@ -4,7 +4,7 @@ public final class VesselVisitBaseCondition {
 
     public static final String DEFAULT_CONDITION = "1=1";
 
-    public static final String VESSEL_VISIT_BASE_QUERY = "SELECT TOP %s c.UniqueKey,\n" +
+    public static final String VESSEL_VISIT_BASE_QUERY = "SELECT c.UniqueKey,\n" +
             "c.Terminal_Operator_ID,\n" +
             "c.Complex_ID,\n" +
             "c.Facility_ID,\n" +
@@ -52,11 +52,11 @@ public final class VesselVisitBaseCondition {
             "FROM vessel_visit c WHERE (1=1)";
     public static final String CONTAINER_NAME = "vessel_visit";
 
-    public static final String CARRIER_NAME = "(c.Carrier_Name = '%s' AND IS_DEFINED(c.Carrier_Name))";
-    public static final String CARRIER_OPERATOR_ID = "(c.Carrier_Operator_ID = '%s' AND IS_DEFINED(c.Carrier_Operator_ID))";
-    public static final String CARRIER_VISIT_ID = "(c.Carrier_Visit_ID = '%s' AND IS_DEFINED(c.Carrier_Visit_ID))";
-    public static final String SERVICE_ID = "(c.service_ID = '%s' AND IS_DEFINED(c.service_ID))";
-    public static final String VISIT_PHASE = "(c.Visit_Phase = '%s' AND IS_DEFINED(c.Visit_Phase))";
+    public static final String CARRIER_NAME = "(c.Carrier_Name IN (%s) AND IS_DEFINED(c.Carrier_Name))";
+    public static final String CARRIER_OPERATOR_ID = "(c.Carrier_Operator_ID IN (%s) AND IS_DEFINED(c.Carrier_Operator_ID))";
+    public static final String CARRIER_VISIT_ID = "(c.Carrier_Visit_ID IN (%s) AND IS_DEFINED(c.Carrier_Visit_ID))";
+    public static final String SERVICE_ID = "(c.service_ID IN (%s) AND IS_DEFINED(c.service_ID))";
+    public static final String VISIT_PHASE = "(c.Visit_Phase IN (%s) AND IS_DEFINED(c.Visit_Phase))";
 
     public static final String ETA = "(('%s' <= TimestampToDateTime(c.ETA) AND TimestampToDateTime(c.ETA) <= '%s') AND IS_DEFINED(c.ETA))";
     public static final String ATA = "(('%s' <= TimestampToDateTime(c.ATA) AND TimestampToDateTime(c.ATA) <= '%s') AND IS_DEFINED(c.ATA))";

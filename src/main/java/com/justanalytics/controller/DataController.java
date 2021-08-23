@@ -158,7 +158,7 @@ public class DataController {
 
     }
 
-    @GetMapping(path = "/api/v1/getVesselVisitDetails", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/api/v1/getVesselVisitDetails", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getVesselVisitDetails(
             @RequestHeader(PRODUCT_ID_HEADER) String productId,
             @RequestHeader(API_ID_HEADER) String apiId,
@@ -176,27 +176,17 @@ public class DataController {
             @RequestParam(value = "etd-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime etdTo,
             @RequestParam(value = "atd-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdFrom,
             @RequestParam(value = "atd-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdTo,
-            @RequestParam(value = "size", required = false, defaultValue = "10") String size
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestParam(value = "order-by", required = false, defaultValue = "") String orderBy,
+            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
+            @RequestParam(name = "format", required = false, defaultValue = "json") String format,
+            @RequestBody Query query
     ) {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
-            List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
-                    carrierName,
-                    carrierOperatorId,
-                    carrierVisitId,
-                    serviceId,
-                    visitPhase,
-                    etaFrom,
-                    etaTo,
-                    ataFrom,
-                    ataTo,
-                    etdFrom,
-                    etdTo,
-                    atdFrom,
-                    atdTo,
-                    size,
-                    terminalConditions
-            );
+            List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisitV2(
+                    query, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
+                    size, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselVisits.size())
                     .body(RestEnvelope.of(vesselVisits));
@@ -222,7 +212,8 @@ public class DataController {
     ) {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
-            List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisitV3(query, truckLicenseNbrs, moveKinds, size, operationType, terminalConditions);
+            List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisitV3(query, truckLicenseNbrs, moveKinds,
+                    size, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + truckVisits.size())
                     .body(RestEnvelope.of(truckVisits));

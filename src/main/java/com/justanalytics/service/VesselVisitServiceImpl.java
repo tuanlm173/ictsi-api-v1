@@ -1,7 +1,10 @@
 package com.justanalytics.service;
 
 import com.justanalytics.dto.VesselVisitDto;
+import com.justanalytics.query.Query;
+import com.justanalytics.query.filter.DefaultFilter;
 import com.justanalytics.repository.DataRepository;
+import com.justanalytics.utils.QueryBuilder;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +14,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.justanalytics.constant.TruckVisitBaseCondition.DEFAULT_CONDITION;
 import static com.justanalytics.constant.VesselVisitBaseCondition.*;
 
 @Service
@@ -50,6 +55,22 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             return String.format(filter, from.format(iso_formatter) + 'Z', to.format(iso_formatter) + 'Z');
         }
             return DEFAULT_CONDITION;
+    }
+
+    private String parseParams(String params) {
+        if (params != null && !params.isBlank())
+            return String.join(", ",
+                    Arrays.stream(params.split(","))
+                            .map(element -> ("'" + element + "'"))
+                            .collect(Collectors.toList()));
+        else return "";
+
+    }
+
+    private String buildFilter(String filter, String input) {
+        if (input != null && !input.isBlank())
+            return String.format(filter, input);
+        else return "";
     }
 
     private List<VesselVisitDto> getVesselVisitDto(List<JSONObject> rawData) {
@@ -226,4 +247,80 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         return getVesselVisitDto(rawData);
 
     }
+
+    @Override
+    public List<VesselVisitDto> findVesselVisitV2(
+            Query query,
+            String carrierName,
+            String carrierOperatorId,
+            String carrierVisitId,
+            String serviceId,
+            String visitPhase,
+            String size,
+            String operationType,
+            List<String> terminalConditions
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(VESSEL_VISIT_BASE_QUERY);
+
+        // Persona filter
+        List<String> personaFilters = new ArrayList<>();
+
+        String personaCarrierName = buildFilter(CARRIER_NAME, parseParams(carrierName));
+        String personaCarrierOperatorId = buildFilter(CARRIER_OPERATOR_ID, parseParams(carrierOperatorId));
+        String personaCarrierVisitId = buildFilter(CARRIER_VISIT_ID, parseParams(carrierVisitId));
+        String personaServiceId = buildFilter(SERVICE_ID, parseParams(serviceId));
+        String personaVisitPhase = buildFilter(VISIT_PHASE, parseParams(visitPhase));
+
+        personaFilters.add(personaCarrierName);
+        personaFilters.add(personaCarrierOperatorId);
+        personaFilters.add(personaCarrierVisitId);
+        personaFilters.add(personaServiceId);
+        personaFilters.add(personaVisitPhase);
+
+        personaFilters = personaFilters.stream()
+                .filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                .collect(Collectors.toList());
+
+        if (personaFilters.size() == 0) {
+            queryBuilder.append(" AND ");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+            queryBuilder.append(" AND ");
+        }
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+        String filter = filterBuilder.buildCosmosSearchFilter(query);
+        queryBuilder.append(filter);
+
+        // Terminal condition
+        if(!terminalConditions.contains("ALL")) {
+            queryBuilder.append(" AND ");
+            List<String> conditions = new ArrayList<>();
+            for (String terminalCondition : terminalConditions) {
+                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+            }
+            queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
+        }
+
+        // Order
+        if (!query.sort.isEmpty()) {
+            String sortBy = filterBuilder.buildOrderByString(query.sort);
+            queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+        }
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        return getVesselVisitDto(rawData);
+
+    }
+
+
 }
