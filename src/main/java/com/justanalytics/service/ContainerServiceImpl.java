@@ -3,9 +3,12 @@ package com.justanalytics.service;
 import com.justanalytics.dto.ContainerDto;
 import com.justanalytics.dto.EmptyContainerDto;
 import com.justanalytics.dto.ExportContainerDto;
+import com.justanalytics.query.Query;
+import com.justanalytics.query.filter.DefaultFilter;
 import com.justanalytics.repository.DataRepository;
 import com.justanalytics.types.ContainerImped;
 import com.justanalytics.types.ContainerType;
+import com.justanalytics.utils.QueryBuilder;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +53,22 @@ public class ContainerServiceImpl implements ContainerService {
         else return DEFAULT_CONDITION;
     }
 
+    private String parseParams(String params) {
+        if (params != null && !params.isBlank())
+            return String.join(", ",
+                    Arrays.stream(params.split(","))
+                            .map(element -> ("'" + element + "'"))
+                            .collect(Collectors.toList()));
+        else return "";
+
+    }
+
+    private String buildFilter(String filter, String input) {
+        if (input != null && !input.isBlank())
+            return String.format(filter, input);
+        else return "";
+    }
+
     private String buildBolNbrParam(String filter, String inputBolFields) {
         if (inputBolFields != null && !inputBolFields.isBlank()) {
             String[] bols = inputBolFields.split(",");
@@ -82,7 +101,7 @@ public class ContainerServiceImpl implements ContainerService {
             String visitState = String.valueOf(data.get("visit_state"));
             String containerNbr = String.valueOf(data.get("ContainerNbr"));
             String equipmentType = String.valueOf(data.get("EquipmentType"));
-            Integer teu = Integer.valueOf(String.valueOf(data.get("TEU")));
+            Float teu =  Objects.nonNull(data.get("TEU")) ? Float.parseFloat(String.valueOf(data.get("TEU"))) : null;
             String operatorLineId = String.valueOf(data.get("OperatorLineID"));
             String operatorName = String.valueOf(data.get("OperatorName"));
             String createTime = String.valueOf(data.get("create_time"));
@@ -240,7 +259,7 @@ public class ContainerServiceImpl implements ContainerService {
             String visitState = String.valueOf(data.get("visit_state"));
             String containerNbr = String.valueOf(data.get("ContainerNbr"));
             String equipmentType = String.valueOf(data.get("EquipmentType"));
-            Integer teu = Integer.valueOf(String.valueOf(data.get("TEU")));
+            Float teu =  Objects.nonNull(data.get("TEU")) ? Float.parseFloat(String.valueOf(data.get("TEU"))) : null;
             String operatorLineId = String.valueOf(data.get("OperatorLineID"));
             String operatorName = String.valueOf(data.get("OperatorName"));
             String createTime = String.valueOf(data.get("create_time"));
@@ -356,7 +375,7 @@ public class ContainerServiceImpl implements ContainerService {
             String visitState = String.valueOf(data.get("visit_state"));
             String containerNbr = String.valueOf(data.get("ContainerNbr"));
             String equipmentType = String.valueOf(data.get("EquipmentType"));
-            Integer teu = Integer.valueOf(String.valueOf(data.get("TEU")));
+            Float teu =  Objects.nonNull(data.get("TEU")) ? Float.parseFloat(String.valueOf(data.get("TEU"))) : null;
             String operatorLineId = String.valueOf(data.get("OperatorLineID"));
             String operatorName = String.valueOf(data.get("OperatorName"));
             String createTime = String.valueOf(data.get("create_time"));
@@ -540,16 +559,16 @@ public class ContainerServiceImpl implements ContainerService {
     ) {
         List<String> filters = new ArrayList<>();
 
-        String containerVisitStateFilter = buildSimpleContainerParam(ALL_CONTAINER_VISIT_STATE, containerVisitState);
-        String containerTransitStateFilter = buildSimpleContainerParam(ALL_CONTAINER_TRANSIT_STATE, containerTransitState);
-        String containerIsoGroupFilter = buildSimpleContainerParam(ALL_CONTAINER_ISO_GROUP, containerIsoGroup);
-        String containerArrivePosLocTypeFilter = buildSimpleContainerParam(ALL_CONTAINER_ARRIVE_POS_LOCTYPE, containerArrivePosLocType);
-        String containerDepartPosLocTypeFilter = buildSimpleContainerParam(ALL_CONTAINER_DEPART_POST_LOCTYPE, containerDepartPosLocType);
-        String containerDepartPosLocIdFilter = buildSimpleContainerParam(ALL_CONTAINER_DEPART_POST_LOC_ID, containerDepartPosLocId);
-        String containerArrivePosLocIdFilter = buildSimpleContainerParam(ALL_CONTAINER_ARRIVE_POS_LOC_ID, containerArrivePosLocId);
-        String containerNumberFilter = buildSimpleContainerParam(ALL_CONTAINER_NUMBER, containerNumber);
-        String containerEquipmentTypeFilter = buildSimpleContainerParam(ALL_CONTAINER_EQUIPMENT_TYPE, containerEquipmentType);
-        String containerOperationLineIFilter = buildSimpleContainerParam(ALL_CONTAINER_OPERATION_LINE_ID, containerOperationLineId);
+        String containerVisitStateFilter = buildFilter(ALL_CONTAINER_VISIT_STATE, parseParams(containerVisitState));
+        String containerTransitStateFilter = buildFilter(ALL_CONTAINER_TRANSIT_STATE, parseParams(containerTransitState));
+        String containerIsoGroupFilter = buildFilter(ALL_CONTAINER_ISO_GROUP, parseParams(containerIsoGroup));
+        String containerArrivePosLocTypeFilter = buildFilter(ALL_CONTAINER_ARRIVE_POS_LOCTYPE, parseParams(containerArrivePosLocType));
+        String containerDepartPosLocTypeFilter = buildFilter(ALL_CONTAINER_DEPART_POST_LOCTYPE, parseParams(containerDepartPosLocType));
+        String containerDepartPosLocIdFilter = buildFilter(ALL_CONTAINER_DEPART_POST_LOC_ID, parseParams(containerDepartPosLocId));
+        String containerArrivePosLocIdFilter = buildFilter(ALL_CONTAINER_ARRIVE_POS_LOC_ID, parseParams(containerArrivePosLocId));
+        String containerNumberFilter = buildFilter(ALL_CONTAINER_NUMBER, parseParams(containerNumber));
+        String containerEquipmentTypeFilter = buildFilter(ALL_CONTAINER_EQUIPMENT_TYPE, parseParams(containerEquipmentType));
+        String containerOperationLineIFilter = buildFilter(ALL_CONTAINER_OPERATION_LINE_ID, parseParams(containerOperationLineId));
 
         String containerTimeInFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String containerTimeOutFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_OUT, departFrom, departTo);
@@ -591,20 +610,20 @@ public class ContainerServiceImpl implements ContainerService {
     ) {
         List<String> filters = new ArrayList<>();
 
-        String containerFreightKindFilter = buildSimpleContainerParam(EXPORT_CONTAINER_FREIGHT_KIND, containerFreightKind);
-        String containerVisitStateFilter = buildSimpleContainerParam(EXPORT_CONTAINER_VISIT_STATE, containerVisitState);
-        String containerTransitStateFilter = buildSimpleContainerParam(EXPORT_CONTAINER_TRANSIT_STATE, containerTransitState);
-        String containerIsoGroupFilter = buildSimpleContainerParam(EXPORT_CONTAINER_ISO_GROUP, containerIsoGroup);
-        String containerArrivePosLocTypeFilter = buildSimpleContainerParam(EXPORT_CONTAINER_ARRIVE_POS_LOCTYPE, containerArrivePosLocType);
-        String containerDepartPosLocTypeFilter = buildSimpleContainerParam(EXPORT_CONTAINER_DEPART_POST_LOCTYPE, containerDepartPosLocType);
-        String containerDepartPosLocIdFilter = buildSimpleContainerParam(EXPORT_CONTAINER_DEPART_POST_LOC_ID, containerDepartPosLocId);
-        String containerArrivePosLocIdFilter = buildSimpleContainerParam(EXPORT_CONTAINER_ARRIVE_POS_LOC_ID, containerArrivePosLocId);
-        String containerNumberFilter = buildSimpleContainerParam(EXPORT_CONTAINER_NUMBER, containerNumber);
-        String containerEquipmentTypeFilter = buildSimpleContainerParam(EXPORT_CONTAINER_EQUIPMENT_TYPE, containerEquipmentType);
-        String containerOperationLineIdFilter = buildSimpleContainerParam(EXPORT_CONTAINER_OPERATION_LINE_ID, containerOperationLineId);
+        String containerFreightKindFilter = buildFilter(EXPORT_CONTAINER_FREIGHT_KIND, parseParams(containerFreightKind));
+        String containerVisitStateFilter = buildFilter(EXPORT_CONTAINER_VISIT_STATE, parseParams(containerVisitState));
+        String containerTransitStateFilter = buildFilter(EXPORT_CONTAINER_TRANSIT_STATE, parseParams(containerTransitState));
+        String containerIsoGroupFilter = buildFilter(EXPORT_CONTAINER_ISO_GROUP, parseParams(containerIsoGroup));
+        String containerArrivePosLocTypeFilter = buildFilter(EXPORT_CONTAINER_ARRIVE_POS_LOCTYPE, parseParams(containerArrivePosLocType));
+        String containerDepartPosLocTypeFilter = buildFilter(EXPORT_CONTAINER_DEPART_POST_LOCTYPE, parseParams(containerDepartPosLocType));
+        String containerDepartPosLocIdFilter = buildFilter(EXPORT_CONTAINER_DEPART_POST_LOC_ID, parseParams(containerDepartPosLocId));
+        String containerArrivePosLocIdFilter = buildFilter(EXPORT_CONTAINER_ARRIVE_POS_LOC_ID, parseParams(containerArrivePosLocId));
+        String containerNumberFilter = buildFilter(EXPORT_CONTAINER_NUMBER, parseParams(containerNumber));
+        String containerEquipmentTypeFilter = buildFilter(EXPORT_CONTAINER_EQUIPMENT_TYPE, parseParams(containerEquipmentType));
+        String containerOperationLineIdFilter = buildFilter(EXPORT_CONTAINER_OPERATION_LINE_ID, parseParams(containerOperationLineId));
         String timeInFilter = buildSimpleTimeframeContainerParam(EXPORT_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String timeOutFilter = buildSimpleTimeframeContainerParam(EXPORT_CONTAINER_TIME_OUT, departFrom, departTo);
-        String containerBookingNumberFilter = buildSimpleContainerParam(EXPORT_CONTAINER_BOOKING_NUMBER, containerBookingNumber);
+        String containerBookingNumberFilter = buildFilter(EXPORT_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
 
         if (ContainerImped.NONE.getContainerImped().equalsIgnoreCase(impedType))
             filters.add(EXPORT_IMPED_TYPE_NONE);
@@ -658,20 +677,20 @@ public class ContainerServiceImpl implements ContainerService {
     ) {
         List<String> filters = new ArrayList<>();
 
-        String containerFreightKindFilter = buildSimpleContainerParam(IMPORT_CONTAINER_FREIGHT_KIND, containerFreightKind);
-        String containerVisitStateFilter = buildSimpleContainerParam(IMPORT_CONTAINER_VISIT_STATE, containerVisitState);
-        String containerTransitStateFilter = buildSimpleContainerParam(IMPORT_CONTAINER_TRANSIT_STATE, containerTransitState);
-        String containerIsoGroupFilter = buildSimpleContainerParam(IMPORT_CONTAINER_ISO_GROUP, containerIsoGroup);
-        String containerArrivePosLocTypeFilter = buildSimpleContainerParam(IMPORT_CONTAINER_ARRIVE_POS_LOCTYPE, containerArrivePosLocType);
-        String containerDepartPosLocTypeFilter = buildSimpleContainerParam(IMPORT_CONTAINER_DEPART_POST_LOCTYPE, containerDepartPosLocType);
-        String containerDepartPosLocIdFilter = buildSimpleContainerParam(IMPORT_CONTAINER_DEPART_POST_LOC_ID, containerDepartPosLocId);
-        String containerArrivePosLocIdFilter = buildSimpleContainerParam(IMPORT_CONTAINER_ARRIVE_POS_LOC_ID, containerArrivePosLocId);
-        String containerNumberFilter = buildSimpleContainerParam(IMPORT_CONTAINER_NUMBER, containerNumber);
-        String containerEquipmentTypeFilter = buildSimpleContainerParam(IMPORT_CONTAINER_EQUIPMENT_TYPE, containerEquipmentType);
-        String containerOperationLineIdFilter = buildSimpleContainerParam(IMPORT_CONTAINER_OPERATION_LINE_ID, containerOperationLineId);
+        String containerFreightKindFilter = buildFilter(IMPORT_CONTAINER_FREIGHT_KIND, parseParams(containerFreightKind));
+        String containerVisitStateFilter = buildFilter(IMPORT_CONTAINER_VISIT_STATE, parseParams(containerVisitState));
+        String containerTransitStateFilter = buildFilter(IMPORT_CONTAINER_TRANSIT_STATE, parseParams(containerTransitState));
+        String containerIsoGroupFilter = buildFilter(IMPORT_CONTAINER_ISO_GROUP, parseParams(containerIsoGroup));
+        String containerArrivePosLocTypeFilter = buildFilter(IMPORT_CONTAINER_ARRIVE_POS_LOCTYPE, parseParams(containerArrivePosLocType));
+        String containerDepartPosLocTypeFilter = buildFilter(IMPORT_CONTAINER_DEPART_POST_LOCTYPE, parseParams(containerDepartPosLocType));
+        String containerDepartPosLocIdFilter = buildFilter(IMPORT_CONTAINER_DEPART_POST_LOC_ID, parseParams(containerDepartPosLocId));
+        String containerArrivePosLocIdFilter = buildFilter(IMPORT_CONTAINER_ARRIVE_POS_LOC_ID, parseParams(containerArrivePosLocId));
+        String containerNumberFilter = buildFilter(IMPORT_CONTAINER_NUMBER, parseParams(containerNumber));
+        String containerEquipmentTypeFilter = buildFilter(IMPORT_CONTAINER_EQUIPMENT_TYPE, parseParams(containerEquipmentType));
+        String containerOperationLineIdFilter = buildFilter(IMPORT_CONTAINER_OPERATION_LINE_ID, parseParams(containerOperationLineId));
         String timeInFilter = buildSimpleTimeframeContainerParam(IMPORT_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String timeOutFilter = buildSimpleTimeframeContainerParam(IMPORT_CONTAINER_TIME_OUT, departFrom, departTo);
-        String containerBookingNumberFilter = buildSimpleContainerParam(IMPORT_CONTAINER_BOOKING_NUMBER, containerBookingNumber);
+        String containerBookingNumberFilter = buildFilter(IMPORT_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
         String containerBolNumberFilter = buildBolNbrParam(IMPORT_CONTAINER_BOL_NUMBER, containerBolNumber);
 
         if (ContainerImped.NONE.getContainerImped().equalsIgnoreCase(impedType))
@@ -763,7 +782,6 @@ public class ContainerServiceImpl implements ContainerService {
                 queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
             }
 
-            //TODO: add to other
             if(!terminalConditions.contains("ALL")) {
                 queryBuilder.append(" AND ");
                 List<String> conditions = new ArrayList<>();
@@ -981,4 +999,271 @@ public class ContainerServiceImpl implements ContainerService {
     }
 
 
+    @Override
+    public List<ContainerDto> findContainerV2(
+            Query query,
+            String containerType,
+            String containerNumber,
+            String containerOperationLineId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String containerFreightKind,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            String containerBookingNumber,
+            String bolNumber,
+            String impedType,
+            String size,
+            String operationType,
+            List<String> terminalConditions
+    ) {
+        List<JSONObject> results = new ArrayList<>();
+
+        if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType)) {
+
+            // Main query
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.append(IMPORT_CONTAINER_BASE_QUERY);
+
+            // Persona filter
+            List<String> personaFilters = buildImportContainerConditions(
+                    containerFreightKind,
+                    containerVisitState,
+                    containerTransitState,
+                    containerIsoGroup,
+                    containerArrivePosLocType,
+                    containerDepartPosLocType,
+                    containerDepartPosLocId,
+                    containerArrivePosLocId,
+                    containerNumber,
+                    containerEquipmentType,
+                    containerOperationLineId,
+                    arriveFrom,
+                    arriveTo,
+                    departFrom,
+                    departTo,
+                    containerBookingNumber,
+                    bolNumber,
+                    impedType
+            );
+
+            personaFilters = personaFilters.stream()
+                    .filter(e -> !Objects.equals(e, ""))
+                    .filter(e -> Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                    .collect(Collectors.toList());
+
+            if (personaFilters.size() == 0) {
+                queryBuilder.append(" AND ");
+            }
+            else {
+                queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+                queryBuilder.append(" AND ");
+            }
+
+            // Search filter
+            QueryBuilder filterBuilder = new QueryBuilder();
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+
+            // Terminal condition
+            if(!terminalConditions.contains("ALL")) {
+                queryBuilder.append(" AND ");
+                List<String> conditions = new ArrayList<>();
+                for (String terminalCondition : terminalConditions) {
+                    conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+                }
+                queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
+            }
+
+            // Order
+            if (!query.sort.isEmpty()) {
+                String sortBy = filterBuilder.buildOrderByString(query.sort);
+                queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+            }
+
+            // Offset limit
+            queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+            String sql = queryBuilder.toString();
+            logger.info("Cosmos SQL statement: {}", sql);
+            results = dataRepository.getSimpleDataFromCosmos(IMPORT_CONTAINER_NAME, sql);
+        }
+
+        else if (ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
+
+            // Main query
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.append(ALL_CONTAINER_BASE_QUERY);
+
+            // Persona filter
+            List<String> personaFilters = buildAllContainerConditions(
+                    containerVisitState,
+                    containerTransitState,
+                    containerIsoGroup,
+                    containerArrivePosLocType,
+                    containerDepartPosLocType,
+                    containerDepartPosLocId,
+                    containerArrivePosLocId,
+                    containerNumber,
+                    containerEquipmentType,
+                    containerOperationLineId,
+                    arriveFrom,
+                    arriveTo,
+                    departFrom,
+                    departTo
+            );
+
+            personaFilters = personaFilters.stream()
+                    .filter(e -> !Objects.equals(e, ""))
+                    .filter(e -> Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                    .collect(Collectors.toList());
+
+            if (personaFilters.size() == 0) {
+                queryBuilder.append(" AND ");
+            }
+            else {
+                queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+                queryBuilder.append(" AND ");
+            }
+
+            // Search filter
+            QueryBuilder filterBuilder = new QueryBuilder();
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+
+            // Terminal condition
+            if(!terminalConditions.contains("ALL")) {
+                queryBuilder.append(" AND ");
+                List<String> conditions = new ArrayList<>();
+                for (String terminalCondition : terminalConditions) {
+                    conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+                }
+                queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
+            }
+
+            // Order
+            if (!query.sort.isEmpty()) {
+                String sortBy = filterBuilder.buildOrderByString(query.sort);
+                queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+            }
+
+            // Offset limit
+            queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+            String sql = queryBuilder.toString();
+            logger.info("Cosmos SQL statement: {}", sql);
+            results = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+
+        }
+
+        return getContainerDto(results);
+
+
+    }
+
+
+    @Override
+    public List<ExportContainerDto> findExportContainerV2(
+            Query query,
+            String containerType,
+            String containerNumber,
+            String containerOperationLineId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String containerFreightKind,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            String containerBookingNumber,
+            String bolNumber,
+            String impedType,
+            String size,
+            String operationType,
+            List<String> terminalConditions
+    ) {
+        List<JSONObject> results = new ArrayList<>();
+
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(EXPORT_CONTAINER_BASE_QUERY);
+
+        // Persona filter
+        List<String> personaFilters = buildExportContainerConditions(
+                containerFreightKind,
+                containerVisitState,
+                containerTransitState,
+                containerIsoGroup,
+                containerArrivePosLocType,
+                containerDepartPosLocType,
+                containerDepartPosLocId,
+                containerArrivePosLocId,
+                containerNumber,
+                containerEquipmentType,
+                containerOperationLineId,
+                arriveFrom,
+                arriveTo,
+                departFrom,
+                departTo,
+                containerBookingNumber,
+                impedType
+        );
+
+        personaFilters = personaFilters.stream()
+                .filter(e -> !Objects.equals(e, ""))
+                .filter(e -> Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                .collect(Collectors.toList());
+
+        if (personaFilters.size() == 0) {
+            queryBuilder.append(" AND ");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+            queryBuilder.append(" AND ");
+        }
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+        String filter = filterBuilder.buildCosmosSearchFilter(query);
+        queryBuilder.append(filter);
+
+        // Terminal condition
+        if(!terminalConditions.contains("ALL")) {
+            queryBuilder.append(" AND ");
+            List<String> conditions = new ArrayList<>();
+            for (String terminalCondition : terminalConditions) {
+                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+            }
+            queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
+        }
+
+        // Order
+        if (!query.sort.isEmpty()) {
+            String sortBy = filterBuilder.buildOrderByString(query.sort);
+            queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+        }
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        results = dataRepository.getSimpleDataFromCosmos(EXPORT_CONTAINER_NAME, sql);
+
+        return getExportContainerDto(results);
+    }
 }

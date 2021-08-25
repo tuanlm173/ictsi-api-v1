@@ -39,7 +39,7 @@ public class ContainerDto {
     @JsonProperty(value = "EquipmentType")
     private String equipmentType;
     @JsonProperty(value = "TEU")
-    private Integer teu;
+    private Float teu;
     @JsonProperty(value = "OperatorLineID")
     private String operatorLineId;
     @JsonProperty(value = "OperatorName")

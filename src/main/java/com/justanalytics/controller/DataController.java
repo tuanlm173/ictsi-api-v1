@@ -40,7 +40,125 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
-    @GetMapping(path = "/api/v1/getContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
+//    @GetMapping(path = "/api/v1/getContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<RestEnvelope> getContainerDetails(
+//            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+//            @RequestHeader(API_ID_HEADER) String apiId,
+//            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
+//            @RequestParam(value = "container-type") String containerType,
+//            @RequestParam(value = "container-number", required = false) String containerNumber,
+//            @RequestParam(value = "operation-line-id", required = false) String containerOperationLineId,
+//            @RequestParam(value = "arrive-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime arriveFrom,
+//            @RequestParam(value = "arrive-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime arriveTo,
+//            @RequestParam(value = "depart-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departFrom,
+//            @RequestParam(value = "depart-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departTo,
+//            @RequestParam(value = "freightkind", required = false) String containerFreightKind,
+//            @RequestParam(value = "visit-state", required = false) String containerVisitState,
+//            @RequestParam(value = "transit-state", required = false) String containerTransitState,
+//            @RequestParam(value = "equipment-type", required = false) String containerEquipmentType,
+//            @RequestParam(value = "iso-group", required = false) String containerIsoGroup,
+//            @RequestParam(value = "arrive-pos-loctype", required = false) String containerArrivePosLocType,
+//            @RequestParam(value = "depart-pos-loctype", required = false) String containerDepartPosLocType,
+//            @RequestParam(value = "depart-pos-locid", required = false) String containerDepartPosLocId,
+//            @RequestParam(value = "arrive-pos-locid", required = false) String containerArrivePosLocId,
+//            @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
+//            @RequestParam(value = "bol-number", required = false) String bolNumber,
+//            @RequestParam(value = "imped-type", required = false) String impedType,
+//            @RequestParam(value = "size", required = false, defaultValue = "10") String size
+//    ) {
+//        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+//            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
+//            if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType) || ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
+//                List<ContainerDto> containers = containerService.findContainer(
+//                        containerType,
+//                        containerNumber,
+//                        containerOperationLineId,
+//                        arriveFrom,
+//                        arriveTo,
+//                        departFrom,
+//                        departTo,
+//                        containerFreightKind,
+//                        containerVisitState,
+//                        containerTransitState,
+//                        containerEquipmentType,
+//                        containerIsoGroup,
+//                        containerArrivePosLocType,
+//                        containerDepartPosLocType,
+//                        containerDepartPosLocId,
+//                        containerArrivePosLocId,
+//                        containerBookingNumber,
+//                        bolNumber,
+//                        impedType,
+//                        size,
+//                        terminalConditions
+//                );
+//                return ResponseEntity.ok()
+//                        .header("row-count", "" + containers.size())
+//                        .body(RestEnvelope.of(containers));
+//            }
+//            else if (ContainerType.EMPTY.getContainerType().equalsIgnoreCase(containerType)) {
+//                List<EmptyContainerDto> emptyContainer = containerService.findEmptyContainer(
+//                        containerType,
+//                        containerNumber,
+//                        containerOperationLineId,
+//                        arriveFrom,
+//                        arriveTo,
+//                        departFrom,
+//                        departTo,
+//                        containerFreightKind,
+//                        containerVisitState,
+//                        containerTransitState,
+//                        containerEquipmentType,
+//                        containerIsoGroup,
+//                        containerArrivePosLocType,
+//                        containerDepartPosLocType,
+//                        containerDepartPosLocId,
+//                        containerArrivePosLocId,
+//                        containerBookingNumber,
+//                        bolNumber,
+//                        impedType,
+//                        size,
+//                        terminalConditions
+//                );
+//                return ResponseEntity.ok()
+//                        .header("row-count", "" + emptyContainer.size())
+//                        .body(RestEnvelope.of(emptyContainer));
+//            }
+//            else if (ContainerType.EXPORT.getContainerType().equalsIgnoreCase(containerType)) {
+//                List<ExportContainerDto> exportContainer = containerService.findExportContainer(
+//                        containerType,
+//                        containerNumber,
+//                        containerOperationLineId,
+//                        arriveFrom,
+//                        arriveTo,
+//                        departFrom,
+//                        departTo,
+//                        containerFreightKind,
+//                        containerVisitState,
+//                        containerTransitState,
+//                        containerEquipmentType,
+//                        containerIsoGroup,
+//                        containerArrivePosLocType,
+//                        containerDepartPosLocType,
+//                        containerDepartPosLocId,
+//                        containerArrivePosLocId,
+//                        containerBookingNumber,
+//                        bolNumber,
+//                        impedType,
+//                        size,
+//                        terminalConditions
+//                );
+//                return ResponseEntity.ok()
+//                        .header("row-count", "" + exportContainer.size())
+//                        .body(RestEnvelope.of(exportContainer));
+//            }
+//            throw new InvalidParameterException("container type must be empty, export, import, all");
+//        }
+//        throw new UnAccessibleSystemException();
+//
+//    }
+
+    @PostMapping(path = "/api/v1/getContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getContainerDetails(
             @RequestHeader(PRODUCT_ID_HEADER) String productId,
             @RequestHeader(API_ID_HEADER) String apiId,
@@ -64,12 +182,17 @@ public class DataController {
             @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
             @RequestParam(value = "bol-number", required = false) String bolNumber,
             @RequestParam(value = "imped-type", required = false) String impedType,
-            @RequestParam(value = "size", required = false, defaultValue = "10") String size
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestParam(value = "order-by", required = false, defaultValue = "") String orderBy,
+            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
+            @RequestParam(name = "format", required = false, defaultValue = "json") String format,
+            @RequestBody Query query
     ) {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType) || ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
-                List<ContainerDto> containers = containerService.findContainer(
+                List<ContainerDto> containers = containerService.findContainerV2(
+                        query,
                         containerType,
                         containerNumber,
                         containerOperationLineId,
@@ -90,6 +213,7 @@ public class DataController {
                         bolNumber,
                         impedType,
                         size,
+                        operationType,
                         terminalConditions
                 );
                 return ResponseEntity.ok()
@@ -125,7 +249,8 @@ public class DataController {
                         .body(RestEnvelope.of(emptyContainer));
             }
             else if (ContainerType.EXPORT.getContainerType().equalsIgnoreCase(containerType)) {
-                List<ExportContainerDto> exportContainer = containerService.findExportContainer(
+                List<ExportContainerDto> exportContainer = containerService.findExportContainerV2(
+                        query,
                         containerType,
                         containerNumber,
                         containerOperationLineId,
@@ -146,6 +271,7 @@ public class DataController {
                         bolNumber,
                         impedType,
                         size,
+                        operationType,
                         terminalConditions
                 );
                 return ResponseEntity.ok()

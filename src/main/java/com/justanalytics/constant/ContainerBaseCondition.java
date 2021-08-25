@@ -2,7 +2,7 @@ package com.justanalytics.constant;
 
 public final class ContainerBaseCondition {
 
-    public static final String ALL_CONTAINER_BASE_QUERY = "SELECT TOP %s c.UniqueKey,\n" +
+    public static final String ALL_CONTAINER_BASE_QUERY = "SELECT c.UniqueKey,\n" +
             "c.OperatorID,\n" +
             "c.ComplexID,\n" +
             "c.FacilityID,\n" +
@@ -57,16 +57,16 @@ public final class ContainerBaseCondition {
             "WHERE (1=1) AND IS_DEFINED(c.TEU)";
     public static final String ALL_CONTAINER_NAME = "container";
 
-    public static final String ALL_CONTAINER_VISIT_STATE = "(c.visit_state = '%s' AND IS_DEFINED(c.visit_state))";
-    public static final String ALL_CONTAINER_TRANSIT_STATE = "(c.transit_state = '%s' AND IS_DEFINED(c.transit_state))";
-    public static final String ALL_CONTAINER_ISO_GROUP = "(c.iso_group = '%s' AND IS_DEFINED(c.iso_group))";
-    public static final String ALL_CONTAINER_ARRIVE_POS_LOCTYPE = "(c.arrive_pos_loctype = '%s' AND IS_DEFINED(c.arrive_pos_loctype))";
-    public static final String ALL_CONTAINER_DEPART_POST_LOCTYPE = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_loctype = '%s' AND IS_DEFINED(c.last_pos_loctype)))";
-    public static final String ALL_CONTAINER_DEPART_POST_LOC_ID = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_locid = '%s' AND IS_DEFINED(c.last_pos_locid)))";
-    public static final String ALL_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_Pos_Locid = '%s' AND IS_DEFINED(c.arrive_Pos_Locid))";
-    public static final String ALL_CONTAINER_NUMBER = "(c.ContainerNbr = '%s' AND IS_DEFINED(c.ContainerNbr))";
-    public static final String ALL_CONTAINER_EQUIPMENT_TYPE = "(c.EquipmentType = '%s' AND IS_DEFINED(c.EquipmentType))";
-    public static final String ALL_CONTAINER_OPERATION_LINE_ID = "(c.OperatorLineID = '%s' AND IS_DEFINED(c.OperatorLineID))";
+    public static final String ALL_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";
+    public static final String ALL_CONTAINER_TRANSIT_STATE = "(c.transit_state IN (%s) AND IS_DEFINED(c.transit_state))";
+    public static final String ALL_CONTAINER_ISO_GROUP = "(c.iso_group IN (%s) AND IS_DEFINED(c.iso_group))";
+    public static final String ALL_CONTAINER_ARRIVE_POS_LOCTYPE = "(c.arrive_pos_loctype IN (%s) AND IS_DEFINED(c.arrive_pos_loctype))";
+    public static final String ALL_CONTAINER_DEPART_POST_LOCTYPE = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_loctype IN (%s) AND IS_DEFINED(c.last_pos_loctype)))";
+    public static final String ALL_CONTAINER_DEPART_POST_LOC_ID = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_locid IN (%s) AND IS_DEFINED(c.last_pos_locid)))";
+    public static final String ALL_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_Pos_Locid IN (%s) AND IS_DEFINED(c.arrive_Pos_Locid))";
+    public static final String ALL_CONTAINER_NUMBER = "(c.ContainerNbr IN (%s) AND IS_DEFINED(c.ContainerNbr))";
+    public static final String ALL_CONTAINER_EQUIPMENT_TYPE = "(c.EquipmentType IN (%s) AND IS_DEFINED(c.EquipmentType))";
+    public static final String ALL_CONTAINER_OPERATION_LINE_ID = "(c.OperatorLineID IN (%s) AND IS_DEFINED(c.OperatorLineID))";
 
     public static final String ALL_CONTAINER_TIME_IN = "((TimestampToDateTime(c.time_in) >= '%s' AND TimestampToDateTime(c.time_in) <= '%s') AND IS_DEFINED(c.time_in))";
     public static final String ALL_CONTAINER_TIME_OUT = "((TimestampToDateTime(c.time_out) >= '%s' AND TimestampToDateTime(c.time_out) <= '%s') AND IS_DEFINED(c.time_out))";

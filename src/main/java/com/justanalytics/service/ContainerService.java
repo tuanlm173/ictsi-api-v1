@@ -3,6 +3,7 @@ package com.justanalytics.service;
 import com.justanalytics.dto.ContainerDto;
 import com.justanalytics.dto.EmptyContainerDto;
 import com.justanalytics.dto.ExportContainerDto;
+import com.justanalytics.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -80,6 +81,58 @@ public interface ContainerService {
             String bolNumber,
             String impedType,
             String size,
+            List<String> terminalConditions
+    );
+
+    List<ContainerDto> findContainerV2(
+            Query query,
+            String containerType,
+            String containerNumber,
+            String containerOperationLineId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String containerFreightKind,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            String containerBookingNumber,
+            String bolNumber,
+            String impedType,
+            String size,
+            String operationType,
+            List<String> terminalConditions
+    );
+
+    List<ExportContainerDto> findExportContainerV2(
+            Query query,
+            String containerType,
+            String containerNumber,
+            String containerOperationLineId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String containerFreightKind,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            String containerBookingNumber,
+            String bolNumber,
+            String impedType,
+            String size,
+            String operationType,
             List<String> terminalConditions
     );
 

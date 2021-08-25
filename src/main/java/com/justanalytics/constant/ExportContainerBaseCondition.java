@@ -3,7 +3,7 @@ package com.justanalytics.constant;
 public final class ExportContainerBaseCondition {
 
     public static final String EXPORT_CONTAINER_BASE_QUERY =
-            "SELECT TOP %s c.UniqueKey,\n" +
+            "SELECT c.UniqueKey,\n" +
                     "c.OperatorID,\n" +
                     "c.ComplexID,\n" +
                     "c.FacilityID,\n" +
@@ -71,21 +71,21 @@ public final class ExportContainerBaseCondition {
     public static final String EXPORT_IMPED_TYPE_VESSEL = "((c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state)) AND ((c.stopped_vessel = true AND IS_DEFINED(c.stopped_vessel)) OR IS_DEFINED(c.imped_vessel) = true))";
     public static final String EXPORT_IMPED_TYPE_RAIL = "((c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state)) AND ((c.stopped_rail = true AND IS_DEFINED(c.stopped_rail)) OR IS_DEFINED(c.imped_rail) = true))";
 
-    public static final String EXPORT_CONTAINER_FREIGHT_KIND = "(c.freight_kind = '%s' AND IS_DEFINED(c.freight_kind))";
-    public static final String EXPORT_CONTAINER_VISIT_STATE = "(c.visit_state = '%s' AND IS_DEFINED(c.visit_state))";
-    public static final String EXPORT_CONTAINER_TRANSIT_STATE = "(c.transit_state = '%s' AND IS_DEFINED(c.transit_state))";
-    public static final String EXPORT_CONTAINER_ISO_GROUP = "(c.iso_group = '%s' AND IS_DEFINED(c.iso_group))";
-    public static final String EXPORT_CONTAINER_ARRIVE_POS_LOCTYPE = "(c.arrive_pos_loctype = '%s' AND IS_DEFINED(c.arrive_pos_loctype))";
-    public static final String EXPORT_CONTAINER_DEPART_POST_LOCTYPE = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_loctype = '%s' AND IS_DEFINED(c.last_pos_loctype)))";
-    public static final String EXPORT_CONTAINER_DEPART_POST_LOC_ID = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_locid = '%s' AND IS_DEFINED(c.last_pos_locid)))";
-    public static final String EXPORT_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_Pos_Locid = '%s' AND IS_DEFINED(c.arrive_Pos_Locid))";
-    public static final String EXPORT_CONTAINER_NUMBER = "(c.ContainerNbr = '%s' AND IS_DEFINED(c.ContainerNbr))";
-    public static final String EXPORT_CONTAINER_EQUIPMENT_TYPE = "(c.EquipmentType = '%s' AND IS_DEFINED(c.EquipmentType))";
-    public static final String EXPORT_CONTAINER_OPERATION_LINE_ID = "(c.OperatorLineID = '%s' AND IS_DEFINED(c.OperatorLineID))";
+    public static final String EXPORT_CONTAINER_FREIGHT_KIND = "(c.freight_kind IN (%s) AND IS_DEFINED(c.freight_kind))";
+    public static final String EXPORT_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";
+    public static final String EXPORT_CONTAINER_TRANSIT_STATE = "(c.transit_state IN (%s) AND IS_DEFINED(c.transit_state))";
+    public static final String EXPORT_CONTAINER_ISO_GROUP = "(c.iso_group IN (%s) AND IS_DEFINED(c.iso_group))";
+    public static final String EXPORT_CONTAINER_ARRIVE_POS_LOCTYPE = "(c.arrive_pos_loctype IN (%s) AND IS_DEFINED(c.arrive_pos_loctype))";
+    public static final String EXPORT_CONTAINER_DEPART_POST_LOCTYPE = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_loctype IN (%s) AND IS_DEFINED(c.last_pos_loctype)))";
+    public static final String EXPORT_CONTAINER_DEPART_POST_LOC_ID = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_locid IN (%s) AND IS_DEFINED(c.last_pos_locid)))";
+    public static final String EXPORT_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_Pos_Locid IN (%s) AND IS_DEFINED(c.arrive_Pos_Locid))";
+    public static final String EXPORT_CONTAINER_NUMBER = "(c.ContainerNbr IN (%s) AND IS_DEFINED(c.ContainerNbr))";
+    public static final String EXPORT_CONTAINER_EQUIPMENT_TYPE = "(c.EquipmentType IN (%s) AND IS_DEFINED(c.EquipmentType))";
+    public static final String EXPORT_CONTAINER_OPERATION_LINE_ID = "(c.OperatorLineID IN (%s) AND IS_DEFINED(c.OperatorLineID))";
 
     public static final String EXPORT_CONTAINER_TIME_IN = "((TimestampToDateTime(c.time_in) >= '%s' AND TimestampToDateTime(c.time_in) <= '%s') AND IS_DEFINED(c.time_in))";
     public static final String EXPORT_CONTAINER_TIME_OUT = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (TimestampToDateTime(c.time_out) >= '%s' AND TimestampToDateTime(c.time_out) <= '%s') AND IS_DEFINED(c.time_out))";
 
-    public static final String EXPORT_CONTAINER_BOOKING_NUMBER = "(c.BookingNumber = '%s' AND IS_DEFINED(c.BookingNumber))";
+    public static final String EXPORT_CONTAINER_BOOKING_NUMBER = "(c.BookingNumber IN (%s) AND IS_DEFINED(c.BookingNumber))";
 
 }
