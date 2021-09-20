@@ -85,28 +85,28 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         List<TruckVisitDto> results = new ArrayList<>(rawData.size());
 
         for (JSONObject data: rawData) {
-            String uniqueKey = String.valueOf(data.get("UniqueKey"));
-            String facilityId = String.valueOf(data.get("Facility_ID"));
-            String truckId = String.valueOf(data.get("TruckID"));
-            String visitNbr = String.valueOf(data.get("Visit_Nbr"));
-            String visitPhase = String.valueOf(data.get("Visit_Phase"));
-            String carrierOperatorId = String.valueOf(data.get("Carrier_Operator_ID"));
-            String carrierOperatorName = String.valueOf(data.get("Carrier_Operator_Name"));
-            String ata = String.valueOf(data.get("ATA"));
-            String atd = String.valueOf(data.get("ATD"));
-            String driverLicenseNbr = String.valueOf(data.get("Driver_License_Nbr"));
-            String truckLicenseNbr = String.valueOf(data.get("Truck_License_Nbr"));
-            String enteredYard = String.valueOf(data.get("Entered_Yard"));
-            String exitedYard = String.valueOf(data.get("Exited_Yard"));
-            String placedTime = String.valueOf(data.get("PlacedTime"));
-            String toLocation = String.valueOf(data.get("ToLocation"));
-            String moveKind = String.valueOf(data.get("MoveKind"));
-            String fromLocation = String.valueOf(data.get("FromLocation"));
+            String uniqueKey = String.valueOf(data.get("unique_key"));
+            String facilityId = String.valueOf(data.get("facility_id"));
+            String truckId = String.valueOf(data.get("truck_id"));
+            String visitNbr = String.valueOf(data.get("visit_nbr"));
+            String visitPhase = String.valueOf(data.get("visit_phase"));
+            String carrierOperatorId = String.valueOf(data.get("carrier_operator_id"));
+            String carrierOperatorName = String.valueOf(data.get("carrier_operator_name"));
+            String ata = String.valueOf(data.get("ata"));
+            String atd = String.valueOf(data.get("atd"));
+            String driverLicenseNbr = String.valueOf(data.get("driver_license_nbr"));
+            String truckLicenseNbr = String.valueOf(data.get("truck_license_nbr"));
+            String enteredYard = String.valueOf(data.get("entered_yard"));
+            String exitedYard = String.valueOf(data.get("exited_yard"));
+            String placedTime = String.valueOf(data.get("placed_time"));
+            String toLocation = String.valueOf(data.get("to_location"));
+            String moveKind = String.valueOf(data.get("move_kind"));
+            String fromLocation = String.valueOf(data.get("from_location"));
             String category = String.valueOf(data.get("category"));
             String freightKind = String.valueOf(data.get("freight_kind"));
-            String placedBy = String.valueOf(data.get("Placed_By"));
-            String eventType = String.valueOf(data.get("Event_Type"));
-            String appliedToId = String.valueOf(data.get("Applied_To_ID"));
+            String placedBy = String.valueOf(data.get("placed_by"));
+            String eventType = String.valueOf(data.get("event_type"));
+            String appliedToId = String.valueOf(data.get("applied_to_id"));
 
             results.add(TruckVisitDto.builder()
                     .uniqueKey(uniqueKey)
@@ -278,7 +278,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         personaFilters.add(personaTruckMoveKindFilter);
 
         personaFilters = personaFilters.stream()
-                .filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
                 .collect(Collectors.toList());
 
         if (personaFilters.size() == 0) {
@@ -299,7 +300,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             queryBuilder.append(" AND ");
             List<String> conditions = new ArrayList<>();
             for (String terminalCondition : terminalConditions) {
-                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+                conditions.add(String.format("c.facility_id = '%s'", terminalCondition));
             }
             queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
         }

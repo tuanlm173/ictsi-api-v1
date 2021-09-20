@@ -11,36 +11,36 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"UniqueKey", "OperatorID", "ComplexID", "FacilityID", "visit_state", "ContainerNbr", "EquipmentType",
-        "TEU", "OperatorLineID", "OperatorName", "create_time", "category", "freight_kind", "goods_and_ctr_wt_kg",
+@JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "visit_state", "container_nbr", "equipment_type",
+        "teu", "operator_line_id", "operator_name", "create_time", "category", "freight_kind", "goods_and_ctr_wt_kg",
         "goods_ctr_wt_kg_advised", "goods_ctr_wt_kg_gate_measured", "goods_ctr_wt_kg_yard_measured", "seal_nbr1", "seal_nbr2",
         "seal_nbr3", "seal_nbr4", "stopped_vessel", "stopped_rail", "stopped_road", "imped_vessel", "imped_rail", "imped_road",
         "arrive_pos_loctype", "arrive_pos_locid", "arrive_pos_slot", "last_pos_loctype", "last_pos_locid", "last_pos_slot",
-        "time_in", "time_out", "BookingNumber", "requires_power", "flex_string01", "flex_string02", "flex_string03", "flex_string04",
+        "time_in", "time_out", "booking_number", "requires_power", "flex_string01", "flex_string02", "flex_string03", "flex_string04",
         "flex_string05", "flex_string06", "flex_string07", "flex_string08", "flex_string09", "flex_string10", "flex_string11",
-        "flex_string12", "flex_string13", "flex_string14", "flex_string15", "time_state_change", "POD", "transit_state",
+        "flex_string12", "flex_string13", "flex_string14", "flex_string15", "time_state_change", "pod", "transit_state",
         "nominal_length", "reefer_type", "iso_group"})
 public class ExportContainerDto {
 
-    @JsonProperty(value = "UniqueKey")
+    @JsonProperty(value = "unique_key")
     private String uniqueKey;
-    @JsonProperty(value = "OperatorID")
+    @JsonProperty(value = "operator_id")
     private String operatorId;
-    @JsonProperty(value = "ComplexID")
+    @JsonProperty(value = "complex_id")
     private String complexId;
-    @JsonProperty(value = "FacilityID")
+    @JsonProperty(value = "facility_id")
     private String facilityId;
     @JsonProperty(value = "visit_state")
     private String visitState;
-    @JsonProperty(value = "ContainerNbr")
+    @JsonProperty(value = "container_nbr")
     private String containerNbr;
-    @JsonProperty(value = "EquipmentType")
+    @JsonProperty(value = "equipment_type")
     private String equipmentType;
-    @JsonProperty(value = "TEU")
+    @JsonProperty(value = "teu")
     private Float teu;
-    @JsonProperty(value = "OperatorLineID")
+    @JsonProperty(value = "operator_line_id")
     private String operatorLineId;
-    @JsonProperty(value = "OperatorName")
+    @JsonProperty(value = "operator_name")
     private String operatorName;
     @JsonProperty(value = "create_time")
     private String createTime;
@@ -92,7 +92,7 @@ public class ExportContainerDto {
     private String timeIn;
     @JsonProperty(value = "time_out")
     private String timeOut;
-    @JsonProperty(value = "BookingNumber")
+    @JsonProperty(value = "booking_number")
     private String bookingNumber;
     @JsonProperty(value = "requires_power")
     private String requiresPower;
@@ -128,7 +128,7 @@ public class ExportContainerDto {
     private String flexString15;
     @JsonProperty(value = "time_state_change")
     private String timeStateChange;
-    @JsonProperty(value = "POD")
+    @JsonProperty(value = "pod")
     private String pod;
     @JsonProperty(value = "transit_state")
     private String transitState;

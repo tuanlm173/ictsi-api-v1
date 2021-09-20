@@ -10,86 +10,88 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"UniqueKey", "Terminal_Operator_ID", "Complex_ID", "Facility_ID", "Carrier_Visit_ID", "Carrier_Name",
-        "Lloyds_ID", "Carrier_Mode", "Visit_Nbr", "Visit_Phase", "Carrier_Operator_ID", "Carrier_Operator_Name", "ETA", "ATA",
-        "ETD", "ATD", "Begin_Receive", "Cargo_Cutoff", "Haz_Cutoff", "Reefer_Cutoff", "Labor_Onboard", "Labor_Offboard",
-        "Arrival_Off_Port", "Departure_Off_Port", "Pilot_Onboard", "Pilot_Offboard", "Start_work", "End_Work", "Classification",
-        "Estimated_Load_Moves", "Estimated_Discharge_Moves", "Estimated_Restow_Moves", "Estimated_Shift_Onboard_Moves",
-        "Estimated_Breakbulk_Load_Moves", "Estimated_Breakbulk_Discharge_Moves", "CountryCode", "flex_string01", "flex_string02",
-        "flex_string03", "ib_vyg", "ob_vyg", "Quay_ID", "Quay_Name", "service_ID", "service_Name"})
+@JsonPropertyOrder({"unique_key", "terminal_operator_id", "complex_id", "facility_id", "carrier_visit_id", "carrier_name",
+        "lloyds_id", "carrier_mode", "visit_nbr", "visit_phase", "carrier_operator_id", "carrier_operator_name", "eta", "ata",
+        "etd", "atd", "begin_receive", "cargo_cutoff", "haz_cutoff", "reefer_cutoff", "labor_onboard", "labor_offboard",
+        "arrival_off_port", "departure_off_port", "pilot_onboard", "pilot_offboard", "start_work", "end_work", "classification",
+        "estimated_load_moves", "estimated_discharge_moves", "estimated_restow_moves", "estimated_shift_onboard_moves",
+        "estimated_breakbulk_load_moves", "estimated_breakbulk_discharge_moves", "countrycode", "flex_string01", "flex_string02",
+        "flex_string03", "ib_vyg", "ob_vyg", "quay_id", "quay_name", "service_id", "service_name", "est_time_of_completion",
+        "amended_est_time_of_completion", "estimated_time_of_berthing", "actual_time_of_berthing", "loading_cutoff", "export_cutoff",
+        "vessel_registry_number", "vessel_status"})
 public class VesselVisitDto {
 
-    @JsonProperty(value = "UniqueKey")
+    @JsonProperty(value = "unique_key")
     private String uniqueKey;
-    @JsonProperty(value = "Terminal_Operator_ID")
+    @JsonProperty(value = "terminal_operator_id")
     private String terminalOperatorId;
-    @JsonProperty(value = "Complex_ID")
+    @JsonProperty(value = "complex_id")
     private String complexId;
-    @JsonProperty(value = "Facility_ID")
+    @JsonProperty(value = "facility_id")
     private String facilityId;
-    @JsonProperty(value = "Carrier_Visit_ID")
+    @JsonProperty(value = "carrier_visit_id")
     private String carrierVisitId;
-    @JsonProperty(value = "Carrier_Name")
+    @JsonProperty(value = "carrier_name")
     private String carrierName;
-    @JsonProperty(value = "Lloyds_ID")
+    @JsonProperty(value = "lloyds_id")
     private String lloydsId;
-    @JsonProperty(value = "Carrier_Mode")
+    @JsonProperty(value = "carrier_mode")
     private String carrierMode;
-    @JsonProperty(value = "Visit_Nbr")
+    @JsonProperty(value = "visit_nbr")
     private String visitNbr;
-    @JsonProperty(value = "Visit_Phase")
+    @JsonProperty(value = "visit_phase")
     private String visitPhase;
-    @JsonProperty(value = "Carrier_Operator_ID")
+    @JsonProperty(value = "carrier_operator_id")
     private String carrierOperatorId;
-    @JsonProperty(value = "Carrier_Operator_Name")
+    @JsonProperty(value = "carrier_operator_name")
     private String carrierOperatorName;
-    @JsonProperty(value = "ETA")
+    @JsonProperty(value = "eta")
     private String eta;
-    @JsonProperty(value = "ATA")
+    @JsonProperty(value = "ata")
     private String ata;
-    @JsonProperty(value = "ETD")
+    @JsonProperty(value = "etd")
     private String etd;
-    @JsonProperty(value = "ATD")
+    @JsonProperty(value = "atd")
     private String atd;
-    @JsonProperty(value = "Begin_Receive")
+    @JsonProperty(value = "begin_receive")
     private String beginReceive;
-    @JsonProperty(value = "Cargo_Cutoff")
+    @JsonProperty(value = "cargo_cutoff")
     private String cargoCutoff;
-    @JsonProperty(value = "Haz_Cutoff")
+    @JsonProperty(value = "haz_cutoff")
     private String hazCutoff;
-    @JsonProperty(value = "Reefer_Cutoff")
+    @JsonProperty(value = "reefer_cutoff")
     private String reeferCutoff;
-    @JsonProperty(value = "Labor_Onboard")
+    @JsonProperty(value = "labor_onboard")
     private String laborOnboard;
-    @JsonProperty(value = "Labor_Offboard")
+    @JsonProperty(value = "labor_offboard")
     private String laborOffboard;
-    @JsonProperty(value = "Arrival_Off_Port")
+    @JsonProperty(value = "arrival_off_port")
     private String arrivalOffPort;
-    @JsonProperty(value = "Departure_Off_Port")
+    @JsonProperty(value = "departure_off_port")
     private String departureOffPort;
-    @JsonProperty(value = "Pilot_Onboard")
+    @JsonProperty(value = "pilot_onboard")
     private String pilotOnboard;
-    @JsonProperty(value = "Pilot_Offboard")
+    @JsonProperty(value = "pilot_offboard")
     private String pilotOffboard;
-    @JsonProperty(value = "Start_work")
+    @JsonProperty(value = "start_work")
     private String startWork;
-    @JsonProperty(value = "End_Work")
+    @JsonProperty(value = "end_work")
     private String endWork;
-    @JsonProperty(value = "Classification")
+    @JsonProperty(value = "classification")
     private String classification;
-    @JsonProperty(value = "Estimated_Load_Moves")
+    @JsonProperty(value = "estimated_load_moves")
     private Integer estimatedLoadMoves;
-    @JsonProperty(value = "Estimated_Discharge_Moves")
+    @JsonProperty(value = "estimated_discharge_moves")
     private Integer estimatedDischargeMoves;
-    @JsonProperty(value = "Estimated_Restow_Moves")
+    @JsonProperty(value = "estimated_restow_moves")
     private Integer estimatedRestowMoves;
-    @JsonProperty(value = "Estimated_Shift_Onboard_Moves")
+    @JsonProperty(value = "estimated_shift_onboard_moves")
     private Integer estimatedShiftOnboardMoves;
-    @JsonProperty(value = "Estimated_Breakbulk_Load_Moves")
+    @JsonProperty(value = "estimated_breakbulk_load_moves")
     private Integer estimatedBreakbulkLoadMoves;
-    @JsonProperty(value = "Estimated_Breakbulk_Discharge_Moves")
+    @JsonProperty(value = "estimated_breakbulk_discharge_moves")
     private Integer estimatedBreakbulkDischargeMoves;
-    @JsonProperty(value = "CountryCode")
+    @JsonProperty(value = "countrycode")
     private String countryCode;
     @JsonProperty(value = "flex_string01")
     private String flexString01;
@@ -101,13 +103,29 @@ public class VesselVisitDto {
     private String ibVyg;
     @JsonProperty(value = "ob_vyg")
     private String obVyg;
-    @JsonProperty(value = "Quay_ID")
+    @JsonProperty(value = "quay_id")
     private String quayId;
-    @JsonProperty(value = "Quay_Name")
+    @JsonProperty(value = "quay_name")
     private String quayName;
-    @JsonProperty(value = "service_ID")
+    @JsonProperty(value = "service_id")
     private String serviceId;
-    @JsonProperty(value = "service_Name")
+    @JsonProperty(value = "service_name")
     private String serviceName;
 
+    @JsonProperty(value = "est_time_of_completion")
+    private String estTimeOfCompletion;
+    @JsonProperty(value = "amended_est_time_of_completion")
+    private String amendedEstTimeOfCompletion;
+    @JsonProperty(value = "estimated_time_of_berthing")
+    private String estimatedTimeOfBerthing;
+    @JsonProperty(value = "actual_time_of_berthing")
+    private String actualTimeOfBerthing;
+    @JsonProperty(value = "loading_cutoff")
+    private String loadingCutoff;
+    @JsonProperty(value = "export_cutoff")
+    private String exportCutoff;
+    @JsonProperty(value = "vessel_registry_number")
+    private String vesselRegistryNumber;
+    @JsonProperty(value = "vessel_status")
+    private String vesselStatus;
 }

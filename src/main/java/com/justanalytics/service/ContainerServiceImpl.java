@@ -94,16 +94,16 @@ public class ContainerServiceImpl implements ContainerService {
         List<ContainerDto> results = new ArrayList<>(rawData.size());
 
         for (JSONObject data: rawData) {
-            String uniqueKey = String.valueOf(data.get("UniqueKey"));
-            String operatorId = String.valueOf(data.get("OperatorID"));
-            String complexId = String.valueOf(data.get("ComplexID"));
-            String facilityId = String.valueOf(data.get("FacilityID"));
+            String uniqueKey = String.valueOf(data.get("unique_key"));
+            String operatorId = String.valueOf(data.get("operator_id"));
+            String complexId = String.valueOf(data.get("complex_id"));
+            String facilityId = String.valueOf(data.get("facility_id"));
             String visitState = String.valueOf(data.get("visit_state"));
-            String containerNbr = String.valueOf(data.get("ContainerNbr"));
-            String equipmentType = String.valueOf(data.get("EquipmentType"));
-            Float teu =  Objects.nonNull(data.get("TEU")) ? Float.parseFloat(String.valueOf(data.get("TEU"))) : null;
-            String operatorLineId = String.valueOf(data.get("OperatorLineID"));
-            String operatorName = String.valueOf(data.get("OperatorName"));
+            String containerNbr = String.valueOf(data.get("container_nbr"));
+            String equipmentType = String.valueOf(data.get("equipment_type"));
+            Float teu =  Objects.nonNull(data.get("teu")) ? Float.parseFloat(String.valueOf(data.get("teu"))) : null;
+            String operatorLineId = String.valueOf(data.get("operator_line_id"));
+            String operatorName = String.valueOf(data.get("operator_name"));
             String createTime = String.valueOf(data.get("create_time"));
             String category = String.valueOf(data.get("category"));
             String freightKind = String.valueOf(data.get("freight_kind"));
@@ -129,7 +129,7 @@ public class ContainerServiceImpl implements ContainerService {
             String lastPosSlot = String.valueOf(data.get("last_pos_slot"));
             String timeIn = String.valueOf(data.get("time_in"));
             String timeOut = String.valueOf(data.get("time_out"));
-            String bookingNumber = String.valueOf(data.get("BookingNumber"));
+            String bookingNumber = String.valueOf(data.get("booking_number"));
             String requiresPower = String.valueOf(data.get("requires_power"));
             String flexString01 = String.valueOf(data.get("flex_string01"));
             String flexString02 = String.valueOf(data.get("flex_string02"));
@@ -152,20 +152,20 @@ public class ContainerServiceImpl implements ContainerService {
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
-            String masterBlNbr = String.valueOf(data.get("Master_BLNbr"));
-            String origin = String.valueOf(data.get("Origin"));
-            String destination = String.valueOf(data.get("Destination"));
-            String consigneeId = String.valueOf(data.get("Consignee_ID"));
-            String consigneeName = String.valueOf(data.get("Consignee_Name"));
-            String shipperId = String.valueOf(data.get("Shipper_ID"));
-            String shipperName = String.valueOf(data.get("Shipper_Name"));
-            String houseBlNbr = String.valueOf(data.get("House_BLNbr"));
-            String cargoCategory = String.valueOf(data.get("Cargo_Category"));
-            String cargoConsigneeId = String.valueOf(data.get("Cargo_Consignee_ID"));
-            String cargoConsigneeName = String.valueOf(data.get("Cargo_Consignee_Name"));
-            String cargoShipperId = String.valueOf(data.get("Cargo_Shipper_ID"));
-            String cargoShipperName = String.valueOf(data.get("Cargo_Shipper_Name"));
-            String cargoOrigin = String.valueOf(data.get("Cargo_Origin"));
+            String masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
+            String origin = String.valueOf(data.get("origin"));
+            String destination = String.valueOf(data.get("destination"));
+            String consigneeId = String.valueOf(data.get("consignee_id"));
+            String consigneeName = String.valueOf(data.get("consignee_name"));
+            String shipperId = String.valueOf(data.get("shipper_id"));
+            String shipperName = String.valueOf(data.get("shipper_name"));
+            String houseBlNbr = String.valueOf(data.get("house_bl_nbr"));
+            String cargoCategory = String.valueOf(data.get("cargo_category"));
+            String cargoConsigneeId = String.valueOf(data.get("cargo_consignee_id"));
+            String cargoConsigneeName = String.valueOf(data.get("cargo_consignee_name"));
+            String cargoShipperId = String.valueOf(data.get("cargo_shipper_id"));
+            String cargoShipperName = String.valueOf(data.get("cargo_shipper_name"));
+            String cargoOrigin = String.valueOf(data.get("cargo_origin"));
 
             results.add(ContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -368,16 +368,16 @@ public class ContainerServiceImpl implements ContainerService {
         List<ExportContainerDto> results = new ArrayList<>(rawData.size());
 
         for (JSONObject data: rawData) {
-            String uniqueKey = String.valueOf(data.get("UniqueKey"));
-            String operatorId = String.valueOf(data.get("OperatorID"));
-            String complexId = String.valueOf(data.get("ComplexID"));
-            String facilityId = String.valueOf(data.get("FacilityID"));
+            String uniqueKey = String.valueOf(data.get("unique_key"));
+            String operatorId = String.valueOf(data.get("operator_id"));
+            String complexId = String.valueOf(data.get("complex_id"));
+            String facilityId = String.valueOf(data.get("facility_id"));
             String visitState = String.valueOf(data.get("visit_state"));
-            String containerNbr = String.valueOf(data.get("ContainerNbr"));
-            String equipmentType = String.valueOf(data.get("EquipmentType"));
-            Float teu =  Objects.nonNull(data.get("TEU")) ? Float.parseFloat(String.valueOf(data.get("TEU"))) : null;
-            String operatorLineId = String.valueOf(data.get("OperatorLineID"));
-            String operatorName = String.valueOf(data.get("OperatorName"));
+            String containerNbr = String.valueOf(data.get("container_nbr"));
+            String equipmentType = String.valueOf(data.get("equipment_type"));
+            Float teu =  Objects.nonNull(data.get("teu")) ? Float.parseFloat(String.valueOf(data.get("teu"))) : null;
+            String operatorLineId = String.valueOf(data.get("operator_line_id"));
+            String operatorName = String.valueOf(data.get("operator_name"));
             String createTime = String.valueOf(data.get("create_time"));
             String category = String.valueOf(data.get("category"));
             String freightKind = String.valueOf(data.get("freight_kind"));
@@ -403,7 +403,7 @@ public class ContainerServiceImpl implements ContainerService {
             String lastPosSlot = String.valueOf(data.get("last_pos_slot"));
             String timeIn = String.valueOf(data.get("time_in"));
             String timeOut = String.valueOf(data.get("time_out"));
-            String bookingNumber = String.valueOf(data.get("BookingNumber"));
+            String bookingNumber = String.valueOf(data.get("booking_number"));
             String requiresPower = String.valueOf(data.get("requires_power"));
             String flexString01 = String.valueOf(data.get("flex_string01"));
             String flexString02 = String.valueOf(data.get("flex_string02"));
@@ -421,7 +421,7 @@ public class ContainerServiceImpl implements ContainerService {
             String flexString14 = String.valueOf(data.get("flex_string14"));
             String flexString15 = String.valueOf(data.get("flex_string15"));
             String timeStateChange = String.valueOf(data.get("time_state_change"));
-            String pod = String.valueOf(data.get("POD"));
+            String pod = String.valueOf(data.get("pod"));
             String transitState = String.valueOf(data.get("transit_state"));
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
@@ -970,7 +970,10 @@ public class ContainerServiceImpl implements ContainerService {
 
         );
 
-        filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
+        filters = filters.stream()
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
+                .collect(Collectors.toList());
 
         if (filters.size() == 0) {
             queryBuilder.append("");
@@ -1056,8 +1059,8 @@ public class ContainerServiceImpl implements ContainerService {
             );
 
             personaFilters = personaFilters.stream()
-                    .filter(e -> !Objects.equals(e, ""))
-                    .filter(e -> Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                    .filter(e -> !e.equalsIgnoreCase(""))
+                    .filter(e -> !e.equalsIgnoreCase("1=1"))
                     .collect(Collectors.toList());
 
             if (personaFilters.size() == 0) {
@@ -1078,7 +1081,7 @@ public class ContainerServiceImpl implements ContainerService {
                 queryBuilder.append(" AND ");
                 List<String> conditions = new ArrayList<>();
                 for (String terminalCondition : terminalConditions) {
-                    conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+                    conditions.add(String.format("c.facility_id = '%s'", terminalCondition));
                 }
                 queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
             }
@@ -1122,8 +1125,8 @@ public class ContainerServiceImpl implements ContainerService {
             );
 
             personaFilters = personaFilters.stream()
-                    .filter(e -> !Objects.equals(e, ""))
-                    .filter(e -> Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                    .filter(e -> !e.equalsIgnoreCase(""))
+                    .filter(e -> !e.equalsIgnoreCase("1=1"))
                     .collect(Collectors.toList());
 
             if (personaFilters.size() == 0) {
@@ -1144,7 +1147,7 @@ public class ContainerServiceImpl implements ContainerService {
                 queryBuilder.append(" AND ");
                 List<String> conditions = new ArrayList<>();
                 for (String terminalCondition : terminalConditions) {
-                    conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+                    conditions.add(String.format("c.facility_id = '%s'", terminalCondition));
                 }
                 queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
             }
@@ -1224,8 +1227,8 @@ public class ContainerServiceImpl implements ContainerService {
         );
 
         personaFilters = personaFilters.stream()
-                .filter(e -> !Objects.equals(e, ""))
-                .filter(e -> Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
                 .collect(Collectors.toList());
 
         if (personaFilters.size() == 0) {
@@ -1246,7 +1249,7 @@ public class ContainerServiceImpl implements ContainerService {
             queryBuilder.append(" AND ");
             List<String> conditions = new ArrayList<>();
             for (String terminalCondition : terminalConditions) {
-                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+                conditions.add(String.format("c.facility_id = '%s'", terminalCondition));
             }
             queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
         }

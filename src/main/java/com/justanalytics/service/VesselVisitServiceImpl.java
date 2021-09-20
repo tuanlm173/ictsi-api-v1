@@ -78,51 +78,60 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         List<VesselVisitDto> results = new ArrayList<>(rawData.size());
 
         for (JSONObject data : rawData) {
-            String uniqueKey = String.valueOf(data.get("UniqueKey"));
-            String terminalOperatorId = String.valueOf(data.get("Terminal_Operator_ID"));
-            String complexId = String.valueOf(data.get("Complex_ID"));
-            String facilityId = String.valueOf(data.get("Facility_ID"));
-            String carrierVisitId = String.valueOf(data.get("Carrier_Visit_ID"));
-            String carrierName = String.valueOf(data.get("Carrier_Name"));
-            String lloydsId = String.valueOf(data.get("Lloyds_ID"));
-            String carrierMode = String.valueOf(data.get("Carrier_Mode"));
-            String visitNbr = String.valueOf(data.get("Visit_Nbr"));
-            String visitPhase = String.valueOf(data.get("Visit_Phase"));
-            String carrierOperatorId = String.valueOf(data.get("Carrier_Operator_ID"));
-            String carrierOperatorName = String.valueOf(data.get("Carrier_Operator_Name"));
-            String eta = String.valueOf(data.get("ETA"));
-            String ata = String.valueOf(data.get("ATA"));
-            String etd = String.valueOf(data.get("ETD"));
-            String atd = String.valueOf(data.get("ATD"));
-            String beginReceive = String.valueOf(data.get("Begin_Receive"));
-            String cargoCutoff = String.valueOf(data.get("Cargo_Cutoff"));
-            String hazCutoff = String.valueOf(data.get("Haz_Cutoff"));
-            String reeferCutoff = String.valueOf(data.get("Reefer_Cutoff"));
-            String laborOnboard = String.valueOf(data.get("Labor_Onboard"));
-            String laborOffboard = String.valueOf(data.get("Labor_Offboard"));
-            String arrivalOffPort = String.valueOf(data.get("Arrival_Off_Port"));
-            String departureOffPort = String.valueOf(data.get("Departure_Off_Port"));
-            String pilotOnboard = String.valueOf(data.get("Pilot_Onboard"));
-            String pilotOffboard = String.valueOf(data.get("Pilot_Offboard"));
-            String startWork = String.valueOf(data.get("Start_work"));
-            String endWork = String.valueOf(data.get("End_Work"));
-            String classification = String.valueOf(data.get("Classification"));
-            Integer estimatedLoadMoves = Objects.nonNull(data.get("Estimated_Load_Moves")) ? Integer.parseInt(String.valueOf(data.get("Estimated_Load_Moves"))) : null;
-            Integer estimatedDischargeMoves = Objects.nonNull(data.get("Estimated_Discharge_Moves")) ? Integer.parseInt(String.valueOf(data.get("Estimated_Discharge_Moves"))) : null;
-            Integer estimatedRestowMoves = Objects.nonNull(data.get("Estimated_Restow_Moves")) ? Integer.parseInt(String.valueOf(data.get("Estimated_Restow_Moves"))) : null;
-            Integer estimatedShiftOnboardMoves = Objects.nonNull(data.get("Estimated_Shift_Onboard_Moves")) ? Integer.parseInt(String.valueOf(data.get("Estimated_Shift_Onboard_Moves"))) : null;
-            Integer estimatedBreakbulkLoadMoves = Objects.nonNull(data.get("Estimated_Breakbulk_Load_Moves")) ? Integer.parseInt(String.valueOf(data.get("Estimated_Breakbulk_Load_Moves"))) : null;
-            Integer estimatedBreakbulkDischargeMoves = Objects.nonNull(data.get("Estimated_Breakbulk_Discharge_Moves")) ? Integer.parseInt(String.valueOf(data.get("Estimated_Breakbulk_Discharge_Moves"))) : null;
-            String countryCode = String.valueOf(data.get("CountryCode"));
+            String uniqueKey = String.valueOf(data.get("unique_key"));
+            String terminalOperatorId = String.valueOf(data.get("terminal_operator_id"));
+            String complexId = String.valueOf(data.get("complex_id"));
+            String facilityId = String.valueOf(data.get("facility_id"));
+            String carrierVisitId = String.valueOf(data.get("carrier_visit_id"));
+            String carrierName = String.valueOf(data.get("carrier_name"));
+            String lloydsId = String.valueOf(data.get("lloyds_id"));
+            String carrierMode = String.valueOf(data.get("carrier_mode"));
+            String visitNbr = String.valueOf(data.get("visit_nbr"));
+            String visitPhase = String.valueOf(data.get("visit_phase"));
+            String carrierOperatorId = String.valueOf(data.get("carrier_operator_id"));
+            String carrierOperatorName = String.valueOf(data.get("carrier_operator_name"));
+            String eta = String.valueOf(data.get("eta"));
+            String ata = String.valueOf(data.get("ata"));
+            String etd = String.valueOf(data.get("etd"));
+            String atd = String.valueOf(data.get("atd"));
+            String beginReceive = String.valueOf(data.get("begin_receive"));
+            String cargoCutoff = String.valueOf(data.get("cargo_cutoff"));
+            String hazCutoff = String.valueOf(data.get("haz_cutoff"));
+            String reeferCutoff = String.valueOf(data.get("reefer_cutoff"));
+            String laborOnboard = String.valueOf(data.get("labor_onboard"));
+            String laborOffboard = String.valueOf(data.get("labor_offboard"));
+            String arrivalOffPort = String.valueOf(data.get("arrival_off_port"));
+            String departureOffPort = String.valueOf(data.get("departure_off_port"));
+            String pilotOnboard = String.valueOf(data.get("pilot_onboard"));
+            String pilotOffboard = String.valueOf(data.get("pilot_offboard"));
+            String startWork = String.valueOf(data.get("start_work"));
+            String endWork = String.valueOf(data.get("end_work"));
+            String classification = String.valueOf(data.get("classification"));
+            Integer estimatedLoadMoves = Objects.nonNull(data.get("estimated_load_moves")) ? Integer.parseInt(String.valueOf(data.get("estimated_load_moves"))) : null;
+            Integer estimatedDischargeMoves = Objects.nonNull(data.get("estimated_discharge_moves")) ? Integer.parseInt(String.valueOf(data.get("estimated_discharge_moves"))) : null;
+            Integer estimatedRestowMoves = Objects.nonNull(data.get("estimated_restow_moves")) ? Integer.parseInt(String.valueOf(data.get("estimated_restow_moves"))) : null;
+            Integer estimatedShiftOnboardMoves = Objects.nonNull(data.get("estimated_shift_onboard_moves")) ? Integer.parseInt(String.valueOf(data.get("estimated_shift_onboard_moves"))) : null;
+            Integer estimatedBreakbulkLoadMoves = Objects.nonNull(data.get("estimated_breakbulk_load_moves")) ? Integer.parseInt(String.valueOf(data.get("estimated_breakbulk_load_moves"))) : null;
+            Integer estimatedBreakbulkDischargeMoves = Objects.nonNull(data.get("estimated_breakbulk_discharge_moves")) ? Integer.parseInt(String.valueOf(data.get("estimated_breakbulk_discharge_moves"))) : null;
+            String countryCode = String.valueOf(data.get("countrycode"));
             String flexString01 = String.valueOf(data.get("flex_string01"));
             String flexString02 = String.valueOf(data.get("flex_string02"));
             String flexString03 = String.valueOf(data.get("flex_string03"));
             String ibVyg = String.valueOf(data.get("ib_vyg"));
             String obVyg = String.valueOf(data.get("ob_vyg"));
-            String quayId = String.valueOf(data.get("Quay_ID"));
-            String quayName = String.valueOf(data.get("Quay_Name"));
-            String serviceId = String.valueOf(data.get("service_ID"));
-            String serviceName = String.valueOf(data.get("service_Name"));
+            String quayId = String.valueOf(data.get("quay_id"));
+            String quayName = String.valueOf(data.get("quay_name"));
+            String serviceId = String.valueOf(data.get("service_id"));
+            String serviceName = String.valueOf(data.get("service_name"));
+            String estTimeOfCompletion = String.valueOf(data.get("est_time_of_completion"));
+            String amendedEstTimeOfCompletion = String.valueOf(data.get("amended_est_time_of_completion"));
+            String estimatedTimeOfBerthing = String.valueOf(data.get("estimated_time_of_berthing"));
+            String actualTimeOfBerthing = String.valueOf(data.get("actual_time_of_berthing"));
+            String loadingCutoff = String.valueOf(data.get("loading_cutoff"));
+            String exportCutoff = String.valueOf(data.get("export_cutoff"));
+            String vesselRegistryNumber = String.valueOf(data.get("vessel_registry_number"));
+            String vesselStatus = String.valueOf(data.get("vessel_status"));
+
 
             results.add(VesselVisitDto.builder()
                     .uniqueKey(uniqueKey)
@@ -170,6 +179,14 @@ public class VesselVisitServiceImpl implements VesselVisitService {
                     .quayName(quayName)
                     .serviceId(serviceId)
                     .serviceName(serviceName)
+                    .estTimeOfCompletion(estTimeOfCompletion)
+                    .amendedEstTimeOfCompletion(amendedEstTimeOfCompletion)
+                    .estimatedTimeOfBerthing(estimatedTimeOfBerthing)
+                    .actualTimeOfBerthing(actualTimeOfBerthing)
+                    .loadingCutoff(loadingCutoff)
+                    .exportCutoff(exportCutoff)
+                    .vesselRegistryNumber(vesselRegistryNumber)
+                    .vesselStatus(vesselStatus)
                     .build());
 
         }
@@ -280,7 +297,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         personaFilters.add(personaVisitPhase);
 
         personaFilters = personaFilters.stream()
-                .filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DefaultFilter.DEFAULT_TRUE.getDefaultFilter()))
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
                 .collect(Collectors.toList());
 
         if (personaFilters.size() == 0) {
@@ -301,7 +319,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             queryBuilder.append(" AND ");
             List<String> conditions = new ArrayList<>();
             for (String terminalCondition : terminalConditions) {
-                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
+                conditions.add(String.format("c.facility_id = '%s'", terminalCondition));
             }
             queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
         }

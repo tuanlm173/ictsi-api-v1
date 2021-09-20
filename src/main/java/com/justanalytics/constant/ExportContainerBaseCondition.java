@@ -3,16 +3,16 @@ package com.justanalytics.constant;
 public final class ExportContainerBaseCondition {
 
     public static final String EXPORT_CONTAINER_BASE_QUERY =
-            "SELECT c.UniqueKey,\n" +
-                    "c.OperatorID,\n" +
-                    "c.ComplexID,\n" +
-                    "c.FacilityID,\n" +
+            "SELECT c.unique_key,\n" +
+                    "c.operator_id,\n" +
+                    "c.complex_id,\n" +
+                    "c.facility_id,\n" +
                     "c.visit_state,\n" +
-                    "c.ContainerNbr,\n" +
-                    "c.EquipmentType,\n" +
-                    "c.TEU,\n" +
-                    "c.OperatorLineID,\n" +
-                    "c.OperatorName,\n" +
+                    "c.container_nbr,\n" +
+                    "c.equipment_type,\n" +
+                    "c.teu,\n" +
+                    "c.operator_line_id,\n" +
+                    "c.operator_name,\n" +
                     "c.create_time,\n" +
                     "c.category,\n" +
                     "c.freight_kind,\n" +
@@ -38,7 +38,7 @@ public final class ExportContainerBaseCondition {
                     "c.last_pos_slot,\n" +
                     "TimestampToDateTime(c.time_in) as time_in,\n" +
                     "TimestampToDateTime(c.time_out) as time_out,\n" +
-                    "c.BookingNumber,\t\t\n" +
+                    "c.booking_number,\t\t\n" +
                     "c.requires_power,\n" +
                     "c.flex_string01,\n" +
                     "c.flex_string02,\n" +
@@ -56,12 +56,13 @@ public final class ExportContainerBaseCondition {
                     "c.flex_string14,\n" +
                     "c.flex_string15,\n" +
                     "TimestampToDateTime(c.time_state_change) as time_state_change,\n" +
-                    "c.POD,\n" +
+                    "c.pod,\n" +
                     "c.transit_state,\n" +
                     "c.nominal_length,\n" +
                     "c.reefer_type,\n" +
                     "c.iso_group " +
-                    "FROM container c WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.TEU)";
+                    "FROM container c " +
+                    "WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
     public static final String EXPORT_CONTAINER_NAME = "container";
 
     public static final String EXPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";
@@ -78,14 +79,14 @@ public final class ExportContainerBaseCondition {
     public static final String EXPORT_CONTAINER_ARRIVE_POS_LOCTYPE = "(c.arrive_pos_loctype IN (%s) AND IS_DEFINED(c.arrive_pos_loctype))";
     public static final String EXPORT_CONTAINER_DEPART_POST_LOCTYPE = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_loctype IN (%s) AND IS_DEFINED(c.last_pos_loctype)))";
     public static final String EXPORT_CONTAINER_DEPART_POST_LOC_ID = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_locid IN (%s) AND IS_DEFINED(c.last_pos_locid)))";
-    public static final String EXPORT_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_Pos_Locid IN (%s) AND IS_DEFINED(c.arrive_Pos_Locid))";
-    public static final String EXPORT_CONTAINER_NUMBER = "(c.ContainerNbr IN (%s) AND IS_DEFINED(c.ContainerNbr))";
-    public static final String EXPORT_CONTAINER_EQUIPMENT_TYPE = "(c.EquipmentType IN (%s) AND IS_DEFINED(c.EquipmentType))";
-    public static final String EXPORT_CONTAINER_OPERATION_LINE_ID = "(c.OperatorLineID IN (%s) AND IS_DEFINED(c.OperatorLineID))";
+    public static final String EXPORT_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_pos_locid IN (%s) AND IS_DEFINED(c.arrive_pos_locid))";
+    public static final String EXPORT_CONTAINER_NUMBER = "(c.container_nbr IN (%s) AND IS_DEFINED(c.container_nbr))";
+    public static final String EXPORT_CONTAINER_EQUIPMENT_TYPE = "(c.equipment_type IN (%s) AND IS_DEFINED(c.equipment_type))";
+    public static final String EXPORT_CONTAINER_OPERATION_LINE_ID = "(c.operator_line_id IN (%s) AND IS_DEFINED(c.operator_line_id))";
 
     public static final String EXPORT_CONTAINER_TIME_IN = "((TimestampToDateTime(c.time_in) >= '%s' AND TimestampToDateTime(c.time_in) <= '%s') AND IS_DEFINED(c.time_in))";
     public static final String EXPORT_CONTAINER_TIME_OUT = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (TimestampToDateTime(c.time_out) >= '%s' AND TimestampToDateTime(c.time_out) <= '%s') AND IS_DEFINED(c.time_out))";
 
-    public static final String EXPORT_CONTAINER_BOOKING_NUMBER = "(c.BookingNumber IN (%s) AND IS_DEFINED(c.BookingNumber))";
+    public static final String EXPORT_CONTAINER_BOOKING_NUMBER = "(c.booking_number IN (%s) AND IS_DEFINED(c.booking_number))";
 
 }

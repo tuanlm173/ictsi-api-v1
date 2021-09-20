@@ -10,55 +10,55 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"UniqueKey", "Facility_ID", "TruckID", "Visit_Nbr", "Visit_Phase", "Carrier_Operator_ID",
-        "Carrier_Operator_Name", "ATA", "ATD", "Driver_License_Nbr", "Truck_License_Nbr", "Entered_Yard",
-        "Exited_Yard", "PlacedTime", "ToLocation", "MoveKind", "FromLocation", "category", "freight_kind", "Placed_By",
-        "Event_Type", "Applied_To_ID"})
+@JsonPropertyOrder({"unique_key", "facility_id", "truck_id", "visit_nbr", "visit_phase", "carrier_operator_id",
+        "carrier_operator_name", "ata", "atd", "driver_license_nbr", "truck_license_nbr", "entered_yard",
+        "exited_yard", "placed_time", "to_location", "move_kind", "from_location", "category", "freight_kind", "placed_by",
+        "event_type", "applied_to_id"})
 public class TruckVisitDto {
 
-    @JsonProperty(value = "UniqueKey")
+    @JsonProperty(value = "unique_key")
     private String uniqueKey;
-    @JsonProperty(value = "Facility_ID")
+    @JsonProperty(value = "facility_id")
     private String facilityId;
-    @JsonProperty(value = "TruckID")
+    @JsonProperty(value = "truck_id")
     private String truckId;
-    @JsonProperty(value = "Visit_Nbr")
+    @JsonProperty(value = "visit_nbr")
     private String visitNbr;
-    @JsonProperty(value = "Visit_Phase")
+    @JsonProperty(value = "visit_phase")
     private String visitPhase;
-    @JsonProperty(value = "Carrier_Operator_ID")
+    @JsonProperty(value = "carrier_operator_id")
     private String carrierOperatorId;
-    @JsonProperty(value = "Carrier_Operator_Name")
+    @JsonProperty(value = "carrier_operator_name")
     private String carrierOperatorName;
-    @JsonProperty(value = "ATA")
+    @JsonProperty(value = "ata")
     private String ata;
-    @JsonProperty(value = "ATD")
+    @JsonProperty(value = "atd")
     private String atd;
-    @JsonProperty(value = "Driver_License_Nbr")
+    @JsonProperty(value = "driver_license_nbr")
     private String driverLicenseNbr;
-    @JsonProperty(value = "Truck_License_Nbr")
+    @JsonProperty(value = "truck_license_nbr")
     private String truckLicenseNbr;
-    @JsonProperty(value = "Entered_Yard")
+    @JsonProperty(value = "entered_yard")
     private String enteredYard;
-    @JsonProperty(value = "Exited_Yard")
+    @JsonProperty(value = "exited_yard")
     private String exitedYard;
-    @JsonProperty(value = "PlacedTime")
+    @JsonProperty(value = "placed_time")
     private String placedTime;
-    @JsonProperty(value = "ToLocation")
+    @JsonProperty(value = "to_location")
     private String toLocation;
-    @JsonProperty(value = "MoveKind")
+    @JsonProperty(value = "move_kind")
     private String moveKind;
-    @JsonProperty(value = "FromLocation")
+    @JsonProperty(value = "from_location")
     private String fromLocation;
     @JsonProperty(value = "category")
     private String category;
     @JsonProperty(value = "freight_kind")
     private String freightKind;
-    @JsonProperty(value = "Placed_By")
+    @JsonProperty(value = "placed_by")
     private String placedBy;
-    @JsonProperty(value = "Event_Type")
+    @JsonProperty(value = "event_type")
     private String eventType;
-    @JsonProperty(value = "Applied_To_ID")
+    @JsonProperty(value = "applied_to_id")
     private String appliedToId;
 
 

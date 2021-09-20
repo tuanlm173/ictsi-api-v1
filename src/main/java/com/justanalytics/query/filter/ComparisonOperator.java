@@ -6,7 +6,7 @@ public enum ComparisonOperator {
     @JsonProperty(value = "EQ")
     EQ("="),
     @JsonProperty(value = "NE")
-    NE("<>"),
+    NE("!="),
     @JsonProperty(value = "LT")
     LT("<"),
     @JsonProperty(value = "LE")
@@ -20,7 +20,8 @@ public enum ComparisonOperator {
 
     public String value;
 
-    private ComparisonOperator(String value) {
+    ComparisonOperator(String value) {
         this.value = value;
     }
+
 }

@@ -53,6 +53,11 @@ public class QueryBuilder {
                 fromString, betweenFields.get(0), toString, betweenFields.get(1));
     }
 
+    //TODO: buildComparisonCosmosFilter
+    private String buildComparisonCosmosFilter(ComparisonFilter comparisonFilter) {
+        String comparedValue = comparisonFilter.getValue().toString();
+        return String.format("%s %s %s", comparisonFilter.getField(), comparisonFilter.getCondition().value, comparedValue);
+    }
 
     private Function<String, String> getConversionFunction(String dataType) {
         switch(DatabricksDataType.valueOf(dataType.toUpperCase())) {
@@ -100,6 +105,8 @@ public class QueryBuilder {
                 return buildINCosmosFilter((INFilter) simpleFilter);
             case BETWEEN:
                 return buildBetweenCosmosFilter((BetweenFilter) simpleFilter);
+            case COMPARISON:
+                return buildComparisonCosmosFilter((ComparisonFilter) simpleFilter);
             default:
                 return null;
         }
