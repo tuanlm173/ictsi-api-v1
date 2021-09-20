@@ -1,7 +1,5 @@
 package com.justanalytics.service;
 
-import com.justanalytics.query.filter.DefaultFilter;
-import com.justanalytics.query.filter.LogicalOperator;
 import com.justanalytics.utils.QueryBuilder;
 import com.justanalytics.dto.TruckVisitDto;
 import com.justanalytics.query.Query;
@@ -19,8 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-
 
 import static com.justanalytics.constant.TruckVisitBaseCondition.*;
 

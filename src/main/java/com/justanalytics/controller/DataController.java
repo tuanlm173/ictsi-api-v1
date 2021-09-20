@@ -5,10 +5,7 @@ import com.justanalytics.exception.InvalidParameterException;
 import com.justanalytics.exception.UnAccessibleSystemException;
 import com.justanalytics.query.Query;
 import com.justanalytics.response.RestEnvelope;
-import com.justanalytics.service.ContainerService;
-import com.justanalytics.service.DataService;
-import com.justanalytics.service.TruckVisitService;
-import com.justanalytics.service.VesselVisitService;
+import com.justanalytics.service.*;
 import com.justanalytics.types.ContainerType;
 import com.justanalytics.types.CtxPath;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +33,9 @@ public class DataController {
 
     @Autowired
     private TruckVisitService truckVisitService;
+
+    @Autowired
+    private FacilityService facilityService;
 
     @Autowired
     private DataService dataService;
@@ -228,6 +228,19 @@ public class DataController {
         }
         throw new UnAccessibleSystemException();
 
+    }
+
+    @PostMapping(path = "/api/v1/getFacility", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getFacility(
+            @RequestBody Query query,
+            @RequestParam(value = "order-by", required = false, defaultValue = "") String orderBy,
+            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
+            @RequestParam(name = "format", required = false, defaultValue = "json") String format
+    ) {
+        List<FacilityDto> facilities = facilityService.findFacility(query, size);
+        return ResponseEntity.ok()
+                .header("row-count", "" + facilities.size())
+                .body(RestEnvelope.of(facilities));
     }
 
 }
