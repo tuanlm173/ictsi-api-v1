@@ -38,6 +38,9 @@ public class DataController {
     private FacilityService facilityService;
 
     @Autowired
+    private VesselEventService vesselEventService;
+
+    @Autowired
     private DataService dataService;
 
     @PostMapping(path = "/api/v1/getContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -241,6 +244,20 @@ public class DataController {
         return ResponseEntity.ok()
                 .header("row-count", "" + facilities.size())
                 .body(RestEnvelope.of(facilities));
+    }
+
+    @PostMapping(path = "/api/v1/getVesselEvent", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getVesselEvent(
+            @RequestParam(value = "unique-key", required = false) String uniqueKey,
+            @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
+            @RequestBody Query query,
+            @RequestParam(name = "format", required = false, defaultValue = "json") String format,
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType
+    ) {
+        List<VesselEventDto> vesselEvents = vesselEventService.findVesselEvent(uniqueKey, language, operationType, query);
+        return ResponseEntity.ok()
+                .header("row-count", "" + vesselEvents.size())
+                .body(RestEnvelope.of(vesselEvents));
     }
 
 }
