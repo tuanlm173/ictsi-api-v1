@@ -12,13 +12,13 @@ public final class TruckVisitBaseCondition {
             "c.visit_phase,\n" +
             "c.carrier_operator_id,\n" +
             "c.carrier_operator_name,\n" +
-            "TimestampToDateTime(c.ata) as ata,\n" +
-            "TimestampToDateTime(c.atd) as atd,\n" +
+            "TicksToDateTime(c.ata) as ata,\n" +
+            "TicksToDateTime(c.atd) as atd,\n" +
             "c.driver_license_nbr,\n" +
             "c.truck_license_nbr,\n" +
-            "TimestampToDateTime(c.entered_yard) as entered_yard,\n" +
-            "TimestampToDateTime(c.exited_yard) as exited_yard,\n" +
-            "TimestampToDateTime(c.placed_time) as placed_time,\n" +
+            "TicksToDateTime(c.entered_yard) as entered_yard,\n" +
+            "TicksToDateTime(c.exited_yard) as exited_yard,\n" +
+            "TicksToDateTime(c.placed_time) as placed_time,\n" +
             "c.to_location,\n" +
             "c.move_kind,\n" +
             "c.from_location,\n" +
@@ -36,7 +36,7 @@ public final class TruckVisitBaseCondition {
     public static final String TRUCK_LICENSE_NBR = "(c.truck_license_nbr IN (%s) AND IS_DEFINED(c.truck_license_nbr))";
     public static final String MOVE_KIND = "(c.move_kind IN (%s) AND IS_DEFINED(c.move_kind))";
 
-    public static final String VISIT_TIME = "(('%s' >= TimestampToDateTime(c.ata) AND '%s' <= TimestampToDateTime(c.atd)) AND IS_DEFINED(c.ata) AND IS_DEFINED(c.atd))";
+    public static final String VISIT_TIME = "(('%s' >= TicksToDateTime(c.ata) AND '%s' <= TicksToDateTime(c.atd)) AND IS_DEFINED(c.ata) AND IS_DEFINED(c.atd))";
 
 
 }

@@ -262,7 +262,6 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append(TRUCK_VISIT_BASE_QUERY);
-//        queryBuilder.append(" AND ");
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -288,8 +287,12 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();
-        String filter = filterBuilder.buildCosmosSearchFilter(query);
-        queryBuilder.append(filter);
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append("1=1");
 
         // Terminal condition
         if(!terminalConditions.contains("ALL")) {

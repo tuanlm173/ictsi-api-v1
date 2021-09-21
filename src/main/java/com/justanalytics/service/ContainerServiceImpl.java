@@ -1073,8 +1073,12 @@ public class ContainerServiceImpl implements ContainerService {
 
             // Search filter
             QueryBuilder filterBuilder = new QueryBuilder();
-            String filter = filterBuilder.buildCosmosSearchFilter(query);
-            queryBuilder.append(filter);
+
+            if (query.filter != null) {
+                String filter = filterBuilder.buildCosmosSearchFilter(query);
+                queryBuilder.append(filter);
+            }
+            else queryBuilder.append("1=1");
 
             // Terminal condition
             if(!terminalConditions.contains("ALL")) {
@@ -1139,8 +1143,12 @@ public class ContainerServiceImpl implements ContainerService {
 
             // Search filter
             QueryBuilder filterBuilder = new QueryBuilder();
-            String filter = filterBuilder.buildCosmosSearchFilter(query);
-            queryBuilder.append(filter);
+
+            if (query.filter != null) {
+                String filter = filterBuilder.buildCosmosSearchFilter(query);
+                queryBuilder.append(filter);
+            }
+            else queryBuilder.append("1=1");
 
             // Terminal condition
             if(!terminalConditions.contains("ALL")) {
@@ -1241,8 +1249,12 @@ public class ContainerServiceImpl implements ContainerService {
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();
-        String filter = filterBuilder.buildCosmosSearchFilter(query);
-        queryBuilder.append(filter);
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append("1=1");
 
         // Terminal condition
         if(!terminalConditions.contains("ALL")) {

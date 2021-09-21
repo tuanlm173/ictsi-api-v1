@@ -32,8 +32,8 @@ public final class ContainerBaseCondition {
             "c.last_pos_loctype,\n" +
             "c.last_pos_locid,\n" +
             "c.last_pos_slot,\n" +
-            "TimestampToDateTime(c.time_in) as time_in,\n" +
-            "TimestampToDateTime(c.time_out) as time_out,\t\t\n" +
+            "TicksToDateTime(c.time_in) as time_in,\n" +
+            "TicksToDateTime(c.time_out) as time_out,\t\t\n" +
             "c.flex_string01,\n" +
             "c.flex_string02,\n" +
             "c.flex_string03,\n" +
@@ -49,7 +49,7 @@ public final class ContainerBaseCondition {
             "c.flex_string13,\n" +
             "c.flex_string14,\n" +
             "c.flex_string15,\n" +
-            "TimestampToDateTime(c.time_state_change) as time_state_change,\n" +
+            "TicksToDateTime(c.time_state_change) as time_state_change,\n" +
             "c.transit_state,\n" +
             "c.nominal_length,\n" +
             "c.reefer_type,\n" +
@@ -69,6 +69,6 @@ public final class ContainerBaseCondition {
     public static final String ALL_CONTAINER_EQUIPMENT_TYPE = "(c.equipment_type IN (%s) AND IS_DEFINED(c.equipment_type))";
     public static final String ALL_CONTAINER_OPERATION_LINE_ID = "(c.operator_line_id IN (%s) AND IS_DEFINED(c.operator_line_id))";
 
-    public static final String ALL_CONTAINER_TIME_IN = "((TimestampToDateTime(c.time_in) >= '%s' AND TimestampToDateTime(c.time_in) <= '%s') AND IS_DEFINED(c.time_in))";
-    public static final String ALL_CONTAINER_TIME_OUT = "((TimestampToDateTime(c.time_out) >= '%s' AND TimestampToDateTime(c.time_out) <= '%s') AND IS_DEFINED(c.time_out))";
+    public static final String ALL_CONTAINER_TIME_IN = "((TicksToDateTime(c.time_in) >= '%s' AND TicksToDateTime(c.time_in) <= '%s') AND IS_DEFINED(c.time_in))";
+    public static final String ALL_CONTAINER_TIME_OUT = "((TicksToDateTime(c.time_out) >= '%s' AND TicksToDateTime(c.time_out) <= '%s') AND IS_DEFINED(c.time_out))";
 }

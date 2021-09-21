@@ -17,22 +17,22 @@ public final class VesselVisitBaseCondition {
             "c.visit_phase,\n" +
             "c.carrier_operator_id,\n" +
             "c.carrier_operator_name,\n" +
-            "TimestampToDateTime(c.eta) as eta,\n" +
-            "TimestampToDateTime(c.ata) as ata,\n" +
-            "TimestampToDateTime(c.etd) as etd,\n" +
-            "TimestampToDateTime(c.atd) as atd,\n" +
-            "TimestampToDateTime(c.begin_receive) as begin_receive,\n" +
-            "TimestampToDateTime(c.cargo_cutoff) as cargo_cutoff,\n" +
-            "TimestampToDateTime(c.haz_cutoff) as haz_cutoff,\n" +
-            "TimestampToDateTime(c.reefer_cutoff) as reefer_cutoff,\n" +
-            "TimestampToDateTime(c.labor_onboard) as labor_onboard,\n" +
-            "TimestampToDateTime(c.labor_offboard) as labor_offboard,\n" +
-            "TimestampToDateTime(c.arrival_off_port) as arrival_off_port,\n" +
-            "TimestampToDateTime(c.departure_off_port) as departure_off_port,\n" +
-            "TimestampToDateTime(c.pilot_onboard) as pilot_onboard,\n" +
-            "TimestampToDateTime(c.pilot_offboard) as pilot_offboard,\n" +
-            "TimestampToDateTime(c.start_work) as start_work,\n" +
-            "TimestampToDateTime(c.end_work) as end_work,\n" +
+            "TicksToDateTime(c.eta) as eta,\n" +
+            "TicksToDateTime(c.ata) as ata,\n" +
+            "TicksToDateTime(c.etd) as etd,\n" +
+            "TicksToDateTime(c.atd) as atd,\n" +
+            "TicksToDateTime(c.begin_receive) as begin_receive,\n" +
+            "TicksToDateTime(c.cargo_cutoff) as cargo_cutoff,\n" +
+            "TicksToDateTime(c.haz_cutoff) as haz_cutoff,\n" +
+            "TicksToDateTime(c.reefer_cutoff) as reefer_cutoff,\n" +
+            "TicksToDateTime(c.labor_onboard) as labor_onboard,\n" +
+            "TicksToDateTime(c.labor_offboard) as labor_offboard,\n" +
+            "TicksToDateTime(c.arrival_off_port) as arrival_off_port,\n" +
+            "TicksToDateTime(c.departure_off_port) as departure_off_port,\n" +
+            "TicksToDateTime(c.pilot_onboard) as pilot_onboard,\n" +
+            "TicksToDateTime(c.pilot_offboard) as pilot_offboard,\n" +
+            "TicksToDateTime(c.start_work) as start_work,\n" +
+            "TicksToDateTime(c.end_work) as end_work,\n" +
             "c.classification,\n" +
             "c.estimated_load_moves,\n" +
             "c.estimated_discharge_moves,\n" +
@@ -50,12 +50,12 @@ public final class VesselVisitBaseCondition {
             "c.quay_name,\n" +
             "c.service_id,\n" +
             "c.service_name,\n" +
-            "TimestampToDateTime(c.est_time_of_completion) as est_time_of_completion,\n" +
-            "TimestampToDateTime(c.amended_est_time_of_completion) as amended_est_time_of_completion,\n" +
-            "TimestampToDateTime(c.estimated_time_of_berthing) as estimated_time_of_berthing,\n" +
-            "TimestampToDateTime(c.actual_time_of_berthing) as actual_time_of_berthing,\n" +
-            "TimestampToDateTime(c.loading_cutoff) as loading_cutoff,\n" +
-            "TimestampToDateTime(c.export_cutoff) as export_cutoff,\n" +
+            "TicksToDateTime(c.est_time_of_completion) as est_time_of_completion,\n" +
+            "TicksToDateTime(c.amended_est_time_of_completion) as amended_est_time_of_completion,\n" +
+            "TicksToDateTime(c.estimated_time_of_berthing) as estimated_time_of_berthing,\n" +
+            "TicksToDateTime(c.actual_time_of_berthing) as actual_time_of_berthing,\n" +
+            "TicksToDateTime(c.loading_cutoff) as loading_cutoff,\n" +
+            "TicksToDateTime(c.export_cutoff) as export_cutoff,\n" +
             "c.vessel_registry_number,\n" +
             "c.vessel_status\n" +
             "FROM vessel_visit c " +
@@ -68,9 +68,9 @@ public final class VesselVisitBaseCondition {
     public static final String SERVICE_ID = "(c.service_id IN (%s) AND IS_DEFINED(c.service_id))";
     public static final String VISIT_PHASE = "(c.visit_phase IN (%s) AND IS_DEFINED(c.visit_phase))";
 
-    public static final String ETA = "(('%s' <= TimestampToDateTime(c.eta) AND TimestampToDateTime(c.ETA) <= '%s') AND IS_DEFINED(c.eta))";
-    public static final String ATA = "(('%s' <= TimestampToDateTime(c.ata) AND TimestampToDateTime(c.ATA) <= '%s') AND IS_DEFINED(c.ata))";
-    public static final String ETD = "(('%s' <= TimestampToDateTime(c.etd) AND TimestampToDateTime(c.ETD) <= '%s') AND IS_DEFINED(c.etd))";
-    public static final String ATD = "(('%s' <= TimestampToDateTime(c.atd) AND TimestampToDateTime(c.ATD) <= '%s') AND IS_DEFINED(c.atd))";
+    public static final String ETA = "(('%s' <= TicksToDateTime(c.eta) AND TicksToDateTime(c.ETA) <= '%s') AND IS_DEFINED(c.eta))";
+    public static final String ATA = "(('%s' <= TicksToDateTime(c.ata) AND TicksToDateTime(c.ATA) <= '%s') AND IS_DEFINED(c.ata))";
+    public static final String ETD = "(('%s' <= TicksToDateTime(c.etd) AND TicksToDateTime(c.ETD) <= '%s') AND IS_DEFINED(c.etd))";
+    public static final String ATD = "(('%s' <= TicksToDateTime(c.atd) AND TicksToDateTime(c.ATD) <= '%s') AND IS_DEFINED(c.atd))";
 
 }

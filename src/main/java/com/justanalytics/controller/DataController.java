@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping({CtxPath.INTERNAL, CtxPath.EXTERNAL})
+//@RequestMapping({CtxPath.INTERNAL, CtxPath.EXTERNAL})
 public class DataController {
 
     private static final String PRODUCT_ID_HEADER = "x-request-product-id";

@@ -74,8 +74,12 @@ public class FacilityServiceImpl implements FacilityService {
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();
-        String filter = filterBuilder.buildCosmosSearchFilter(query);
-        queryBuilder.append(filter);
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append("1=1");
 
         // Order
         if (!query.sort.isEmpty()) {
