@@ -35,7 +35,14 @@ public interface VesselVisitService {
             String carrierVisitId,
             String serviceId,
             String visitPhase,
-            String size,
+            LocalDateTime etaFrom,
+            LocalDateTime etaTo,
+            LocalDateTime ataFrom,
+            LocalDateTime ataTo,
+            LocalDateTime etdFrom,
+            LocalDateTime etdTo,
+            LocalDateTime atdFrom,
+            LocalDateTime atdTo,
             String operationType,
             List<String> terminalConditions
     );

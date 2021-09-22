@@ -35,7 +35,8 @@ public interface TruckVisitService {
             Query query,
             String truckLicenseNbrs,
             String moveKinds,
-            String size,
+            LocalDateTime visitTimeFrom,
+            LocalDateTime visitTimeTo,
             String operationType,
             List<String> terminalConditions
     );

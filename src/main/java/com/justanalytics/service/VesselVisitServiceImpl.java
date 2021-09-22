@@ -273,7 +273,14 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             String carrierVisitId,
             String serviceId,
             String visitPhase,
-            String size,
+            LocalDateTime etaFrom,
+            LocalDateTime etaTo,
+            LocalDateTime ataFrom,
+            LocalDateTime ataTo,
+            LocalDateTime etdFrom,
+            LocalDateTime etdTo,
+            LocalDateTime atdFrom,
+            LocalDateTime atdTo,
             String operationType,
             List<String> terminalConditions
     ) {
@@ -290,11 +297,21 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         String personaServiceId = buildFilter(SERVICE_ID, parseParams(serviceId));
         String personaVisitPhase = buildFilter(VISIT_PHASE, parseParams(visitPhase));
 
+        String vesselVisitEtaFilter = buildSimpleTimeframeVesselParam(ETA, etaFrom, etaTo);
+        String vesselVisitAtaFilter = buildSimpleTimeframeVesselParam(ATA, ataFrom, ataTo);
+        String vesselVisitEtdFilter = buildSimpleTimeframeVesselParam(ETD, etdFrom, etdTo);
+        String vesselVisitAtdFilter = buildSimpleTimeframeVesselParam(ATD, atdFrom, atdTo);
+
         personaFilters.add(personaCarrierName);
         personaFilters.add(personaCarrierOperatorId);
         personaFilters.add(personaCarrierVisitId);
         personaFilters.add(personaServiceId);
         personaFilters.add(personaVisitPhase);
+
+        personaFilters.add(vesselVisitEtaFilter);
+        personaFilters.add(vesselVisitAtaFilter);
+        personaFilters.add(vesselVisitEtdFilter);
+        personaFilters.add(vesselVisitAtdFilter);
 
         personaFilters = personaFilters.stream()
                 .filter(e -> !e.equalsIgnoreCase(""))

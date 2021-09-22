@@ -7,7 +7,6 @@ import com.justanalytics.query.Query;
 import com.justanalytics.response.RestEnvelope;
 import com.justanalytics.service.*;
 import com.justanalytics.types.ContainerType;
-import com.justanalytics.types.CtxPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -18,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-//@RequestMapping({CtxPath.INTERNAL, CtxPath.EXTERNAL})
 public class DataController {
 
     private static final String PRODUCT_ID_HEADER = "x-request-product-id";
@@ -68,9 +66,6 @@ public class DataController {
             @RequestParam(value = "bol-number", required = false) String bolNumber,
             @RequestParam(value = "imped-type", required = false) String impedType,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
-            @RequestParam(value = "order-by", required = false, defaultValue = "") String orderBy,
-            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
-            @RequestParam(name = "format", required = false, defaultValue = "json") String format,
             @RequestBody Query query
     ) {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
@@ -97,41 +92,12 @@ public class DataController {
                         containerBookingNumber,
                         bolNumber,
                         impedType,
-                        size,
                         operationType,
                         terminalConditions
                 );
                 return ResponseEntity.ok()
                         .header("row-count", "" + containers.size())
                         .body(RestEnvelope.of(containers));
-            }
-            else if (ContainerType.EMPTY.getContainerType().equalsIgnoreCase(containerType)) {
-                List<EmptyContainerDto> emptyContainer = containerService.findEmptyContainer(
-                        containerType,
-                        containerNumber,
-                        containerOperationLineId,
-                        arriveFrom,
-                        arriveTo,
-                        departFrom,
-                        departTo,
-                        containerFreightKind,
-                        containerVisitState,
-                        containerTransitState,
-                        containerEquipmentType,
-                        containerIsoGroup,
-                        containerArrivePosLocType,
-                        containerDepartPosLocType,
-                        containerDepartPosLocId,
-                        containerArrivePosLocId,
-                        containerBookingNumber,
-                        bolNumber,
-                        impedType,
-                        size,
-                        terminalConditions
-                );
-                return ResponseEntity.ok()
-                        .header("row-count", "" + emptyContainer.size())
-                        .body(RestEnvelope.of(emptyContainer));
             }
             else if (ContainerType.EXPORT.getContainerType().equalsIgnoreCase(containerType)) {
                 List<ExportContainerDto> exportContainer = containerService.findExportContainerV2(
@@ -155,7 +121,6 @@ public class DataController {
                         containerBookingNumber,
                         bolNumber,
                         impedType,
-                        size,
                         operationType,
                         terminalConditions
                 );
@@ -188,16 +153,13 @@ public class DataController {
             @RequestParam(value = "atd-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdFrom,
             @RequestParam(value = "atd-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdTo,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
-            @RequestParam(value = "order-by", required = false, defaultValue = "") String orderBy,
-            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
-            @RequestParam(name = "format", required = false, defaultValue = "json") String format,
             @RequestBody Query query
     ) {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisitV2(
                     query, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
-                    size, operationType, terminalConditions);
+                    etaFrom, etaTo, ataFrom, ataTo, etdFrom, etdTo, atdFrom, atdTo, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselVisits.size())
                     .body(RestEnvelope.of(vesselVisits));
@@ -216,15 +178,12 @@ public class DataController {
             @RequestParam(value = "visit-time-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeFrom,
             @RequestParam(value = "visit-time-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeTo,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
-            @RequestParam(value = "order-by", required = false, defaultValue = "") String orderBy,
-            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
-            @RequestParam(name = "format", required = false, defaultValue = "json") String format,
             @RequestBody Query query
     ) {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisitV3(query, truckLicenseNbrs, moveKinds,
-                    size, operationType, terminalConditions);
+                    visitTimeFrom, visitTimeTo, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + truckVisits.size())
                     .body(RestEnvelope.of(truckVisits));
@@ -235,12 +194,9 @@ public class DataController {
 
     @PostMapping(path = "/api/v1/getFacility", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getFacility(
-            @RequestBody Query query,
-            @RequestParam(value = "order-by", required = false, defaultValue = "") String orderBy,
-            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
-            @RequestParam(name = "format", required = false, defaultValue = "json") String format
+            @RequestBody Query query
     ) {
-        List<FacilityDto> facilities = facilityService.findFacility(query, size);
+        List<FacilityDto> facilities = facilityService.findFacility(query);
         return ResponseEntity.ok()
                 .header("row-count", "" + facilities.size())
                 .body(RestEnvelope.of(facilities));
@@ -250,9 +206,8 @@ public class DataController {
     public ResponseEntity<RestEnvelope> getVesselEvent(
             @RequestParam(value = "unique-key", required = false) String uniqueKey,
             @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
-            @RequestBody Query query,
-            @RequestParam(name = "format", required = false, defaultValue = "json") String format,
-            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestBody Query query
     ) {
         List<VesselEventDto> vesselEvents = vesselEventService.findVesselEvent(uniqueKey, language, operationType, query);
         return ResponseEntity.ok()

@@ -63,8 +63,7 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Override
     public List<FacilityDto> findFacility(
-            Query query,
-            String size) {
+            Query query) {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();

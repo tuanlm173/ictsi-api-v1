@@ -11,7 +11,6 @@ import java.util.List;
 public interface FacilityService {
 
     List<FacilityDto> findFacility(
-            Query query,
-            String size
+            Query query
     );
 }

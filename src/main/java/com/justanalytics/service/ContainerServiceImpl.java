@@ -1024,7 +1024,6 @@ public class ContainerServiceImpl implements ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String impedType,
-            String size,
             String operationType,
             List<String> terminalConditions
     ) {
@@ -1203,7 +1202,6 @@ public class ContainerServiceImpl implements ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String impedType,
-            String size,
             String operationType,
             List<String> terminalConditions
     ) {

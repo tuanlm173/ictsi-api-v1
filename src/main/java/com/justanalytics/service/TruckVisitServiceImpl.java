@@ -254,7 +254,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             Query query,
             String truckLicenseNbrs,
             String moveKinds,
-            String size,
+            LocalDateTime visitTimeFrom,
+            LocalDateTime visitTimeTo,
             String operationType,
             List<String> terminalConditions
     ) {
@@ -268,9 +269,11 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         String personaTruckLicenseNbrFilter = buildFilter(TRUCK_LICENSE_NBR, parseParams(truckLicenseNbrs));
         String personaTruckMoveKindFilter = buildFilter(MOVE_KIND, parseParams(moveKinds));
+        String truckVisitTimeFilter = buildSimpleTimeframeTruckParam(VISIT_TIME, visitTimeFrom, visitTimeTo);
 
         personaFilters.add(personaTruckLicenseNbrFilter);
         personaFilters.add(personaTruckMoveKindFilter);
+        personaFilters.add(truckVisitTimeFilter);
 
         personaFilters = personaFilters.stream()
                 .filter(e -> !e.equalsIgnoreCase(""))
