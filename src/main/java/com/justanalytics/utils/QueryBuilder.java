@@ -39,13 +39,14 @@ public class QueryBuilder {
         String values = inFilter.getValues().stream()
                 .map(value -> "'" + value.toString() + "'")
                 .collect(Collectors.joining(", ", "(", ")"));
-        return String.format("%s in %s", inFilter.getField(), values);
+        return String.format("%s in %s", "c." + inFilter.getField().toLowerCase(), values);
     }
 
     private String buildBetweenCosmosFilter(BetweenFilter betweenFilter) {
         String fromString = betweenFilter.getFrom().toString();
         String toString = betweenFilter.getTo().toString();
-        List<String> betweenFields = Arrays.asList(betweenFilter.getField().split(","));
+        List<String> betweenFields = Arrays.stream(betweenFilter.getField().split(","))
+                .map(String::toLowerCase).map(field -> "c." + field).collect(Collectors.toList());
         if (betweenFields.size() != 2) {
             throw new InvalidParameterException("Between filter parameters must be two (2)");
         }
@@ -56,7 +57,7 @@ public class QueryBuilder {
     //TODO: buildComparisonCosmosFilter
     private String buildComparisonCosmosFilter(ComparisonFilter comparisonFilter) {
         String comparedValue = comparisonFilter.getValue().toString();
-        return String.format("%s %s %s", comparisonFilter.getField(), comparisonFilter.getCondition().value, comparedValue);
+        return String.format("%s %s %s", "c." + comparisonFilter.getField().toLowerCase(), comparisonFilter.getCondition().value, comparedValue);
     }
 
     private Function<String, String> getConversionFunction(String dataType) {
@@ -190,7 +191,7 @@ public class QueryBuilder {
     }
 
     public String buildOrderByString(List<Sort> orderBy) {
-        return orderBy.stream().map(sort -> String.format("%s %s", sort.by, sort.order.value))
+        return orderBy.stream().map(sort -> String.format("%s %s", "c." + sort.by.toLowerCase(), sort.order.value.toUpperCase()))
                 .collect(Collectors.joining(", "));
     }
 
