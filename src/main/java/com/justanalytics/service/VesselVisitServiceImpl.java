@@ -1,8 +1,12 @@
 package com.justanalytics.service;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.dto.VesselVisitDto;
 import com.justanalytics.query.Query;
-import com.justanalytics.query.filter.DefaultFilter;
 import com.justanalytics.repository.DataRepository;
 import com.justanalytics.utils.QueryBuilder;
 import net.minidev.json.JSONObject;
@@ -13,10 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.justanalytics.constant.TruckVisitBaseCondition.DEFAULT_CONDITION;
@@ -73,7 +74,11 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         else return "";
     }
 
-    private List<VesselVisitDto> getVesselVisitDto(List<JSONObject> rawData) {
+    private List<VesselVisitDto> getVesselVisitDto(List<JSONObject> rawData) throws JsonProcessingException {
+
+        JsonFactory factory = new JsonFactory();
+        factory.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
+        ObjectMapper mapper = new ObjectMapper(factory);
 
         List<VesselVisitDto> results = new ArrayList<>(rawData.size());
 
@@ -130,8 +135,10 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             String loadingCutoff = String.valueOf(data.get("loading_cutoff"));
             String exportCutoff = String.valueOf(data.get("export_cutoff"));
             String vesselRegistryNumber = String.valueOf(data.get("vessel_registry_number"));
-            String vesselStatus = String.valueOf(data.get("vessel_status"));
 
+            List<LanguageDescription> vesselStatus = new ArrayList<>();
+            List<LanguageDescription> rawVesselStatus = (List<LanguageDescription>) data.get("vessel_statuses");
+            if (rawVesselStatus != null) vesselStatus = rawVesselStatus;
 
             results.add(VesselVisitDto.builder()
                     .uniqueKey(uniqueKey)
@@ -195,77 +202,6 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     }
 
     @Override
-    public List<VesselVisitDto> findVesselVisit(
-            String carrierName,
-            String carrierOperatorId,
-            String carrierVisitId,
-            String serviceId,
-            String visitPhase,
-            LocalDateTime etaFrom,
-            LocalDateTime etaTo,
-            LocalDateTime ataFrom,
-            LocalDateTime ataTo,
-            LocalDateTime etdFrom,
-            LocalDateTime etdTo,
-            LocalDateTime atdFrom,
-            LocalDateTime atdTo,
-            String size,
-            List<String> terminalConditions
-    ) {
-        List<String> filters = new ArrayList<>();
-
-        StringBuilder queryBuilder = buildSimpleVesselVisitQuery(VESSEL_VISIT_BASE_QUERY, size);
-
-        // TODO: change to parse parameters for 'IN' condition (same as truck visit)
-        String vesselVisitCarrierNameFilter = buildSimpleVesselParam(CARRIER_NAME, carrierName);
-        String vesselVisitCarrierOperatorIdFilter = buildSimpleVesselParam(CARRIER_OPERATOR_ID, carrierOperatorId);
-        String vesselVisitCarrierVisitIdFilter = buildSimpleVesselParam(CARRIER_VISIT_ID, carrierVisitId);
-        String vesselVisitServiceIdFilter = buildSimpleVesselParam(SERVICE_ID, serviceId);
-        String vesselVisitPhaseFilter = buildSimpleVesselParam(VISIT_PHASE, visitPhase);
-
-        String vesselVisitEtaFilter = buildSimpleTimeframeVesselParam(ETA, etaFrom, etaTo);
-        String vesselVisitAtaFilter = buildSimpleTimeframeVesselParam(ATA, ataFrom, ataTo);
-        String vesselVisitEtdFilter = buildSimpleTimeframeVesselParam(ETD, etdFrom, etdTo);
-        String vesselVisitAtdFilter = buildSimpleTimeframeVesselParam(ATD, atdFrom, atdTo);
-
-        filters.add(vesselVisitCarrierNameFilter);
-        filters.add(vesselVisitCarrierOperatorIdFilter);
-        filters.add(vesselVisitCarrierVisitIdFilter);
-        filters.add(vesselVisitServiceIdFilter);
-        filters.add(vesselVisitPhaseFilter);
-        filters.add(vesselVisitEtaFilter);
-        filters.add(vesselVisitAtaFilter);
-        filters.add(vesselVisitEtdFilter);
-        filters.add(vesselVisitAtdFilter);
-
-        filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
-
-        if (filters.size() == 0) {
-            queryBuilder.append("");
-        } else {
-            queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
-        }
-
-        if(!terminalConditions.contains("ALL")) {
-            queryBuilder.append(" AND ");
-            List<String> conditions = new ArrayList<>();
-            for (String terminalCondition : terminalConditions) {
-                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
-            }
-            queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
-        }
-
-        if (size.equalsIgnoreCase("1")) {
-            queryBuilder.append(" ORDER BY c.ETA DESC");
-        }
-        String sql = queryBuilder.toString();
-        logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
-        return getVesselVisitDto(rawData);
-
-    }
-
-    @Override
     public List<VesselVisitDto> findVesselVisitV2(
             Query query,
             String carrierName,
@@ -283,7 +219,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             LocalDateTime atdTo,
             String operationType,
             List<String> terminalConditions
-    ) {
+    ) throws JsonProcessingException {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append(VESSEL_VISIT_BASE_QUERY);

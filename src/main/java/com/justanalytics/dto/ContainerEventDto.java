@@ -1,5 +1,6 @@
 package com.justanalytics.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
@@ -13,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({"unique_key", "operator", "complex", "facility", "yard", "placed_by", "placed_time", "event_type",
-        "event_descriptions", "notifiable", "vessel_gkey", "applied_to_id", "notes", "field_changes"})
-public class VesselEventDto {
+        "event_descriptions", "notifiable", "container_gkey", "applied_to_id", "notes", "field_changes"})
+public class ContainerEventDto {
 
     @JsonProperty(value = "unique_key")
     private String uniqueKey;
@@ -36,8 +37,8 @@ public class VesselEventDto {
     private List<LanguageDescription> eventDescriptions;
     @JsonProperty(value = "notifiable")
     private Boolean notifiable;
-    @JsonProperty(value = "vessel_gkey")
-    private String vesselGkey;
+    @JsonProperty(value = "container_gkey")
+    private String containerGkey;
     @JsonProperty(value = "applied_to_id")
     private String appliedToId;
     @JsonProperty(value = "notes")

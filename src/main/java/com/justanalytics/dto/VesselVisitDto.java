@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @Getter
@@ -18,7 +20,7 @@ import lombok.*;
         "estimated_breakbulk_load_moves", "estimated_breakbulk_discharge_moves", "countrycode", "flex_string01", "flex_string02",
         "flex_string03", "ib_vyg", "ob_vyg", "quay_id", "quay_name", "service_id", "service_name", "est_time_of_completion",
         "amended_est_time_of_completion", "estimated_time_of_berthing", "actual_time_of_berthing", "loading_cutoff", "export_cutoff",
-        "vessel_registry_number", "vessel_status"})
+        "vessel_registry_number", "vessel_statuses"})
 public class VesselVisitDto {
 
     @JsonProperty(value = "unique_key")
@@ -126,6 +128,6 @@ public class VesselVisitDto {
     private String exportCutoff;
     @JsonProperty(value = "vessel_registry_number")
     private String vesselRegistryNumber;
-    @JsonProperty(value = "vessel_status")
-    private String vesselStatus;
+    @JsonProperty(value = "vessel_statuses")
+    private List<LanguageDescription> vesselStatus;
 }

@@ -1,7 +1,7 @@
 package com.justanalytics.service;
 
+import com.justanalytics.dto.ContainerEventDto;
 import com.justanalytics.dto.LanguageDescription;
-import com.justanalytics.dto.VesselEventDto;
 import com.justanalytics.query.Query;
 import com.justanalytics.repository.DataRepository;
 import com.justanalytics.utils.QueryBuilder;
@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.justanalytics.constant.VesselEventBaseCondition.*;
+import static com.justanalytics.constant.ContainerEventBaseCondition.*;
 
 @Service
-public class VesselEventServiceImpl implements VesselEventService {
+public class ContainerEventServiceImpl implements ContainerEventService {
 
     Logger logger = LoggerFactory.getLogger(TruckVisitServiceImpl.class);
 
@@ -46,9 +46,9 @@ public class VesselEventServiceImpl implements VesselEventService {
         else return "";
     }
 
-    private List<VesselEventDto> getVesselEventDto(List<JSONObject> rawData) {
+    private List<ContainerEventDto> getContainerEventDto(List<JSONObject> rawData) {
 
-        List<VesselEventDto> results = new ArrayList<>(rawData.size());
+        List<ContainerEventDto> results = new ArrayList<>(rawData.size());
 
         for (JSONObject data : rawData) {
             String uniqueKey = String.valueOf(data.get("unique_key"));
@@ -60,7 +60,7 @@ public class VesselEventServiceImpl implements VesselEventService {
             String placedTime = String.valueOf(data.get("placed_time"));
             String eventType = String.valueOf(data.get("event_type"));
             Boolean notifiable = Objects.nonNull(data.get("notifiable")) ? Boolean.valueOf(String.valueOf(data.get("notifiable"))) : null;
-            String vesselGkey = String.valueOf(data.get("vessel_gkey"));
+            String containerGkey = String.valueOf(data.get("container_gkey"));
             String appliedToId = String.valueOf(data.get("applied_to_id"));
             String notes = String.valueOf(data.get("notes"));
             String fieldChanges = String.valueOf(data.get("field_changes"));
@@ -69,7 +69,7 @@ public class VesselEventServiceImpl implements VesselEventService {
             List<LanguageDescription> raweventDescriptions = (List<LanguageDescription>) data.get("event_descriptions");
             if (raweventDescriptions != null) eventDescriptions = raweventDescriptions;
 
-            results.add(VesselEventDto.builder()
+            results.add(ContainerEventDto.builder()
                     .uniqueKey(uniqueKey)
                     .operator(operator)
                     .complex(complex)
@@ -80,19 +80,19 @@ public class VesselEventServiceImpl implements VesselEventService {
                     .eventType(eventType)
                     .eventDescriptions(eventDescriptions)
                     .notifiable(notifiable)
-                    .vesselGkey(vesselGkey)
+                    .containerGkey(containerGkey)
                     .appliedToId(appliedToId)
                     .notes(notes)
                     .fieldChanges(fieldChanges)
                     .build());
-
         }
-        return results;
 
+        return results;
     }
 
+
     @Override
-    public List<VesselEventDto> findVesselEvent(
+    public List<ContainerEventDto> findContainerEvent(
             String uniqueKey,
             String language,
             String operationType,
@@ -100,7 +100,7 @@ public class VesselEventServiceImpl implements VesselEventService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(VESSEL_EVENT_BASE_QUERY);
+        queryBuilder.append(CONTAINER_EVENT_BASE_QUERY);
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -144,8 +144,7 @@ public class VesselEventServiceImpl implements VesselEventService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(VESSEL_EVENT_CONTAINER_NAME, sql);
-        return getVesselEventDto(rawData);
-
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_EVENT_CONTAINER_NAME, sql);
+        return getContainerEventDto(rawData);
     }
 }

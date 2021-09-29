@@ -1,5 +1,6 @@
 package com.justanalytics.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.justanalytics.dto.*;
 import com.justanalytics.exception.InvalidParameterException;
 import com.justanalytics.exception.UnAccessibleSystemException;
@@ -37,6 +38,9 @@ public class DataController {
 
     @Autowired
     private VesselEventService vesselEventService;
+
+    @Autowired
+    private ContainerEventService containerEventService;
 
     @Autowired
     private DataService dataService;
@@ -154,7 +158,7 @@ public class DataController {
             @RequestParam(value = "atd-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdTo,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
-    ) {
+    ) throws JsonProcessingException {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisitV2(
@@ -213,6 +217,19 @@ public class DataController {
         return ResponseEntity.ok()
                 .header("row-count", "" + vesselEvents.size())
                 .body(RestEnvelope.of(vesselEvents));
+    }
+
+    @PostMapping(path = "/api/v1/getContainerEvent", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getContainerEvent(
+            @RequestParam(value = "unique-key", required = false) String uniqueKey,
+            @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestBody Query query
+    ) {
+        List<ContainerEventDto> containerEvents = containerEventService.findContainerEvent(uniqueKey, language, operationType, query);
+        return ResponseEntity.ok()
+                .header("row-count", "" + containerEvents.size())
+                .body(RestEnvelope.of(containerEvents));
     }
 
 }

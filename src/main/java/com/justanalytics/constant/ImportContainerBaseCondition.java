@@ -36,8 +36,8 @@ public final class ImportContainerBaseCondition {
             "c.last_pos_loctype,\n" +
             "c.last_pos_locid,\n" +
             "c.last_pos_slot,\n" +
-            "TicksToDateTime(c.time_in) as time_in,\n" +
-            "TicksToDateTime(c.time_out) as time_out,\n" +
+            "c.time_in,\n" +
+            "c.time_out,\n" +
             "c.booking_number,\t\t\n" +
             "c.requires_power,\n" +
             "c.flex_string01,\n" +
@@ -55,7 +55,7 @@ public final class ImportContainerBaseCondition {
             "c.flex_string13,\n" +
             "c.flex_string14,\n" +
             "c.flex_string15,\n" +
-            "TicksToDateTime(c.time_state_change) as time_state_change,\n" +
+            "c.time_state_change,\n" +
             "c.pod,\n" +
             "c.transit_state,\n" +
             "c.nominal_length,\n" +
@@ -75,9 +75,9 @@ public final class ImportContainerBaseCondition {
             "c.cargo_shipper_id,\n" +
             "c.cargo_shipper_name,\n" +
             "c.cargo_origin " +
-            "FROM container_import_api c " +
+            "FROM api_container_import c " +
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
-    public static final String IMPORT_CONTAINER_NAME = "container_import_api";
+    public static final String IMPORT_CONTAINER_NAME = "api_container_import";
 
     public static final String IMPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";
     public static final String IMPORT_IMPED_TYPE_NONE = "((c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state)) AND (c.stopped_road = false AND IS_DEFINED(c.stopped_road)) AND (c.stopped_rail = false AND IS_DEFINED(c.stopped_rail)) AND IS_DEFINED(c.imped_road) = false AND IS_DEFINED(c.imped_rail) = false)";
@@ -98,8 +98,8 @@ public final class ImportContainerBaseCondition {
     public static final String IMPORT_CONTAINER_EQUIPMENT_TYPE = "(c.equipment_type IN (%s) AND IS_DEFINED(c.equipment_type))";
     public static final String IMPORT_CONTAINER_OPERATION_LINE_ID = "(c.operator_line_id IN (%s) AND IS_DEFINED(c.operator_line_id))";
 
-    public static final String IMPORT_CONTAINER_TIME_IN = "((TicksToDateTime(c.time_in) >= '%s' AND TicksToDateTime(c.time_in) <= '%s') AND IS_DEFINED(c.time_in))";
-    public static final String IMPORT_CONTAINER_TIME_OUT = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (TicksToDateTime(c.time_out) >= '%s' AND TicksToDateTime(c.time_out) <= '%s') AND IS_DEFINED(c.time_out))";
+    public static final String IMPORT_CONTAINER_TIME_IN = "((c.time_in >= '%s' AND c.time_in <= '%s') AND IS_DEFINED(c.time_in))";
+    public static final String IMPORT_CONTAINER_TIME_OUT = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";
 
     public static final String IMPORT_CONTAINER_BOOKING_NUMBER = "(c.booking_number IN (%s) AND IS_DEFINED(c.booking_number))";
     public static final String IMPORT_CONTAINER_BOL_NUMBER = "((c.bill_of_lading_nbr = '%s' AND IS_DEFINED(c.bill_of_lading_nbr)) OR (c.house_bl_nbr = '%s' AND IS_DEFINED(c.house_bl_nbr)))";

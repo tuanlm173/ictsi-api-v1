@@ -32,8 +32,8 @@ public final class ContainerBaseCondition {
             "c.last_pos_loctype,\n" +
             "c.last_pos_locid,\n" +
             "c.last_pos_slot,\n" +
-            "TicksToDateTime(c.time_in) as time_in,\n" +
-            "TicksToDateTime(c.time_out) as time_out,\t\t\n" +
+            "c.time_in,\n" +
+            "c.time_out,\t\t\n" +
             "c.flex_string01,\n" +
             "c.flex_string02,\n" +
             "c.flex_string03,\n" +
@@ -49,14 +49,14 @@ public final class ContainerBaseCondition {
             "c.flex_string13,\n" +
             "c.flex_string14,\n" +
             "c.flex_string15,\n" +
-            "TicksToDateTime(c.time_state_change) as time_state_change,\n" +
+            "c.time_state_change,\n" +
             "c.transit_state,\n" +
             "c.nominal_length,\n" +
             "c.reefer_type,\n" +
             "c.iso_group " +
-            "FROM container c " +
+            "FROM api_container c " +
             "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N'";
-    public static final String ALL_CONTAINER_NAME = "container";
+    public static final String ALL_CONTAINER_NAME = "api_container";
 
     public static final String ALL_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";
     public static final String ALL_CONTAINER_TRANSIT_STATE = "(c.transit_state IN (%s) AND IS_DEFINED(c.transit_state))";
@@ -69,6 +69,6 @@ public final class ContainerBaseCondition {
     public static final String ALL_CONTAINER_EQUIPMENT_TYPE = "(c.equipment_type IN (%s) AND IS_DEFINED(c.equipment_type))";
     public static final String ALL_CONTAINER_OPERATION_LINE_ID = "(c.operator_line_id IN (%s) AND IS_DEFINED(c.operator_line_id))";
 
-    public static final String ALL_CONTAINER_TIME_IN = "((TicksToDateTime(c.time_in) >= '%s' AND TicksToDateTime(c.time_in) <= '%s') AND IS_DEFINED(c.time_in))";
-    public static final String ALL_CONTAINER_TIME_OUT = "((TicksToDateTime(c.time_out) >= '%s' AND TicksToDateTime(c.time_out) <= '%s') AND IS_DEFINED(c.time_out))";
+    public static final String ALL_CONTAINER_TIME_IN = "((c.time_in >= '%s' AND c.time_in <= '%s') AND IS_DEFINED(c.time_in))";
+    public static final String ALL_CONTAINER_TIME_OUT = "((c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";
 }

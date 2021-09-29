@@ -17,22 +17,22 @@ public final class VesselVisitBaseCondition {
             "c.visit_phase,\n" +
             "c.carrier_operator_id,\n" +
             "c.carrier_operator_name,\n" +
-            "TicksToDateTime(c.eta) as eta,\n" +
-            "TicksToDateTime(c.ata) as ata,\n" +
-            "TicksToDateTime(c.etd) as etd,\n" +
-            "TicksToDateTime(c.atd) as atd,\n" +
-            "TicksToDateTime(c.begin_receive) as begin_receive,\n" +
-            "TicksToDateTime(c.cargo_cutoff) as cargo_cutoff,\n" +
-            "TicksToDateTime(c.haz_cutoff) as haz_cutoff,\n" +
-            "TicksToDateTime(c.reefer_cutoff) as reefer_cutoff,\n" +
-            "TicksToDateTime(c.labor_onboard) as labor_onboard,\n" +
-            "TicksToDateTime(c.labor_offboard) as labor_offboard,\n" +
-            "TicksToDateTime(c.arrival_off_port) as arrival_off_port,\n" +
-            "TicksToDateTime(c.departure_off_port) as departure_off_port,\n" +
-            "TicksToDateTime(c.pilot_onboard) as pilot_onboard,\n" +
-            "TicksToDateTime(c.pilot_offboard) as pilot_offboard,\n" +
-            "TicksToDateTime(c.start_work) as start_work,\n" +
-            "TicksToDateTime(c.end_work) as end_work,\n" +
+            "c.eta,\n" +
+            "c.ata,\n" +
+            "c.etd,\n" +
+            "c.atd,\n" +
+            "c.begin_receive,\n" +
+            "c.cargo_cutoff,\n" +
+            "c.haz_cutoff,\n" +
+            "c.reefer_cutoff,\n" +
+            "c.labor_onboard,\n" +
+            "c.labor_offboard,\n" +
+            "c.arrival_off_port,\n" +
+            "c.departure_off_port,\n" +
+            "c.pilot_onboard,\n" +
+            "c.pilot_offboard,\n" +
+            "c.start_work,\n" +
+            "c.end_work,\n" +
             "c.classification,\n" +
             "c.estimated_load_moves,\n" +
             "c.estimated_discharge_moves,\n" +
@@ -50,17 +50,17 @@ public final class VesselVisitBaseCondition {
             "c.quay_name,\n" +
             "c.service_id,\n" +
             "c.service_name,\n" +
-            "TicksToDateTime(c.est_time_of_completion) as est_time_of_completion,\n" +
-            "TicksToDateTime(c.amended_est_time_of_completion) as amended_est_time_of_completion,\n" +
-            "TicksToDateTime(c.estimated_time_of_berthing) as estimated_time_of_berthing,\n" +
-            "TicksToDateTime(c.actual_time_of_berthing) as actual_time_of_berthing,\n" +
-            "TicksToDateTime(c.loading_cutoff) as loading_cutoff,\n" +
-            "TicksToDateTime(c.export_cutoff) as export_cutoff,\n" +
+            "c.est_time_of_completion,\n" +
+            "c.amended_est_time_of_completion,\n" +
+            "c.estimated_time_of_berthing,\n" +
+            "c.actual_time_of_berthing,\n" +
+            "c.loading_cutoff,\n" +
+            "c.export_cutoff,\n" +
             "c.vessel_registry_number,\n" +
-            "c.vessel_status\n" +
-            "FROM vessel_visit c " +
+            "c.vessel_statuses \n" +
+            "FROM api_vessel_visit c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
-    public static final String CONTAINER_NAME = "vessel_visit";
+    public static final String CONTAINER_NAME = "api_vessel_visit";
 
     public static final String CARRIER_NAME = "(c.carrier_name IN (%s) AND IS_DEFINED(c.carrier_name))";
     public static final String CARRIER_OPERATOR_ID = "(c.carrier_operator_id IN (%s) AND IS_DEFINED(c.carrier_operator_id))";
@@ -68,9 +68,9 @@ public final class VesselVisitBaseCondition {
     public static final String SERVICE_ID = "(c.service_id IN (%s) AND IS_DEFINED(c.service_id))";
     public static final String VISIT_PHASE = "(c.visit_phase IN (%s) AND IS_DEFINED(c.visit_phase))";
 
-    public static final String ETA = "(('%s' <= TicksToDateTime(c.eta) AND TicksToDateTime(c.ETA) <= '%s') AND IS_DEFINED(c.eta))";
-    public static final String ATA = "(('%s' <= TicksToDateTime(c.ata) AND TicksToDateTime(c.ATA) <= '%s') AND IS_DEFINED(c.ata))";
-    public static final String ETD = "(('%s' <= TicksToDateTime(c.etd) AND TicksToDateTime(c.ETD) <= '%s') AND IS_DEFINED(c.etd))";
-    public static final String ATD = "(('%s' <= TicksToDateTime(c.atd) AND TicksToDateTime(c.ATD) <= '%s') AND IS_DEFINED(c.atd))";
+    public static final String ETA = "(('%s' <= c.eta AND c.eta <= '%s') AND IS_DEFINED(c.eta))";
+    public static final String ATA = "(('%s' <= c.ata AND c.ata <= '%s') AND IS_DEFINED(c.ata))";
+    public static final String ETD = "(('%s' <= c.etd AND c.etd <= '%s') AND IS_DEFINED(c.etd))";
+    public static final String ATD = "(('%s' <= c.atd AND c.atd <= '%s') AND IS_DEFINED(c.atd))";
 
 }

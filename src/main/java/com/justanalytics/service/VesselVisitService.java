@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.justanalytics.dto.VesselVisitDto;
 import com.justanalytics.query.Query;
 import org.springframework.stereotype.Service;
@@ -10,25 +11,7 @@ import java.util.List;
 @Service
 public interface VesselVisitService {
 
-    List<VesselVisitDto> findVesselVisit(
-            String carrierName,
-            String carrierOperatorId,
-            String carrierVisitId,
-            String serviceId,
-            String visitPhase,
-            LocalDateTime etaFrom,
-            LocalDateTime etaTo,
-            LocalDateTime ataFrom,
-            LocalDateTime ataTo,
-            LocalDateTime etdFrom,
-            LocalDateTime etdTo,
-            LocalDateTime atdFrom,
-            LocalDateTime atdTo,
-            String size,
-            List<String> terminalConditions
-    );
-
-    List<VesselVisitDto> findVesselVisitV2(
+    List<VesselVisitDto> findVesselVisitV2 (
             Query query,
             String carrierName,
             String carrierOperatorId,
@@ -45,5 +28,5 @@ public interface VesselVisitService {
             LocalDateTime atdTo,
             String operationType,
             List<String> terminalConditions
-    );
+    ) throws JsonProcessingException;
 }

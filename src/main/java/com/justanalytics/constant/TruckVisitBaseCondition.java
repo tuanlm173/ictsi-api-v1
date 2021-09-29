@@ -12,13 +12,13 @@ public final class TruckVisitBaseCondition {
             "c.visit_phase,\n" +
             "c.carrier_operator_id,\n" +
             "c.carrier_operator_name,\n" +
-            "TicksToDateTime(c.ata) as ata,\n" +
-            "TicksToDateTime(c.atd) as atd,\n" +
+            "c.ata,\n" +
+            "c.atd,\n" +
             "c.driver_license_nbr,\n" +
             "c.truck_license_nbr,\n" +
-            "TicksToDateTime(c.entered_yard) as entered_yard,\n" +
-            "TicksToDateTime(c.exited_yard) as exited_yard,\n" +
-            "TicksToDateTime(c.placed_time) as placed_time,\n" +
+            "c.entered_yard,\n" +
+            "c.exited_yard,\n" +
+            "c.placed_time,\n" +
             "c.to_location,\n" +
             "c.move_kind,\n" +
             "c.from_location,\n" +
@@ -27,16 +27,15 @@ public final class TruckVisitBaseCondition {
             "c.placed_by,\n" +
             "c.event_type,\n" +
             "c.applied_to_id " +
-            "FROM truck_visit c " +
+            "FROM api_truck_visit c " +
             "WHERE ((c.from_location = 'TRUCK' AND IS_DEFINED(c.from_location)) OR (c.to_location = 'TRUCK' AND IS_DEFINED(c.to_location))) " +
             "AND c.delete_flag = 'N'";
-    public static final String CONTAINER_NAME = "truck_visit";
-    // dev container: truck_visit_api
+    public static final String CONTAINER_NAME = "api_truck_visit";
 
     public static final String TRUCK_LICENSE_NBR = "(c.truck_license_nbr IN (%s) AND IS_DEFINED(c.truck_license_nbr))";
     public static final String MOVE_KIND = "(c.move_kind IN (%s) AND IS_DEFINED(c.move_kind))";
 
-    public static final String VISIT_TIME = "(('%s' >= TicksToDateTime(c.ata) AND '%s' <= TicksToDateTime(c.atd)) AND IS_DEFINED(c.ata) AND IS_DEFINED(c.atd))";
+    public static final String VISIT_TIME = "(('%s' >= c.ata AND '%s' <= c.atd) AND IS_DEFINED(c.ata) AND IS_DEFINED(c.atd))";
 
 
 }
