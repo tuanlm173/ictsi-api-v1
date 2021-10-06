@@ -24,7 +24,7 @@ public final class ContainerEventBaseCondition {
 
     public static final String CONTAINER_EVENT_CONTAINER_NAME = "api_container_event";
 
-    public static final String UNIQUE_KEY = "(c.unique_key IN (%s) AND IS_DEFINED(c.unique_key))";
+    public static final String UNIQUE_KEY = "(c.container_gkey IN (%s) AND IS_DEFINED(c.container_gkey))";
     public static final String LANGUAGE = "(ARRAY_CONTAINS(c.event_descriptions, {'language': %s}, true))";
 
 }

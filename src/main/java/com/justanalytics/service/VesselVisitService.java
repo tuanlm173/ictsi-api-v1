@@ -11,8 +11,9 @@ import java.util.List;
 @Service
 public interface VesselVisitService {
 
-    List<VesselVisitDto> findVesselVisitV2 (
+    List<VesselVisitDto> findVesselVisit (
             Query query,
+            String facilityId,
             String carrierName,
             String carrierOperatorId,
             String carrierVisitId,

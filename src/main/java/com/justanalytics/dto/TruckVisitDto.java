@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @Getter
@@ -12,8 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @JsonPropertyOrder({"unique_key", "facility_id", "truck_id", "visit_nbr", "visit_phase", "carrier_operator_id",
         "carrier_operator_name", "ata", "atd", "driver_license_nbr", "truck_license_nbr", "entered_yard",
-        "exited_yard", "placed_time", "to_location", "move_kind", "from_location", "category", "freight_kind", "placed_by",
-        "event_type", "applied_to_id"})
+        "exited_yard", "stage_id", "visit_statuses"})
 public class TruckVisitDto {
 
     @JsonProperty(value = "unique_key")
@@ -42,24 +43,11 @@ public class TruckVisitDto {
     private String enteredYard;
     @JsonProperty(value = "exited_yard")
     private String exitedYard;
-    @JsonProperty(value = "placed_time")
-    private String placedTime;
-    @JsonProperty(value = "to_location")
-    private String toLocation;
-    @JsonProperty(value = "move_kind")
-    private String moveKind;
-    @JsonProperty(value = "from_location")
-    private String fromLocation;
-    @JsonProperty(value = "category")
-    private String category;
-    @JsonProperty(value = "freight_kind")
-    private String freightKind;
-    @JsonProperty(value = "placed_by")
-    private String placedBy;
-    @JsonProperty(value = "event_type")
-    private String eventType;
-    @JsonProperty(value = "applied_to_id")
-    private String appliedToId;
+    @JsonProperty(value = "stage_id")
+    private String stageId;
+    @JsonProperty(value = "visit_statuses")
+    private List<LanguageDescription> visitStatus;
+
 
 
 

@@ -18,7 +18,7 @@ import java.util.List;
         "arrival_off_port", "departure_off_port", "pilot_onboard", "pilot_offboard", "start_work", "end_work", "classification",
         "estimated_load_moves", "estimated_discharge_moves", "estimated_restow_moves", "estimated_shift_onboard_moves",
         "estimated_breakbulk_load_moves", "estimated_breakbulk_discharge_moves", "countrycode", "flex_string01", "flex_string02",
-        "flex_string03", "ib_vyg", "ob_vyg", "quay_id", "quay_name", "service_id", "service_name", "est_time_of_completion",
+        "flex_string03", "ib_vyg", "ob_vyg", "quay_id", "quay_name", "service_id", "service_name", "remarks", "est_time_of_completion",
         "amended_est_time_of_completion", "estimated_time_of_berthing", "actual_time_of_berthing", "loading_cutoff", "export_cutoff",
         "vessel_registry_number", "vessel_statuses"})
 public class VesselVisitDto {
@@ -113,6 +113,8 @@ public class VesselVisitDto {
     private String serviceId;
     @JsonProperty(value = "service_name")
     private String serviceName;
+    @JsonProperty(value = "remarks")
+    private String remarks;
 
     @JsonProperty(value = "est_time_of_completion")
     private String estTimeOfCompletion;

@@ -128,6 +128,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             String quayName = String.valueOf(data.get("quay_name"));
             String serviceId = String.valueOf(data.get("service_id"));
             String serviceName = String.valueOf(data.get("service_name"));
+            String remarks = String.valueOf(data.get("remarks"));
             String estTimeOfCompletion = String.valueOf(data.get("est_time_of_completion"));
             String amendedEstTimeOfCompletion = String.valueOf(data.get("amended_est_time_of_completion"));
             String estimatedTimeOfBerthing = String.valueOf(data.get("estimated_time_of_berthing"));
@@ -186,6 +187,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
                     .quayName(quayName)
                     .serviceId(serviceId)
                     .serviceName(serviceName)
+                    .remarks(remarks)
                     .estTimeOfCompletion(estTimeOfCompletion)
                     .amendedEstTimeOfCompletion(amendedEstTimeOfCompletion)
                     .estimatedTimeOfBerthing(estimatedTimeOfBerthing)
@@ -202,8 +204,9 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     }
 
     @Override
-    public List<VesselVisitDto> findVesselVisitV2(
+    public List<VesselVisitDto> findVesselVisit(
             Query query,
+            String facilityId,
             String carrierName,
             String carrierOperatorId,
             String carrierVisitId,
@@ -227,6 +230,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
 
+        String personaFacilityId = buildFilter(FACILITY_ID, parseParams(facilityId));
         String personaCarrierName = buildFilter(CARRIER_NAME, parseParams(carrierName));
         String personaCarrierOperatorId = buildFilter(CARRIER_OPERATOR_ID, parseParams(carrierOperatorId));
         String personaCarrierVisitId = buildFilter(CARRIER_VISIT_ID, parseParams(carrierVisitId));
@@ -238,6 +242,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         String vesselVisitEtdFilter = buildSimpleTimeframeVesselParam(ETD, etdFrom, etdTo);
         String vesselVisitAtdFilter = buildSimpleTimeframeVesselParam(ATD, atdFrom, atdTo);
 
+        personaFilters.add(personaFacilityId);
         personaFilters.add(personaCarrierName);
         personaFilters.add(personaCarrierOperatorId);
         personaFilters.add(personaCarrierVisitId);

@@ -50,6 +50,7 @@ public final class VesselVisitBaseCondition {
             "c.quay_name,\n" +
             "c.service_id,\n" +
             "c.service_name,\n" +
+            "c.remarks,\n" +
             "c.est_time_of_completion,\n" +
             "c.amended_est_time_of_completion,\n" +
             "c.estimated_time_of_berthing,\n" +
@@ -62,6 +63,7 @@ public final class VesselVisitBaseCondition {
             "WHERE (1=1) AND c.delete_flag = 'N'";
     public static final String CONTAINER_NAME = "api_vessel_visit";
 
+    public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String CARRIER_NAME = "(c.carrier_name IN (%s) AND IS_DEFINED(c.carrier_name))";
     public static final String CARRIER_OPERATOR_ID = "(c.carrier_operator_id IN (%s) AND IS_DEFINED(c.carrier_operator_id))";
     public static final String CARRIER_VISIT_ID = "(c.carrier_visit_id IN (%s) AND IS_DEFINED(c.carrier_visit_id))";

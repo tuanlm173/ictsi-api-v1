@@ -58,6 +58,7 @@ public final class ContainerBaseCondition {
             "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N'";
     public static final String ALL_CONTAINER_NAME = "api_container";
 
+    public static final String ALL_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String ALL_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";
     public static final String ALL_CONTAINER_TRANSIT_STATE = "(c.transit_state IN (%s) AND IS_DEFINED(c.transit_state))";
     public static final String ALL_CONTAINER_ISO_GROUP = "(c.iso_group IN (%s) AND IS_DEFINED(c.iso_group))";

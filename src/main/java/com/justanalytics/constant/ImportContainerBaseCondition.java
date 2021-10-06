@@ -79,6 +79,7 @@ public final class ImportContainerBaseCondition {
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
     public static final String IMPORT_CONTAINER_NAME = "api_container_import";
 
+    public static final String IMPORT_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String IMPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";
     public static final String IMPORT_IMPED_TYPE_NONE = "((c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state)) AND (c.stopped_road = false AND IS_DEFINED(c.stopped_road)) AND (c.stopped_rail = false AND IS_DEFINED(c.stopped_rail)) AND IS_DEFINED(c.imped_road) = false AND IS_DEFINED(c.imped_rail) = false)";
     public static final String IMPORT_IMPED_TYPE_ANY = "((c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state)) AND ((c.stopped_road = true AND IS_DEFINED(c.stopped_road)) OR (c.stopped_rail = true AND IS_DEFINED(c.stopped_rail)) OR (c.stopped_vessel = true AND IS_DEFINED(c.stopped_vessel)) OR IS_DEFINED(c.imped_vessel) = true OR IS_DEFINED(c.imped_road) = true OR IS_DEFINED(c.imped_rail) = true))";

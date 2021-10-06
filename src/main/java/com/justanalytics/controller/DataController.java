@@ -51,6 +51,7 @@ public class DataController {
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "container-type") String containerType,
+            @RequestParam(value = "facility-id", required = false) String facilityId,
             @RequestParam(value = "container-number", required = false) String containerNumber,
             @RequestParam(value = "operation-line-id", required = false) String containerOperationLineId,
             @RequestParam(value = "arrive-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime arriveFrom,
@@ -75,9 +76,10 @@ public class DataController {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType) || ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
-                List<ContainerDto> containers = containerService.findContainerV2(
+                List<ContainerDto> containers = containerService.findContainer(
                         query,
                         containerType,
+                        facilityId,
                         containerNumber,
                         containerOperationLineId,
                         arriveFrom,
@@ -104,9 +106,10 @@ public class DataController {
                         .body(RestEnvelope.of(containers));
             }
             else if (ContainerType.EXPORT.getContainerType().equalsIgnoreCase(containerType)) {
-                List<ExportContainerDto> exportContainer = containerService.findExportContainerV2(
+                List<ExportContainerDto> exportContainer = containerService.findExportContainer(
                         query,
                         containerType,
+                        facilityId,
                         containerNumber,
                         containerOperationLineId,
                         arriveFrom,
@@ -143,6 +146,7 @@ public class DataController {
             @RequestHeader(PRODUCT_ID_HEADER) String productId,
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "facility-id", required = false) String facilityId,
             @RequestParam(value = "carrier-name", required = false) String carrierName,
             @RequestParam(value = "carrier-operator-id", required = false) String carrierOperatorId,
             @RequestParam(value = "carrier-visit-id", required = false) String carrierVisitId,
@@ -161,8 +165,8 @@ public class DataController {
     ) throws JsonProcessingException {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
-            List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisitV2(
-                    query, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
+            List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
+                    query, facilityId, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
                     etaFrom, etaTo, ataFrom, ataTo, etdFrom, etdTo, atdFrom, atdTo, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselVisits.size())
@@ -177,8 +181,10 @@ public class DataController {
             @RequestHeader(PRODUCT_ID_HEADER) String productId,
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "facility-id", required = false) String facilityId,
             @RequestParam(value = "truck-license-number", required = false) String truckLicenseNbrs,
-            @RequestParam(value = "move-kind", required = false) String moveKinds,
+            @RequestParam(value = "visit-phase", required = false) String visitPhases,
+            @RequestParam(value = "carrier-operator-name", required = false) String carrierOperatorNames,
             @RequestParam(value = "visit-time-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeFrom,
             @RequestParam(value = "visit-time-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeTo,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
@@ -186,8 +192,8 @@ public class DataController {
     ) {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
-            List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisitV3(query, truckLicenseNbrs, moveKinds,
-                    visitTimeFrom, visitTimeTo, operationType, terminalConditions);
+            List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisit(query, facilityId, truckLicenseNbrs,
+                    visitPhases, carrierOperatorNames, visitTimeFrom, visitTimeTo, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + truckVisits.size())
                     .body(RestEnvelope.of(truckVisits));
@@ -198,12 +204,18 @@ public class DataController {
 
     @PostMapping(path = "/api/v1/getFacility", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getFacility(
+            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+            @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestBody Query query
     ) {
+        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
         List<FacilityDto> facilities = facilityService.findFacility(query);
         return ResponseEntity.ok()
                 .header("row-count", "" + facilities.size())
                 .body(RestEnvelope.of(facilities));
+        }
+        throw new UnAccessibleSystemException();
     }
 
     @PostMapping(path = "/api/v1/getVesselEvent", produces = MediaType.APPLICATION_JSON_VALUE)

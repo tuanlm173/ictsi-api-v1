@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.utils.QueryBuilder;
 import com.justanalytics.dto.TruckVisitDto;
 import com.justanalytics.query.Query;
@@ -94,15 +95,11 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             String truckLicenseNbr = String.valueOf(data.get("truck_license_nbr"));
             String enteredYard = String.valueOf(data.get("entered_yard"));
             String exitedYard = String.valueOf(data.get("exited_yard"));
-            String placedTime = String.valueOf(data.get("placed_time"));
-            String toLocation = String.valueOf(data.get("to_location"));
-            String moveKind = String.valueOf(data.get("move_kind"));
-            String fromLocation = String.valueOf(data.get("from_location"));
-            String category = String.valueOf(data.get("category"));
-            String freightKind = String.valueOf(data.get("freight_kind"));
-            String placedBy = String.valueOf(data.get("placed_by"));
-            String eventType = String.valueOf(data.get("event_type"));
-            String appliedToId = String.valueOf(data.get("applied_to_id"));
+            String stageId = String.valueOf(data.get("stage_id"));
+
+            List<LanguageDescription> visitStatus = new ArrayList<>();
+            List<LanguageDescription> rawVisitStatus = (List<LanguageDescription>) data.get("visit_statuses");
+            if (rawVisitStatus != null) visitStatus = rawVisitStatus;
 
             results.add(TruckVisitDto.builder()
                     .uniqueKey(uniqueKey)
@@ -118,15 +115,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
                     .truckLicenseNbr(truckLicenseNbr)
                     .enteredYard(enteredYard)
                     .exitedYard(exitedYard)
-                    .placedTime(placedTime)
-                    .toLocation(toLocation)
-                    .moveKind(moveKind)
-                    .fromLocation(fromLocation)
-                    .category(category)
-                    .freightKind(freightKind)
-                    .placedBy(placedBy)
-                    .eventType(eventType)
-                    .appliedToId(appliedToId)
+                    .stageId(stageId)
+                    .visitStatus(visitStatus)
                     .build());
 
         }
@@ -135,125 +125,11 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
     @Override
     public List<TruckVisitDto> findTruckVisit(
-            String truckLicenseNbr,
-            String moveKind,
-            LocalDateTime visitTimeFrom,
-            LocalDateTime visitTimeTo,
-            String size,
-            List<String> terminalConditions
-    ) {
-
-        List<String> filters = new ArrayList<>();
-
-        StringBuilder queryBuilder = buildSimpleTruckVisitQuery(TRUCK_VISIT_BASE_QUERY, size);
-
-        String truckLicenseNbrFilter = buildSimpleTruckParam(TRUCK_LICENSE_NBR, truckLicenseNbr);
-        String truckMoveKindFilter = buildSimpleTruckParam(MOVE_KIND, moveKind);
-        String truckVisitTimeFilter = buildSimpleTimeframeTruckParam(VISIT_TIME, visitTimeFrom, visitTimeTo);
-
-        filters.add(truckLicenseNbrFilter);
-        filters.add(truckMoveKindFilter);
-        filters.add(truckVisitTimeFilter);
-
-        filters = filters.stream().filter(e -> !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
-
-        if (filters.size() == 0) {
-            queryBuilder.append("");
-        } else {
-            queryBuilder.append(String.format(" AND %s", String.join(" AND ", filters)));
-        }
-
-        if(!terminalConditions.contains("ALL")) {
-            queryBuilder.append(" AND ");
-            List<String> conditions = new ArrayList<>();
-            for (String terminalCondition : terminalConditions) {
-                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
-            }
-            queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
-        }
-
-        if (size.equalsIgnoreCase("1")) {
-            queryBuilder.append(" ORDER BY c.PlacedTime DESC");
-        }
-        String sql = queryBuilder.toString();
-        logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
-        return getTruckVisitDto(rawData);
-    }
-
-    @Override
-    public List<TruckVisitDto> findTruckVisitV2(
-            String truckLicenseNbrs,
-            String moveKinds,
-            LocalDateTime visitTimeFrom,
-            LocalDateTime visitTimeTo,
-            String filterTruckLicenseNbrs,
-            String filterMoveKinds,
-            String operationType,
-            String size,
-            List<String> terminalConditions
-    ) {
-
-        List<String> mandatoryFilters = new ArrayList<>();
-        List<String> optionalFilters = new ArrayList<>();
-
-        StringBuilder queryBuilder = buildSimpleTruckVisitQuery(TRUCK_VISIT_BASE_QUERY, size);
-
-        String mandatoryTruckLicenseNbrFilter = buildFilter(TRUCK_LICENSE_NBR, parseParams(filterTruckLicenseNbrs));
-        String mandatoryTruckMoveKindFilter = buildFilter(MOVE_KIND, parseParams(filterMoveKinds));
-
-        mandatoryFilters.add(mandatoryTruckLicenseNbrFilter);
-        mandatoryFilters.add(mandatoryTruckMoveKindFilter);
-
-        mandatoryFilters = mandatoryFilters.stream().filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
-
-        String optionalTruckLicenseNbrFilter = buildFilter(TRUCK_LICENSE_NBR, parseParams(truckLicenseNbrs));
-        String optionalTruckMoveKindFilter = buildFilter(MOVE_KIND, parseParams(moveKinds));
-        String truckVisitTimeFilter = buildSimpleTimeframeTruckParam(VISIT_TIME, visitTimeFrom, visitTimeTo);
-
-        optionalFilters.add(optionalTruckLicenseNbrFilter);
-        optionalFilters.add(optionalTruckMoveKindFilter);
-        optionalFilters.add(truckVisitTimeFilter);
-
-        optionalFilters = optionalFilters.stream().filter(e -> !Objects.equals(e, "") && !Objects.equals(e, DEFAULT_CONDITION)).collect(Collectors.toList());
-
-        if (mandatoryFilters.size() == 0) {
-            queryBuilder.append("");
-        }
-        else {
-            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", mandatoryFilters) + ")"));
-        }
-
-        if (optionalFilters.size() == 0) {
-            queryBuilder.append("");
-        }
-        else {
-            queryBuilder.append(String.format(" AND %s", "(" + String.join(" OR ", optionalFilters) + ")"));
-        }
-
-        if(!terminalConditions.contains("ALL")) {
-            queryBuilder.append(" AND ");
-            List<String> conditions = new ArrayList<>();
-            for (String terminalCondition : terminalConditions) {
-                conditions.add(String.format("c.Facility_ID = '%s'", terminalCondition));
-            }
-            queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
-        }
-
-        queryBuilder.append(" ORDER BY c.PlacedTime DESC");
-
-        String sql = queryBuilder.toString();
-        logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
-        return getTruckVisitDto(rawData);
-
-    }
-
-    @Override
-    public List<TruckVisitDto> findTruckVisitV3(
             Query query,
+            String facilityId,
             String truckLicenseNbrs,
-            String moveKinds,
+            String visitPhases,
+            String carrierOperatorNames,
             LocalDateTime visitTimeFrom,
             LocalDateTime visitTimeTo,
             String operationType,
@@ -267,12 +143,16 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
 
+        String personaFacilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
         String personaTruckLicenseNbrFilter = buildFilter(TRUCK_LICENSE_NBR, parseParams(truckLicenseNbrs));
-        String personaTruckMoveKindFilter = buildFilter(MOVE_KIND, parseParams(moveKinds));
+        String personaTruckVisitPhaseFilter = buildFilter(VISIT_PHASE, parseParams(visitPhases));
+        String personaTruckCarrierOperatorNameFilter = buildFilter(CARRIER_OPERATOR_NAME, parseParams(carrierOperatorNames));
         String truckVisitTimeFilter = buildSimpleTimeframeTruckParam(VISIT_TIME, visitTimeFrom, visitTimeTo);
 
+        personaFilters.add(personaFacilityIdFilter);
         personaFilters.add(personaTruckLicenseNbrFilter);
-        personaFilters.add(personaTruckMoveKindFilter);
+        personaFilters.add(personaTruckVisitPhaseFilter);
+        personaFilters.add(personaTruckCarrierOperatorNameFilter);
         personaFilters.add(truckVisitTimeFilter);
 
         personaFilters = personaFilters.stream()

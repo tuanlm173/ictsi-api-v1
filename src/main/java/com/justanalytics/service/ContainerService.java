@@ -13,80 +13,9 @@ import java.util.List;
 public interface ContainerService {
 
     List<ContainerDto> findContainer(
-            String containerType,
-            String containerNumber,
-            String containerOperationLineId,
-            LocalDateTime arriveFrom,
-            LocalDateTime arriveTo,
-            LocalDateTime departFrom,
-            LocalDateTime departTo,
-            String containerFreightKind,
-            String containerVisitState,
-            String containerTransitState,
-            String containerEquipmentType,
-            String containerIsoGroup,
-            String containerArrivePosLocType,
-            String containerDepartPosLocType,
-            String containerDepartPosLocId,
-            String containerArrivePosLocId,
-            String containerBookingNumber,
-            String bolNumber,
-            String impedType,
-            String size,
-            List<String> terminalConditions
-    );
-
-    List<EmptyContainerDto> findEmptyContainer(
-            String containerType,
-            String containerNumber,
-            String containerOperationLineId,
-            LocalDateTime arriveFrom,
-            LocalDateTime arriveTo,
-            LocalDateTime departFrom,
-            LocalDateTime departTo,
-            String containerFreightKind,
-            String containerVisitState,
-            String containerTransitState,
-            String containerEquipmentType,
-            String containerIsoGroup,
-            String containerArrivePosLocType,
-            String containerDepartPosLocType,
-            String containerDepartPosLocId,
-            String containerArrivePosLocId,
-            String containerBookingNumber,
-            String bolNumber,
-            String impedType,
-            String size,
-            List<String> terminalConditions
-    );
-
-    List<ExportContainerDto> findExportContainer(
-            String containerType,
-            String containerNumber,
-            String containerOperationLineId,
-            LocalDateTime arriveFrom,
-            LocalDateTime arriveTo,
-            LocalDateTime departFrom,
-            LocalDateTime departTo,
-            String containerFreightKind,
-            String containerVisitState,
-            String containerTransitState,
-            String containerEquipmentType,
-            String containerIsoGroup,
-            String containerArrivePosLocType,
-            String containerDepartPosLocType,
-            String containerDepartPosLocId,
-            String containerArrivePosLocId,
-            String containerBookingNumber,
-            String bolNumber,
-            String impedType,
-            String size,
-            List<String> terminalConditions
-    );
-
-    List<ContainerDto> findContainerV2(
             Query query,
             String containerType,
+            String facilityId,
             String containerNumber,
             String containerOperationLineId,
             LocalDateTime arriveFrom,
@@ -109,9 +38,10 @@ public interface ContainerService {
             List<String> terminalConditions
     );
 
-    List<ExportContainerDto> findExportContainerV2(
+    List<ExportContainerDto> findExportContainer(
             Query query,
             String containerType,
+            String facilityId,
             String containerNumber,
             String containerOperationLineId,
             LocalDateTime arriveFrom,

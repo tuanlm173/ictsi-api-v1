@@ -24,7 +24,7 @@ public final class VesselEventBaseCondition {
 
     public static final String VESSEL_EVENT_CONTAINER_NAME = "api_vessel_event";
 
-    public static final String UNIQUE_KEY = "(c.unique_key IN (%s) AND IS_DEFINED(c.unique_key))";
+    public static final String UNIQUE_KEY = "(c.vessel_gkey IN (%s) AND IS_DEFINED(c.vessel_gkey))";
     public static final String LANGUAGE = "(ARRAY_CONTAINS(c.event_descriptions, {'language': %s}, true))";
 
 }

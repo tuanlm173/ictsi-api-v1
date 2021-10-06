@@ -17,5 +17,8 @@ public final class FacilityBaseCondition {
             "c.region\n" +
             "FROM facility c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
+
     public static final String FACILITY_CONTAINER_NAME = "facility";
+
+    public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
 }

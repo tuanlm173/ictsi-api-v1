@@ -50,8 +50,8 @@ public class QueryBuilder {
         if (betweenFields.size() != 2) {
             throw new InvalidParameterException("Between filter parameters must be two (2)");
         }
-        return String.format("'%s' >= TimestampToDateTime(%s) AND '%s' <= TimestampToDateTime(%s)",
-                fromString, betweenFields.get(0), toString, betweenFields.get(1));
+        return String.format("'%s' <= %s AND %s <= '%s'",
+                fromString, betweenFields.get(0), betweenFields.get(1), toString);
     }
 
     //TODO: buildComparisonCosmosFilter
