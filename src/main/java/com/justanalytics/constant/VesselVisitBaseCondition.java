@@ -41,6 +41,7 @@ public final class VesselVisitBaseCondition {
             "c.estimated_breakbulk_load_moves,\n" +
             "c.estimated_breakbulk_discharge_moves,\n" +
             "c.countrycode,\n" +
+            "c.visit_details_gkey,\n" +
             "c.flex_string01,\n" +
             "c.flex_string02,\n" +
             "c.flex_string03,\n" +

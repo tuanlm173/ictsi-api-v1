@@ -17,7 +17,7 @@ import java.util.List;
         "etd", "atd", "begin_receive", "cargo_cutoff", "haz_cutoff", "reefer_cutoff", "labor_onboard", "labor_offboard",
         "arrival_off_port", "departure_off_port", "pilot_onboard", "pilot_offboard", "start_work", "end_work", "classification",
         "estimated_load_moves", "estimated_discharge_moves", "estimated_restow_moves", "estimated_shift_onboard_moves",
-        "estimated_breakbulk_load_moves", "estimated_breakbulk_discharge_moves", "countrycode", "flex_string01", "flex_string02",
+        "estimated_breakbulk_load_moves", "estimated_breakbulk_discharge_moves", "countrycode", "visit_details_gkey", "flex_string01", "flex_string02",
         "flex_string03", "ib_vyg", "ob_vyg", "quay_id", "quay_name", "service_id", "service_name", "remarks", "est_time_of_completion",
         "amended_est_time_of_completion", "estimated_time_of_berthing", "actual_time_of_berthing", "loading_cutoff", "export_cutoff",
         "vessel_registry_number", "vessel_statuses"})
@@ -95,6 +95,8 @@ public class VesselVisitDto {
     private Integer estimatedBreakbulkDischargeMoves;
     @JsonProperty(value = "countrycode")
     private String countryCode;
+    @JsonProperty(value = "visit_details_gkey")
+    private String visitDetailsGkey;
     @JsonProperty(value = "flex_string01")
     private String flexString01;
     @JsonProperty(value = "flex_string02")

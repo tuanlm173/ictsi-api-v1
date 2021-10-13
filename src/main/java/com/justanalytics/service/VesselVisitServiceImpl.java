@@ -119,6 +119,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             Integer estimatedBreakbulkLoadMoves = Objects.nonNull(data.get("estimated_breakbulk_load_moves")) ? Integer.parseInt(String.valueOf(data.get("estimated_breakbulk_load_moves"))) : null;
             Integer estimatedBreakbulkDischargeMoves = Objects.nonNull(data.get("estimated_breakbulk_discharge_moves")) ? Integer.parseInt(String.valueOf(data.get("estimated_breakbulk_discharge_moves"))) : null;
             String countryCode = String.valueOf(data.get("countrycode"));
+            String visitDetailsGkey = String.valueOf(data.get("visit_details_gkey"));
             String flexString01 = String.valueOf(data.get("flex_string01"));
             String flexString02 = String.valueOf(data.get("flex_string02"));
             String flexString03 = String.valueOf(data.get("flex_string03"));
@@ -178,6 +179,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
                     .estimatedBreakbulkLoadMoves(estimatedBreakbulkLoadMoves)
                     .estimatedBreakbulkDischargeMoves(estimatedBreakbulkDischargeMoves)
                     .countryCode(countryCode)
+                    .visitDetailsGkey(visitDetailsGkey)
                     .flexString01(flexString01)
                     .flexString02(flexString02)
                     .flexString03(flexString03)

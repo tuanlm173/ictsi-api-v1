@@ -43,6 +43,9 @@ public class DataController {
     private ContainerEventService containerEventService;
 
     @Autowired
+    private TruckingTransactionsService truckingTransactionsService;
+
+    @Autowired
     private DataService dataService;
 
     @PostMapping(path = "/api/v1/getContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -220,28 +223,64 @@ public class DataController {
 
     @PostMapping(path = "/api/v1/getVesselEvent", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getVesselEvent(
+            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+            @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "unique-key", required = false) String uniqueKey,
             @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        List<VesselEventDto> vesselEvents = vesselEventService.findVesselEvent(uniqueKey, language, operationType, query);
-        return ResponseEntity.ok()
-                .header("row-count", "" + vesselEvents.size())
-                .body(RestEnvelope.of(vesselEvents));
+        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+            List<VesselEventDto> vesselEvents = vesselEventService.findVesselEvent(uniqueKey, language, operationType, query);
+            return ResponseEntity.ok()
+                    .header("row-count", "" + vesselEvents.size())
+                    .body(RestEnvelope.of(vesselEvents));
+        }
+        throw new UnAccessibleSystemException();
     }
 
     @PostMapping(path = "/api/v1/getContainerEvent", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getContainerEvent(
+            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+            @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "unique-key", required = false) String uniqueKey,
             @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        List<ContainerEventDto> containerEvents = containerEventService.findContainerEvent(uniqueKey, language, operationType, query);
-        return ResponseEntity.ok()
-                .header("row-count", "" + containerEvents.size())
-                .body(RestEnvelope.of(containerEvents));
+        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+            List<ContainerEventDto> containerEvents = containerEventService.findContainerEvent(uniqueKey, language, operationType, query);
+            return ResponseEntity.ok()
+                    .header("row-count", "" + containerEvents.size())
+                    .body(RestEnvelope.of(containerEvents));
+        }
+        throw new UnAccessibleSystemException();
+    }
+
+    @PostMapping(path = "/api/v1/getTruckTransactions", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getTruckTransactions(
+            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+            @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "truck-company", required = false) String truckCompany,
+            @RequestParam(value = "truck-plate", required = false) String truckPlate,
+            @RequestParam(value = "unique-key", required = false) String uniqueKey,
+            @RequestParam(value = "truck-visit-time-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeFrom,
+            @RequestParam(value = "truck-visit-time-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeTo,
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestBody Query query
+    ) {
+        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
+            List<TruckTransactionsDto> truckTransactions = truckingTransactionsService.findTruckTransactions(
+                    query, truckCompany, truckPlate, uniqueKey, visitTimeFrom, visitTimeTo, operationType, terminalConditions);
+            return ResponseEntity.ok()
+                    .header("row-count", "" + truckTransactions.size())
+                    .body(RestEnvelope.of(truckTransactions));
+        }
+        throw new UnAccessibleSystemException();
     }
 
 }
