@@ -40,7 +40,7 @@ public final class TruckTransactionsBaseCondition {
 
     public static final String TRUCKING_COMPANY = "(c.trucking_company IN (%s) AND IS_DEFINED(c.trucking_company))";
     public static final String TRUCK_PLATE = "(c.truck_plate IN (%s) AND IS_DEFINED(c.truck_plate))";
-    public static final String UNIQUE_KEY = "(c.unique_key IN (%s) AND IS_DEFINED(c.unique_key))";
+    public static final String UNIQUE_KEY = "(c.truck_visit_gkey IN (%s) AND IS_DEFINED(c.truck_visit_gkey))";
     public static final String TRUCK_VISIT_TIME = "((c.truck_visit_entered_yard <= '%s' AND '%s' <= c.truck_visit_exited_yard) AND IS_DEFINED(c.truck_visit_entered_yard) AND IS_DEFINED(c.truck_visit_exited_yard))";
 
 }

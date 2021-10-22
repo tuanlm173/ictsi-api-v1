@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.dto.FieldChanges;
 import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.dto.VesselEventDto;
 import com.justanalytics.query.Query;
@@ -63,7 +64,10 @@ public class VesselEventServiceImpl implements VesselEventService {
             String vesselGkey = String.valueOf(data.get("vessel_gkey"));
             String appliedToId = String.valueOf(data.get("applied_to_id"));
             String notes = String.valueOf(data.get("notes"));
-            String fieldChanges = String.valueOf(data.get("field_changes"));
+
+            List<FieldChanges> fieldChanges = new ArrayList<>();
+            List<FieldChanges> rawFieldChanges = (List<FieldChanges>) data.get("field_changes");
+            if (rawFieldChanges != null) fieldChanges = rawFieldChanges;
 
             List<LanguageDescription> eventDescriptions = new ArrayList<>();
             List<LanguageDescription> raweventDescriptions = (List<LanguageDescription>) data.get("event_descriptions");
