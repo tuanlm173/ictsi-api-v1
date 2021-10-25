@@ -15,6 +15,7 @@ public final class TruckVisitBaseCondition {
             "c.ata,\n" +
             "c.atd,\n" +
             "c.driver_license_nbr,\n" +
+            "c.truck_visit_gkey,\n" +
             "c.truck_license_nbr,\n" +
             "c.entered_yard,\n" +
             "c.exited_yard,\n" +

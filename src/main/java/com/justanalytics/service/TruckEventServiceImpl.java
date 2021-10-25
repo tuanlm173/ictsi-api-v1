@@ -2,7 +2,7 @@ package com.justanalytics.service;
 
 import com.justanalytics.dto.FieldChanges;
 import com.justanalytics.dto.LanguageDescription;
-import com.justanalytics.dto.VesselEventDto;
+import com.justanalytics.dto.TruckEventDto;
 import com.justanalytics.query.Query;
 import com.justanalytics.repository.DataRepository;
 import com.justanalytics.utils.QueryBuilder;
@@ -16,15 +16,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.justanalytics.constant.VesselEventBaseCondition.*;
+import static com.justanalytics.constant.TruckEventBaseCondition.*;
 
 @Service
-public class VesselEventServiceImpl implements VesselEventService {
+public class TruckEventServiceImpl implements TruckEventService {
 
-    Logger logger = LoggerFactory.getLogger(VesselEventServiceImpl.class);
+
+    Logger logger = LoggerFactory.getLogger(TruckEventServiceImpl.class);
 
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
 
@@ -47,9 +47,9 @@ public class VesselEventServiceImpl implements VesselEventService {
         else return "";
     }
 
-    private List<VesselEventDto> getVesselEventDto(List<JSONObject> rawData) {
+    private List<TruckEventDto> getTruckEventDto(List<JSONObject> rawData) {
 
-        List<VesselEventDto> results = new ArrayList<>(rawData.size());
+        List<TruckEventDto> results = new ArrayList<>(rawData.size());
 
         for (JSONObject data : rawData) {
             String uniqueKey = String.valueOf(data.get("unique_key"));
@@ -60,9 +60,9 @@ public class VesselEventServiceImpl implements VesselEventService {
             String placedBy = String.valueOf(data.get("placed_by"));
             String placedTime = String.valueOf(data.get("placed_time"));
             String eventType = String.valueOf(data.get("event_type"));
-            Boolean notifiable = Objects.nonNull(data.get("notifiable")) ? Boolean.valueOf(String.valueOf(data.get("notifiable"))) : null;
-            String vesselGkey = String.valueOf(data.get("vessel_gkey"));
+            String containerGkey = String.valueOf(data.get("container_gkey"));
             String appliedToId = String.valueOf(data.get("applied_to_id"));
+            String truckVisitGkey = String.valueOf(data.get("truck_visit_gkey"));
             String notes = String.valueOf(data.get("notes"));
 
             List<FieldChanges> fieldChanges = new ArrayList<>();
@@ -73,7 +73,7 @@ public class VesselEventServiceImpl implements VesselEventService {
             List<LanguageDescription> raweventDescriptions = (List<LanguageDescription>) data.get("event_descriptions");
             if (raweventDescriptions != null) eventDescriptions = raweventDescriptions;
 
-            results.add(VesselEventDto.builder()
+            results.add(TruckEventDto.builder()
                     .uniqueKey(uniqueKey)
                     .operatorId(operator)
                     .complexId(complex)
@@ -83,28 +83,31 @@ public class VesselEventServiceImpl implements VesselEventService {
                     .placedTime(placedTime)
                     .eventType(eventType)
                     .eventDescriptions(eventDescriptions)
-                    .notifiable(notifiable)
-                    .vesselGkey(vesselGkey)
+                    .containerGkey(containerGkey)
                     .appliedToId(appliedToId)
+                    .truckVisitGkey(truckVisitGkey)
                     .notes(notes)
                     .fieldChanges(fieldChanges)
                     .build());
 
         }
-        return results;
 
+        return results;
     }
 
+
+
     @Override
-    public List<VesselEventDto> findVesselEvent(
+    public List<TruckEventDto> findTruckEvent(
             String uniqueKey,
             String language,
             String operationType,
             Query query) {
 
+
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(VESSEL_EVENT_BASE_QUERY);
+        queryBuilder.append(TRUCK_EVENT_BASE_QUERY);
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -148,8 +151,7 @@ public class VesselEventServiceImpl implements VesselEventService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(VESSEL_EVENT_CONTAINER_NAME, sql);
-        return getVesselEventDto(rawData);
-
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(TRUCK_EVENT_BASE_QUERY, sql);
+        return getTruckEventDto(rawData);
     }
 }

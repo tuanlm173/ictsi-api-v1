@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "yard_id", "placed_by", "placed_time", "event_type",
-        "event_descriptions", "notifiable", "vessel_gkey", "applied_to_id", "notes", "field_changes"})
-public class VesselEventDto {
+        "event_descriptions", "container_gkey", "applied_to_id", "truck_visit_gkey", "notes", "field_changes"})
+public class TruckEventDto {
 
     @JsonProperty(value = "unique_key")
     private String uniqueKey;
@@ -34,15 +34,16 @@ public class VesselEventDto {
     private String eventType;
     @JsonProperty(value = "event_descriptions")
     private List<LanguageDescription> eventDescriptions;
-    @JsonProperty(value = "notifiable")
-    private Boolean notifiable;
-    @JsonProperty(value = "vessel_gkey")
-    private String vesselGkey;
+    @JsonProperty(value = "container_gkey")
+    private String containerGkey;
     @JsonProperty(value = "applied_to_id")
     private String appliedToId;
+    @JsonProperty(value = "truck_visit_gkey")
+    private String truckVisitGkey;
     @JsonProperty(value = "notes")
     private String notes;
     @JsonProperty(value = "field_changes")
     private List<FieldChanges> fieldChanges;
+
 
 }
