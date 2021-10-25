@@ -91,6 +91,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             String carrierOperatorName = String.valueOf(data.get("carrier_operator_name"));
             String ata = String.valueOf(data.get("ata"));
             String atd = String.valueOf(data.get("atd"));
+            String truckVisitGkey = String.valueOf(data.get("truck_visit_gkey"));
             String driverLicenseNbr = String.valueOf(data.get("driver_license_nbr"));
             String truckLicenseNbr = String.valueOf(data.get("truck_license_nbr"));
             String enteredYard = String.valueOf(data.get("entered_yard"));
@@ -112,6 +113,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
                     .ata(ata)
                     .atd(atd)
                     .driverLicenseNbr(driverLicenseNbr)
+                    .truckVisitGkey(truckVisitGkey)
                     .truckLicenseNbr(truckLicenseNbr)
                     .enteredYard(enteredYard)
                     .exitedYard(exitedYard)
