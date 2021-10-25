@@ -6,10 +6,10 @@ public final class VesselEventBaseCondition {
 
     public static final String VESSEL_EVENT_BASE_QUERY = "SELECT " +
             "c.unique_key,\n" +
-            "c.operator,\n" +
-            "c.complex,\n" +
-            "c.facility,\n" +
-            "c.yard,\n" +
+            "c.operator_id,\n" +
+            "c.complex_id,\n" +
+            "c.facility_id,\n" +
+            "c.yard_id,\n" +
             "c.placed_by,\n" +
             "c.placed_time,\n" +
             "c.event_type,\n" +

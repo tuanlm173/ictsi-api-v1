@@ -12,20 +12,20 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"unique_key", "operator", "complex", "facility", "yard", "placed_by", "placed_time", "event_type",
+@JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "yard_id", "placed_by", "placed_time", "event_type",
         "event_descriptions", "notifiable", "vessel_gkey", "applied_to_id", "notes", "field_changes"})
 public class VesselEventDto {
 
     @JsonProperty(value = "unique_key")
     private String uniqueKey;
-    @JsonProperty(value = "operator")
-    private String operator;
-    @JsonProperty(value = "complex")
-    private String complex;
-    @JsonProperty(value = "facility")
-    private String facility;
-    @JsonProperty(value = "yard")
-    private String yard;
+    @JsonProperty(value = "operator_id")
+    private String operatorId;
+    @JsonProperty(value = "complex_id")
+    private String complexId;
+    @JsonProperty(value = "facility_id")
+    private String facilityId;
+    @JsonProperty(value = "yard_id")
+    private String yardId;
     @JsonProperty(value = "placed_by")
     private String placedBy;
     @JsonProperty(value = "placed_time")

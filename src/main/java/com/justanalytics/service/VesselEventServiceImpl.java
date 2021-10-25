@@ -53,10 +53,10 @@ public class VesselEventServiceImpl implements VesselEventService {
 
         for (JSONObject data : rawData) {
             String uniqueKey = String.valueOf(data.get("unique_key"));
-            String operator = String.valueOf(data.get("operator"));
-            String complex = String.valueOf(data.get("complex"));
-            String facility = String.valueOf(data.get("facility"));
-            String yard = String.valueOf(data.get("yard"));
+            String operator = String.valueOf(data.get("operator_id"));
+            String complex = String.valueOf(data.get("complex_id"));
+            String facility = String.valueOf(data.get("facility_id"));
+            String yard = String.valueOf(data.get("yard_id"));
             String placedBy = String.valueOf(data.get("placed_by"));
             String placedTime = String.valueOf(data.get("placed_time"));
             String eventType = String.valueOf(data.get("event_type"));
@@ -75,10 +75,10 @@ public class VesselEventServiceImpl implements VesselEventService {
 
             results.add(VesselEventDto.builder()
                     .uniqueKey(uniqueKey)
-                    .operator(operator)
-                    .complex(complex)
-                    .facility(facility)
-                    .yard(yard)
+                    .operatorId(operator)
+                    .complexId(complex)
+                    .facilityId(facility)
+                    .yardId(yard)
                     .placedBy(placedBy)
                     .placedTime(placedTime)
                     .eventType(eventType)
