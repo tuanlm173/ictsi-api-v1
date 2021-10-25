@@ -43,6 +43,9 @@ public class DataController {
     private ContainerEventService containerEventService;
 
     @Autowired
+    private TruckEventService truckEventService;
+
+    @Autowired
     private TruckingTransactionsService truckingTransactionsService;
 
     @Autowired
@@ -255,6 +258,25 @@ public class DataController {
             return ResponseEntity.ok()
                     .header("row-count", "" + containerEvents.size())
                     .body(RestEnvelope.of(containerEvents));
+        }
+        throw new UnAccessibleSystemException();
+    }
+
+    @PostMapping(path = "/api/v1/getTruckEvent", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getTruckEvent(
+            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+            @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "unique-key", required = false) String uniqueKey,
+            @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestBody Query query
+    ) {
+        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+            List<TruckEventDto> truckEvents = truckEventService.findTruckEvent(uniqueKey, language, operationType, query);
+            return ResponseEntity.ok()
+                    .header("row-count", "" + truckEvents.size())
+                    .body(RestEnvelope.of(truckEvents));
         }
         throw new UnAccessibleSystemException();
     }
