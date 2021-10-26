@@ -273,10 +273,10 @@ public class DataController {
             @RequestBody Query query
     ) {
         if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
-            List<TruckEventDto> truckEvents = truckEventService.findTruckEvent(uniqueKey, language, operationType, query);
+            List<TruckEventDto> truckEvent = truckEventService.findTruckEvent(uniqueKey, language, operationType, query);
             return ResponseEntity.ok()
-                    .header("row-count", "" + truckEvents.size())
-                    .body(RestEnvelope.of(truckEvents));
+                    .header("row-count", "" + truckEvent.size())
+                    .body(RestEnvelope.of(truckEvent));
         }
         throw new UnAccessibleSystemException();
     }

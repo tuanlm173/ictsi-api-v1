@@ -151,7 +151,7 @@ public class TruckEventServiceImpl implements TruckEventService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(TRUCK_EVENT_BASE_QUERY, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(TRUCK_EVENT_CONTAINER_NAME, sql);
         return getTruckEventDto(rawData);
     }
 }

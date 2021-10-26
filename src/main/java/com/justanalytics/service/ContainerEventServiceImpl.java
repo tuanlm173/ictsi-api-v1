@@ -1,6 +1,7 @@
 package com.justanalytics.service;
 
 import com.justanalytics.dto.ContainerEventDto;
+import com.justanalytics.dto.FieldChanges;
 import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.query.Query;
 import com.justanalytics.repository.DataRepository;
@@ -63,7 +64,10 @@ public class ContainerEventServiceImpl implements ContainerEventService {
             String containerGkey = String.valueOf(data.get("container_gkey"));
             String appliedToId = String.valueOf(data.get("applied_to_id"));
             String notes = String.valueOf(data.get("notes"));
-            String fieldChanges = String.valueOf(data.get("field_changes"));
+
+            List<FieldChanges> fieldChanges = new ArrayList<>();
+            List<FieldChanges> rawFieldChanges = (List<FieldChanges>) data.get("field_changes");
+            if (rawFieldChanges != null) fieldChanges = rawFieldChanges;
 
             List<LanguageDescription> eventDescriptions = new ArrayList<>();
             List<LanguageDescription> raweventDescriptions = (List<LanguageDescription>) data.get("event_descriptions");

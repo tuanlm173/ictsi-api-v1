@@ -44,6 +44,6 @@ public class ContainerEventDto {
     @JsonProperty(value = "notes")
     private String notes;
     @JsonProperty(value = "field_changes")
-    private String fieldChanges;
+    private List<FieldChanges> fieldChanges;
 
 }
