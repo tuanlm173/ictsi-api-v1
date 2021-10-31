@@ -79,7 +79,7 @@ public class DataController {
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType) || ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
                 List<ContainerDto> containers = containerService.findContainer(
@@ -169,7 +169,7 @@ public class DataController {
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) throws JsonProcessingException {
-        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
                     query, facilityId, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
@@ -196,7 +196,7 @@ public class DataController {
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisit(query, facilityId, truckLicenseNbrs,
                     visitPhases, carrierOperatorNames, visitTimeFrom, visitTimeTo, operationType, terminalConditions);
@@ -215,7 +215,7 @@ public class DataController {
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestBody Query query
     ) {
-        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
         List<FacilityDto> facilities = facilityService.findFacility(query);
         return ResponseEntity.ok()
                 .header("row-count", "" + facilities.size())
@@ -234,7 +234,7 @@ public class DataController {
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<VesselEventDto> vesselEvents = vesselEventService.findVesselEvent(uniqueKey, language, operationType, query);
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselEvents.size())
@@ -253,7 +253,7 @@ public class DataController {
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<ContainerEventDto> containerEvents = containerEventService.findContainerEvent(uniqueKey, language, operationType, query);
             return ResponseEntity.ok()
                     .header("row-count", "" + containerEvents.size())
@@ -272,7 +272,7 @@ public class DataController {
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<TruckEventDto> truckEvent = truckEventService.findTruckEvent(uniqueKey, language, operationType, query);
             return ResponseEntity.ok()
                     .header("row-count", "" + truckEvent.size())
@@ -294,7 +294,7 @@ public class DataController {
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        if (dataService.checkAccessv2(productId, apiId, subscriptionId)) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
             List<TruckTransactionsDto> truckTransactions = truckingTransactionsService.findTruckTransactions(
                     query, truckCompany, truckPlate, uniqueKey, visitTimeFrom, visitTimeTo, operationType, terminalConditions);
