@@ -131,11 +131,13 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             String serviceName = String.valueOf(data.get("service_name"));
             String remarks = String.valueOf(data.get("remarks"));
             String estTimeOfCompletion = String.valueOf(data.get("est_time_of_completion"));
+            String initialTimeOfCompletion = String.valueOf(data.get("initial_time_of_completion"));
             String amendedEstTimeOfCompletion = String.valueOf(data.get("amended_est_time_of_completion"));
             String estimatedTimeOfBerthing = String.valueOf(data.get("estimated_time_of_berthing"));
             String actualTimeOfBerthing = String.valueOf(data.get("actual_time_of_berthing"));
             String loadingCutoff = String.valueOf(data.get("loading_cutoff"));
             String exportCutoff = String.valueOf(data.get("export_cutoff"));
+            String etbLct = String.valueOf(data.get("etb_lct"));
             String vesselRegistryNumber = String.valueOf(data.get("vessel_registry_number"));
 
             List<LanguageDescription> vesselStatus = new ArrayList<>();
@@ -191,11 +193,13 @@ public class VesselVisitServiceImpl implements VesselVisitService {
                     .serviceName(serviceName)
                     .remarks(remarks)
                     .estTimeOfCompletion(estTimeOfCompletion)
+                    .initialTimeOfCompletion(initialTimeOfCompletion)
                     .amendedEstTimeOfCompletion(amendedEstTimeOfCompletion)
                     .estimatedTimeOfBerthing(estimatedTimeOfBerthing)
                     .actualTimeOfBerthing(actualTimeOfBerthing)
                     .loadingCutoff(loadingCutoff)
                     .exportCutoff(exportCutoff)
+                    .etbLct(etbLct)
                     .vesselRegistryNumber(vesselRegistryNumber)
                     .vesselStatus(vesselStatus)
                     .build());

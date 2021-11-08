@@ -86,6 +86,10 @@ public class TruckingTransactionsServiceImpl implements TruckingTransactionsServ
             String stageId = String.valueOf(data.get("stage_id"));
             String handled = String.valueOf(data.get("handled"));
             String loadDischargeTime = String.valueOf(data.get("load_discharge_time"));
+            String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
+            String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
+            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+
 
             results.add(TruckTransactionsDto.builder()
                     .uniqueKey(uniqueKey)
@@ -116,6 +120,9 @@ public class TruckingTransactionsServiceImpl implements TruckingTransactionsServ
                     .stageId(stageId)
                     .handled(handled)
                     .loadDischargeTime(loadDischargeTime)
+                    .showTvarrivalStatus(showTvarrivalStatus)
+                    .tvArrivalStatus(tvArrivalStatus)
+                    .tvArrivalRemarks(tvArrivalRemarks)
                     .build());
 
         }

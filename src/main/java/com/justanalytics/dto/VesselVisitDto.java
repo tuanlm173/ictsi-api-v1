@@ -19,8 +19,8 @@ import java.util.List;
         "estimated_load_moves", "estimated_discharge_moves", "estimated_restow_moves", "estimated_shift_onboard_moves",
         "estimated_breakbulk_load_moves", "estimated_breakbulk_discharge_moves", "countrycode", "visit_details_gkey", "flex_string01", "flex_string02",
         "flex_string03", "ib_vyg", "ob_vyg", "quay_id", "quay_name", "service_id", "service_name", "remarks", "est_time_of_completion",
-        "amended_est_time_of_completion", "estimated_time_of_berthing", "actual_time_of_berthing", "loading_cutoff", "export_cutoff",
-        "vessel_registry_number", "vessel_statuses"})
+        "initial_time_of_completion", "amended_est_time_of_completion", "estimated_time_of_berthing", "actual_time_of_berthing", "loading_cutoff", "export_cutoff",
+        "etb_lct", "vessel_registry_number", "vessel_statuses"})
 public class VesselVisitDto {
 
     @JsonProperty(value = "unique_key")
@@ -120,6 +120,8 @@ public class VesselVisitDto {
 
     @JsonProperty(value = "est_time_of_completion")
     private String estTimeOfCompletion;
+    @JsonProperty(value = "initial_time_of_completion")
+    private String initialTimeOfCompletion;
     @JsonProperty(value = "amended_est_time_of_completion")
     private String amendedEstTimeOfCompletion;
     @JsonProperty(value = "estimated_time_of_berthing")
@@ -130,6 +132,8 @@ public class VesselVisitDto {
     private String loadingCutoff;
     @JsonProperty(value = "export_cutoff")
     private String exportCutoff;
+    @JsonProperty(value = "etb_lct")
+    private String etbLct;
     @JsonProperty(value = "vessel_registry_number")
     private String vesselRegistryNumber;
     @JsonProperty(value = "vessel_statuses")

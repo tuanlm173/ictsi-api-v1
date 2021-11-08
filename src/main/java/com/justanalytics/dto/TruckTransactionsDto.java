@@ -13,7 +13,8 @@ import lombok.*;
 @JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "sequence_number", "transaction_type",
         "container_nbr", "container_gkey", "ctr_ufv_gkey", "booking_no", "freight_kind", "category", "line_operator", "origin",
         "shipper", "appointment_start_date", "appointment_end_date", "truck_plate", "truck_visit_gkey", "status", "truck_visit_entered_yard", "truck_visit_exited_yard",
-        "driver_license", "trucking_company", "trucking_company_gkey", "stage_id", "handled", "load_discharge_time"})
+        "driver_license", "trucking_company", "trucking_company_gkey", "stage_id", "handled", "load_discharge_time", "show_tvarrival_status",
+        "tv_arrival_status", "tv_arrival_remarks"})
 public class TruckTransactionsDto {
 
     @JsonProperty(value = "unique_key")
@@ -72,5 +73,11 @@ public class TruckTransactionsDto {
     private String handled;
     @JsonProperty(value = "load_discharge_time")
     private String loadDischargeTime;
+    @JsonProperty(value = "show_tvarrival_status")
+    private String showTvarrivalStatus;
+    @JsonProperty(value = "tv_arrival_status")
+    private String tvArrivalStatus;
+    @JsonProperty(value = "tv_arrival_remarks")
+    private String tvArrivalRemarks;
 
 }

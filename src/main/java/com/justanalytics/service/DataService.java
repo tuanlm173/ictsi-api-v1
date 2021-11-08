@@ -27,18 +27,6 @@ public class DataService {
     @Autowired
     private DataRepository dataRepository;
 
-    public Boolean checkAccess(String productId) {
-        return apiRegistrationRepository.existsByProductId(productId);
-    }
-
-    public Boolean checkAccessv2(String productId, String apiId, String subscriptionId) {
-        return apiRegistrationRepository.existsByProductIdAndEntityAndSubscriptionId(productId, apiId, subscriptionId);
-    }
-
-    public Boolean checkAccessv3(String productId, String apiId) {
-        return apiRegistrationRepository.existsByProductIdAndEntity(productId, apiId);
-    }
-
     public Boolean checkAccessFromCosmos(String productId, String apiId, String subscriptionId) {
         String query = CHECK_ACCESS_QUERY;
         query = String.format(query, subscriptionId, productId, apiId);

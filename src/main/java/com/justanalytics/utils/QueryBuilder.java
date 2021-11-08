@@ -39,7 +39,10 @@ public class QueryBuilder {
         String values = inFilter.getValues().stream()
                 .map(value -> "'" + value.toString() + "'")
                 .collect(Collectors.joining(", ", "(", ")"));
-        return String.format("%s in %s", "c." + inFilter.getField().toLowerCase(), values);
+        Boolean negate = inFilter.getNegate();
+        String negateCondition = "";
+        if (negate) negateCondition = "NOT";
+        return String.format("%s %s IN %s", "c." + inFilter.getField().toLowerCase(), negateCondition, values);
     }
 
     private String buildBetweenCosmosFilter(BetweenFilter betweenFilter) {
@@ -135,9 +138,9 @@ public class QueryBuilder {
             default:
                 break;
         }
-        if(filter.getNegate()) {
-            return String.format("NOT %s", filterQueryString);
-        }
+//        if(filter.getNegate()) {
+//            return String.format("NOT %s", filterQueryString);
+//        }
         return filterQueryString;
     }
 

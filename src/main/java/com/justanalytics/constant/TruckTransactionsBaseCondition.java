@@ -32,7 +32,10 @@ public final class TruckTransactionsBaseCondition {
             "c.trucking_company_gkey,\n" +
             "c.stage_id,\n" +
             "c.handled,\n" +
-            "c.load_discharge_time \n " +
+            "c.load_discharge_time,\n" +
+            "c.show_tvarrival_status,\n" +
+            "c.tv_arrival_status,\n" +
+            "c.tv_arrival_remarks \n" +
             "FROM api_truck_transactions c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
 

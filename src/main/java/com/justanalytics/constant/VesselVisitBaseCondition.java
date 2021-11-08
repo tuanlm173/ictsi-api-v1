@@ -53,11 +53,13 @@ public final class VesselVisitBaseCondition {
             "c.service_name,\n" +
             "c.remarks,\n" +
             "c.est_time_of_completion,\n" +
+            "c.initial_time_of_completion,\n" +
             "c.amended_est_time_of_completion,\n" +
             "c.estimated_time_of_berthing,\n" +
             "c.actual_time_of_berthing,\n" +
             "c.loading_cutoff,\n" +
             "c.export_cutoff,\n" +
+            "c.etb_lct,\n" +
             "c.vessel_registry_number,\n" +
             "c.vessel_statuses \n" +
             "FROM api_vessel_visit c " +
