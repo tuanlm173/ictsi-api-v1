@@ -74,7 +74,7 @@ public class TruckTransactionsDto {
     @JsonProperty(value = "load_discharge_time")
     private String loadDischargeTime;
     @JsonProperty(value = "show_tvarrival_status")
-    private String showTvarrivalStatus;
+    private Boolean showTvarrivalStatus;
     @JsonProperty(value = "tv_arrival_status")
     private String tvArrivalStatus;
     @JsonProperty(value = "tv_arrival_remarks")

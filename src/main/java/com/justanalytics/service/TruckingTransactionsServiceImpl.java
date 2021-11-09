@@ -86,7 +86,7 @@ public class TruckingTransactionsServiceImpl implements TruckingTransactionsServ
             String stageId = String.valueOf(data.get("stage_id"));
             String handled = String.valueOf(data.get("handled"));
             String loadDischargeTime = String.valueOf(data.get("load_discharge_time"));
-            String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
+            Boolean showTvarrivalStatus = Objects.nonNull(data.get("show_tvarrival_status")) ? Boolean.valueOf(String.valueOf(data.get("show_tvarrival_status"))) : null;
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
             String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
 
