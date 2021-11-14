@@ -10,37 +10,35 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"UniqueKey", "OperatorID", "ComplexID", "FacilityID", "visit_state", "ContainerNbr", "EquipmentType",
-        "TEU", "OperatorLineID", "OperatorName", "create_time", "category", "freight_kind", "seal_nbr1", "seal_nbr2",
+@JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "visit_state", "container_nbr", "equipment_type",
+        "teu", "operator_line_id", "operator_name", "create_time", "category", "freight_kind", "seal_nbr1", "seal_nbr2",
         "seal_nbr3", "seal_nbr4", "stopped_vessel", "stopped_rail", "stopped_road", "imped_vessel", "imped_rail", "imped_road",
         "arrive_pos_loctype", "arrive_pos_locid", "arrive_pos_slot", "last_pos_loctype", "last_pos_locid", "last_pos_slot",
-        "time_in", "time_out", "BookingNumber", "requires_power", "flex_string01", "flex_string02", "flex_string03", "flex_string04",
-        "flex_string05", "flex_string06", "flex_string07", "flex_string08", "flex_string09", "flex_string10", "flex_string11",
-        "flex_string12", "flex_string13", "flex_string14", "flex_string15", "time_state_change", "POD", "transit_state",
-        "nominal_length", "reefer_type", "iso_group", "Master_BLNbr", "Origin", "Destination", "Consignee_ID", "Consignee_Name",
-        "Shipper_ID", "Shipper_Name", "House_BLNbr", "Cargo_Category", "Cargo_Consignee_ID", "Cargo_Consignee_Name",
-        "Cargo_Shipper_ID", "Cargo_Shipper_Name", "Cargo_Origin"})
+        "time_in", "time_out", "booking_number", "time_state_change", "transit_state",
+        "nominal_length", "reefer_type", "iso_group", "shipper_declared_vgm", "terminal_measured_vgm", "last_free_day", "paid_thru_day",
+        "power_last_free_day", "power_paid_thru_day", "ib_registry_nbr", "ob_registry_nbr", "entry_no", "appointment_start_date", "appointment_end_date",
+        "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks"})
 public class EmptyContainerDto {
 
-    @JsonProperty(value = "UniqueKey")
+    @JsonProperty(value = "unique_key")
     private String uniqueKey;
-    @JsonProperty(value = "OperatorID")
+    @JsonProperty(value = "operator_id")
     private String operatorId;
-    @JsonProperty(value = "ComplexID")
+    @JsonProperty(value = "complex_id")
     private String complexId;
-    @JsonProperty(value = "FacilityID")
+    @JsonProperty(value = "facility_id")
     private String facilityId;
     @JsonProperty(value = "visit_state")
     private String visitState;
-    @JsonProperty(value = "ContainerNbr")
+    @JsonProperty(value = "container_nbr")
     private String containerNbr;
-    @JsonProperty(value = "EquipmentType")
+    @JsonProperty(value = "equipment_type")
     private String equipmentType;
-    @JsonProperty(value = "TEU")
+    @JsonProperty(value = "teu")
     private Float teu;
-    @JsonProperty(value = "OperatorLineID")
+    @JsonProperty(value = "operator_line_id")
     private String operatorLineId;
-    @JsonProperty(value = "OperatorName")
+    @JsonProperty(value = "operator_name")
     private String operatorName;
     @JsonProperty(value = "create_time")
     private String createTime;
@@ -84,36 +82,8 @@ public class EmptyContainerDto {
     private String timeIn;
     @JsonProperty(value = "time_out")
     private String timeOut;
-    @JsonProperty(value = "flex_string01")
-    private String flexString01;
-    @JsonProperty(value = "flex_string02")
-    private String flexString02;
-    @JsonProperty(value = "flex_string03")
-    private String flexString03;
-    @JsonProperty(value = "flex_string04")
-    private String flexString04;
-    @JsonProperty(value = "flex_string05")
-    private String flexString05;
-    @JsonProperty(value = "flex_string06")
-    private String flexString06;
-    @JsonProperty(value = "flex_string07")
-    private String flexString07;
-    @JsonProperty(value = "flex_string08")
-    private String flexString08;
-    @JsonProperty(value = "flex_string09")
-    private String flexString09;
-    @JsonProperty(value = "flex_string10")
-    private String flexString10;
-    @JsonProperty(value = "flex_string11")
-    private String flexString11;
-    @JsonProperty(value = "flex_string12")
-    private String flexString12;
-    @JsonProperty(value = "flex_string13")
-    private String flexString13;
-    @JsonProperty(value = "flex_string14")
-    private String flexString14;
-    @JsonProperty(value = "flex_string15")
-    private String flexString15;
+    @JsonProperty(value = "booking_number")
+    private String bookingNumber;
     @JsonProperty(value = "time_state_change")
     private String timeStateChange;
     @JsonProperty(value = "transit_state")
@@ -125,5 +95,37 @@ public class EmptyContainerDto {
     @JsonProperty(value = "iso_group")
     private String isoGroup;
 
+    @JsonProperty(value = "shipper_declared_vgm")
+    private String shipperDeclaredVgm;
+    @JsonProperty(value = "terminal_measured_vgm")
+    private String terminalMeasuredVgm;
+    @JsonProperty(value = "last_free_day")
+    private String lastFreeDay;
+    @JsonProperty(value = "paid_thru_day")
+    private String paidThruDay;
+    @JsonProperty(value = "power_last_free_day")
+    private String powerLastFreeDay;
+    @JsonProperty(value = "power_paid_thru_day")
+    private String powerPaidThruDay;
+    @JsonProperty(value = "ib_registry_nbr")
+    private String ibRegistryNbr;
+    @JsonProperty(value = "ob_registry_nbr")
+    private String obRegistryNbr;
+    @JsonProperty(value = "entry_no")
+    private String entryNo;
+    @JsonProperty(value = "appointment_start_date")
+    private String appointmentStartDate;
+    @JsonProperty(value = "appointment_end_date")
+    private String appointmentEndDate;
+    @JsonProperty(value = "shipper")
+    private String shipper;
+    @JsonProperty(value = "consignee")
+    private String consignee;
+    @JsonProperty(value = "show_tvarrival_status")
+    private String showTvarrivalStatus;
+    @JsonProperty(value = "tv_arrival_status")
+    private String tvArrivalStatus;
+    @JsonProperty(value = "tv_arrival_remarks")
+    private String tvArrivalRemarks;
 
 }

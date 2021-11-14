@@ -141,6 +141,33 @@ public class DataController {
                         .header("row-count", "" + exportContainer.size())
                         .body(RestEnvelope.of(exportContainer));
             }
+            else if (ContainerType.EMPTY.getContainerType().equalsIgnoreCase(containerType)) {
+                List<EmptyContainerDto> emptyContainer = containerService.findEmptyContainer(
+                        query,
+                        containerType,
+                        facilityId,
+                        containerNumber,
+                        containerOperationLineId,
+                        containerVisitState,
+                        containerTransitState,
+                        containerEquipmentType,
+                        containerIsoGroup,
+                        containerArrivePosLocType,
+                        containerDepartPosLocType,
+                        containerDepartPosLocId,
+                        containerArrivePosLocId,
+                        arriveFrom,
+                        arriveTo,
+                        departFrom,
+                        departTo,
+                        impedType,
+                        operationType,
+                        terminalConditions
+                );
+                return ResponseEntity.ok()
+                        .header("row-count", "" + emptyContainer.size())
+                        .body(RestEnvelope.of(emptyContainer));
+            }
             throw new InvalidParameterException("container type must be empty, export, import, all");
         }
         throw new UnAccessibleSystemException();

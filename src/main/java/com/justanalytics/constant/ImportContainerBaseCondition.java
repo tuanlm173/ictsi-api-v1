@@ -40,21 +40,6 @@ public final class ImportContainerBaseCondition {
             "c.time_out,\n" +
             "c.booking_number,\t\t\n" +
             "c.requires_power,\n" +
-            "c.flex_string01,\n" +
-            "c.flex_string02,\n" +
-            "c.flex_string03,\n" +
-            "c.flex_string04,\n" +
-            "c.flex_string05,\n" +
-            "c.flex_string06,\n" +
-            "c.flex_string07,\n" +
-            "c.flex_string08,\n" +
-            "c.flex_string09,\n" +
-            "c.flex_string10,\n" +
-            "c.flex_string11,\n" +
-            "c.flex_string12,\n" +
-            "c.flex_string13,\n" +
-            "c.flex_string14,\n" +
-            "c.flex_string15,\n" +
             "c.time_state_change,\n" +
             "c.pod,\n" +
             "c.transit_state,\n" +
@@ -74,7 +59,23 @@ public final class ImportContainerBaseCondition {
             "c.cargo_consignee_name,\n" +
             "c.cargo_shipper_id,\n" +
             "c.cargo_shipper_name,\n" +
-            "c.cargo_origin " +
+            "c.cargo_origin,\n" +
+            "c.shipper_declared_vgm,\n" +
+            "c.terminal_measured_vgm,\n" +
+            "c.last_free_day,\n" +
+            "c.paid_thru_day,\n" +
+            "c.power_last_free_day,\n" +
+            "c.power_paid_thru_day,\n" +
+            "c.ib_registry_nbr,\n" +
+            "c.ob_registry_nbr,\n" +
+            "c.entry_no,\n" +
+            "c.appointment_start_date,\n" +
+            "c.appointment_end_date,\n" +
+            "c.shipper,\n" +
+            "c.consignee,\n" +
+            "c.show_tvarrival_status,\n" +
+            "c.tv_arrival_status,\n" +
+            "c.tv_arrival_remarks " +
             "FROM api_container_import c " +
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
     public static final String IMPORT_CONTAINER_NAME = "api_container_import";

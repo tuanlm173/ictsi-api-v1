@@ -131,21 +131,6 @@ public class ContainerServiceImpl implements ContainerService {
             String timeOut = String.valueOf(data.get("time_out"));
             String bookingNumber = String.valueOf(data.get("booking_number"));
             String requiresPower = String.valueOf(data.get("requires_power"));
-            String flexString01 = String.valueOf(data.get("flex_string01"));
-            String flexString02 = String.valueOf(data.get("flex_string02"));
-            String flexString03 = String.valueOf(data.get("flex_string03"));
-            String flexString04 = String.valueOf(data.get("flex_string04"));
-            String flexString05 = String.valueOf(data.get("flex_string05"));
-            String flexString06 = String.valueOf(data.get("flex_string06"));
-            String flexString07 = String.valueOf(data.get("flex_string07"));
-            String flexString08 = String.valueOf(data.get("flex_string08"));
-            String flexString09 = String.valueOf(data.get("flex_string09"));
-            String flexString10 = String.valueOf(data.get("flex_string10"));
-            String flexString11 = String.valueOf(data.get("flex_string11"));
-            String flexString12 = String.valueOf(data.get("flex_string12"));
-            String flexString13 = String.valueOf(data.get("flex_string13"));
-            String flexString14 = String.valueOf(data.get("flex_string14"));
-            String flexString15 = String.valueOf(data.get("flex_string15"));
             String timeStateChange = String.valueOf(data.get("time_state_change"));
             String pod = String.valueOf(data.get("POD"));
             String transitState = String.valueOf(data.get("transit_state"));
@@ -166,6 +151,24 @@ public class ContainerServiceImpl implements ContainerService {
             String cargoShipperId = String.valueOf(data.get("cargo_shipper_id"));
             String cargoShipperName = String.valueOf(data.get("cargo_shipper_name"));
             String cargoOrigin = String.valueOf(data.get("cargo_origin"));
+
+            String shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
+            String terminalMeasuredVgm = String.valueOf(data.get("terminal_measured_vgm"));
+            String lastFreeDay = String.valueOf(data.get("last_free_day"));
+            String paidThruDay = String.valueOf(data.get("paid_thru_day"));
+            String powerLastFreeDay = String.valueOf(data.get("power_last_free_day"));
+            String powerPaidThruDay = String.valueOf(data.get("power_paid_thru_day"));
+            String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
+            String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
+            String entryNo = String.valueOf(data.get("entry_no"));
+            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
+            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String shipper = String.valueOf(data.get("shipper"));
+            String consignee = String.valueOf(data.get("consignee"));
+            String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
+            String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
+            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+
 
             results.add(ContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -205,21 +208,6 @@ public class ContainerServiceImpl implements ContainerService {
                     .timeOut(timeOut)
                     .bookingNumber(bookingNumber)
                     .requiresPower(requiresPower)
-                    .flexString01(flexString01)
-                    .flexString02(flexString02)
-                    .flexString03(flexString03)
-                    .flexString04(flexString04)
-                    .flexString05(flexString05)
-                    .flexString06(flexString06)
-                    .flexString07(flexString07)
-                    .flexString08(flexString08)
-                    .flexString09(flexString09)
-                    .flexString10(flexString10)
-                    .flexString11(flexString11)
-                    .flexString12(flexString12)
-                    .flexString13(flexString13)
-                    .flexString14(flexString14)
-                    .flexString15(flexString15)
                     .timeStateChange(timeStateChange)
                     .pod(pod)
                     .transitState(transitState)
@@ -240,6 +228,22 @@ public class ContainerServiceImpl implements ContainerService {
                     .cargoShipperId(cargoShipperId)
                     .cargoShipperName(cargoShipperName)
                     .cargoOrigin(cargoOrigin)
+                    .shipperDeclaredVgm(shipperDeclaredVgm)
+                    .terminalMeasuredVgm(terminalMeasuredVgm)
+                    .lastFreeDay(lastFreeDay)
+                    .paidThruDay(paidThruDay)
+                    .powerLastFreeDay(powerLastFreeDay)
+                    .powerPaidThruDay(powerPaidThruDay)
+                    .ibRegistryNbr(ibRegistryNbr)
+                    .obRegistryNbr(obRegistryNbr)
+                    .entryNo(entryNo)
+                    .appointmentStartDate(appointmentStartDate)
+                    .appointmentEndDate(appointmentEndDate)
+                    .shipper(shipper)
+                    .consignee(consignee)
+                    .showTvarrivalStatus(showTvarrivalStatus)
+                    .tvArrivalStatus(tvArrivalStatus)
+                    .tvArrivalRemarks(tvArrivalRemarks)
                     .build());
 
         }
@@ -252,16 +256,16 @@ public class ContainerServiceImpl implements ContainerService {
         List<EmptyContainerDto> results = new ArrayList<>(rawData.size());
 
         for (JSONObject data: rawData) {
-            String uniqueKey = String.valueOf(data.get("UniqueKey"));
-            String operatorId = String.valueOf(data.get("OperatorID"));
-            String complexId = String.valueOf(data.get("ComplexID"));
-            String facilityId = String.valueOf(data.get("FacilityID"));
+            String uniqueKey = String.valueOf(data.get("unique_key"));
+            String operatorId = String.valueOf(data.get("operator_id"));
+            String complexId = String.valueOf(data.get("complex_id"));
+            String facilityId = String.valueOf(data.get("facility_id"));
             String visitState = String.valueOf(data.get("visit_state"));
-            String containerNbr = String.valueOf(data.get("ContainerNbr"));
-            String equipmentType = String.valueOf(data.get("EquipmentType"));
-            Float teu =  Objects.nonNull(data.get("TEU")) ? Float.parseFloat(String.valueOf(data.get("TEU"))) : null;
-            String operatorLineId = String.valueOf(data.get("OperatorLineID"));
-            String operatorName = String.valueOf(data.get("OperatorName"));
+            String containerNbr = String.valueOf(data.get("container_nbr"));
+            String equipmentType = String.valueOf(data.get("equipment_type"));
+            Float teu =  Objects.nonNull(data.get("teu")) ? Float.parseFloat(String.valueOf(data.get("teu"))) : null;
+            String operatorLineId = String.valueOf(data.get("operator_line_id"));
+            String operatorName = String.valueOf(data.get("operator_name"));
             String createTime = String.valueOf(data.get("create_time"));
             String category = String.valueOf(data.get("category"));
             String freightKind = String.valueOf(data.get("freight_kind"));
@@ -283,26 +287,30 @@ public class ContainerServiceImpl implements ContainerService {
             String lastPosSlot = String.valueOf(data.get("last_pos_slot"));
             String timeIn = String.valueOf(data.get("time_in"));
             String timeOut = String.valueOf(data.get("time_out"));
-            String flexString01 = String.valueOf(data.get("flex_string01"));
-            String flexString02 = String.valueOf(data.get("flex_string02"));
-            String flexString03 = String.valueOf(data.get("flex_string03"));
-            String flexString04 = String.valueOf(data.get("flex_string04"));
-            String flexString05 = String.valueOf(data.get("flex_string05"));
-            String flexString06 = String.valueOf(data.get("flex_string06"));
-            String flexString07 = String.valueOf(data.get("flex_string07"));
-            String flexString08 = String.valueOf(data.get("flex_string08"));
-            String flexString09 = String.valueOf(data.get("flex_string09"));
-            String flexString10 = String.valueOf(data.get("flex_string10"));
-            String flexString11 = String.valueOf(data.get("flex_string11"));
-            String flexString12 = String.valueOf(data.get("flex_string12"));
-            String flexString13 = String.valueOf(data.get("flex_string13"));
-            String flexString14 = String.valueOf(data.get("flex_string14"));
-            String flexString15 = String.valueOf(data.get("flex_string15"));
+            String bookingNumber = String.valueOf(data.get("booking_number"));
             String timeStateChange = String.valueOf(data.get("time_state_change"));
             String transitState = String.valueOf(data.get("transit_state"));
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
+
+            String shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
+            String terminalMeasuredVgm = String.valueOf(data.get("terminal_measured_vgm"));
+            String lastFreeDay = String.valueOf(data.get("last_free_day"));
+            String paidThruDay = String.valueOf(data.get("paid_thru_day"));
+            String powerLastFreeDay = String.valueOf(data.get("power_last_free_day"));
+            String powerPaidThruDay = String.valueOf(data.get("power_paid_thru_day"));
+            String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
+            String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
+            String entryNo = String.valueOf(data.get("entry_no"));
+            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
+            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String shipper = String.valueOf(data.get("shipper"));
+            String consignee = String.valueOf(data.get("consignee"));
+            String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
+            String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
+            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+
 
             results.add(EmptyContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -336,26 +344,28 @@ public class ContainerServiceImpl implements ContainerService {
                     .lastPosSlot(lastPosSlot)
                     .timeIn(timeIn)
                     .timeOut(timeOut)
-                    .flexString01(flexString01)
-                    .flexString02(flexString02)
-                    .flexString03(flexString03)
-                    .flexString04(flexString04)
-                    .flexString05(flexString05)
-                    .flexString06(flexString06)
-                    .flexString07(flexString07)
-                    .flexString08(flexString08)
-                    .flexString09(flexString09)
-                    .flexString10(flexString10)
-                    .flexString11(flexString11)
-                    .flexString12(flexString12)
-                    .flexString13(flexString13)
-                    .flexString14(flexString14)
-                    .flexString15(flexString15)
+                    .bookingNumber(bookingNumber)
                     .timeStateChange(timeStateChange)
                     .transitState(transitState)
                     .nominalLength(nominalLength)
                     .reeferType(reeferType)
                     .isoGroup(isoGroup)
+                    .shipperDeclaredVgm(shipperDeclaredVgm)
+                    .terminalMeasuredVgm(terminalMeasuredVgm)
+                    .lastFreeDay(lastFreeDay)
+                    .paidThruDay(paidThruDay)
+                    .powerLastFreeDay(powerLastFreeDay)
+                    .powerPaidThruDay(powerPaidThruDay)
+                    .ibRegistryNbr(ibRegistryNbr)
+                    .obRegistryNbr(obRegistryNbr)
+                    .entryNo(entryNo)
+                    .appointmentStartDate(appointmentStartDate)
+                    .appointmentEndDate(appointmentEndDate)
+                    .shipper(shipper)
+                    .consignee(consignee)
+                    .showTvarrivalStatus(showTvarrivalStatus)
+                    .tvArrivalStatus(tvArrivalStatus)
+                    .tvArrivalRemarks(tvArrivalRemarks)
                     .build());
 
         }
@@ -405,27 +415,29 @@ public class ContainerServiceImpl implements ContainerService {
             String timeOut = String.valueOf(data.get("time_out"));
             String bookingNumber = String.valueOf(data.get("booking_number"));
             String requiresPower = String.valueOf(data.get("requires_power"));
-            String flexString01 = String.valueOf(data.get("flex_string01"));
-            String flexString02 = String.valueOf(data.get("flex_string02"));
-            String flexString03 = String.valueOf(data.get("flex_string03"));
-            String flexString04 = String.valueOf(data.get("flex_string04"));
-            String flexString05 = String.valueOf(data.get("flex_string05"));
-            String flexString06 = String.valueOf(data.get("flex_string06"));
-            String flexString07 = String.valueOf(data.get("flex_string07"));
-            String flexString08 = String.valueOf(data.get("flex_string08"));
-            String flexString09 = String.valueOf(data.get("flex_string09"));
-            String flexString10 = String.valueOf(data.get("flex_string10"));
-            String flexString11 = String.valueOf(data.get("flex_string11"));
-            String flexString12 = String.valueOf(data.get("flex_string12"));
-            String flexString13 = String.valueOf(data.get("flex_string13"));
-            String flexString14 = String.valueOf(data.get("flex_string14"));
-            String flexString15 = String.valueOf(data.get("flex_string15"));
             String timeStateChange = String.valueOf(data.get("time_state_change"));
             String pod = String.valueOf(data.get("pod"));
             String transitState = String.valueOf(data.get("transit_state"));
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
+
+            String shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
+            String terminalMeasuredVgm = String.valueOf(data.get("terminal_measured_vgm"));
+            String lastFreeDay = String.valueOf(data.get("last_free_day"));
+            String paidThruDay = String.valueOf(data.get("paid_thru_day"));
+            String powerLastFreeDay = String.valueOf(data.get("power_last_free_day"));
+            String powerPaidThruDay = String.valueOf(data.get("power_paid_thru_day"));
+            String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
+            String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
+            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
+            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String shipper = String.valueOf(data.get("shipper"));
+            String consignee = String.valueOf(data.get("consignee"));
+            String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
+            String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
+            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+
 
             results.add(ExportContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -465,27 +477,27 @@ public class ContainerServiceImpl implements ContainerService {
                     .timeOut(timeOut)
                     .bookingNumber(bookingNumber)
                     .requiresPower(requiresPower)
-                    .flexString01(flexString01)
-                    .flexString02(flexString02)
-                    .flexString03(flexString03)
-                    .flexString04(flexString04)
-                    .flexString05(flexString05)
-                    .flexString06(flexString06)
-                    .flexString07(flexString07)
-                    .flexString08(flexString08)
-                    .flexString09(flexString09)
-                    .flexString10(flexString10)
-                    .flexString11(flexString11)
-                    .flexString12(flexString12)
-                    .flexString13(flexString13)
-                    .flexString14(flexString14)
-                    .flexString15(flexString15)
                     .timeStateChange(timeStateChange)
                     .pod(pod)
                     .transitState(transitState)
                     .nominalLength(nominalLength)
                     .reeferType(reeferType)
                     .isoGroup(isoGroup)
+                    .shipperDeclaredVgm(shipperDeclaredVgm)
+                    .terminalMeasuredVgm(terminalMeasuredVgm)
+                    .lastFreeDay(lastFreeDay)
+                    .paidThruDay(paidThruDay)
+                    .powerLastFreeDay(powerLastFreeDay)
+                    .powerPaidThruDay(powerPaidThruDay)
+                    .ibRegistryNbr(ibRegistryNbr)
+                    .obRegistryNbr(obRegistryNbr)
+                    .appointmentStartDate(appointmentStartDate)
+                    .appointmentEndDate(appointmentEndDate)
+                    .shipper(shipper)
+                    .consignee(consignee)
+                    .showTvarrivalStatus(showTvarrivalStatus)
+                    .tvArrivalStatus(tvArrivalStatus)
+                    .tvArrivalRemarks(tvArrivalRemarks)
                     .build());
 
         }
@@ -511,16 +523,16 @@ public class ContainerServiceImpl implements ContainerService {
     ) {
         List<String> filters = new ArrayList<>();
 
-        String containerVisitStateFilter = buildSimpleContainerParam(EMPTY_CONTAINER_VISIT_STATE, containerVisitState);
-        String containerTransitStateFilter = buildSimpleContainerParam(EMPTY_CONTAINER_TRANSIT_STATE, containerTransitState);
-        String containerIsoGroupFilter = buildSimpleContainerParam(EMPTY_CONTAINER_ISO_GROUP, containerIsoGroup);
-        String containerArrivePosLocTypeFilter = buildSimpleContainerParam(EMPTY_CONTAINER_ARRIVE_POS_LOCTYPE, containerArrivePosLocType);
-        String containerDepartPosLocTypeFilter = buildSimpleContainerParam(EMPTY_CONTAINER_DEPART_POST_LOCTYPE, containerDepartPosLocType);
-        String containerDepartPosLocIdFilter = buildSimpleContainerParam(EMPTY_CONTAINER_DEPART_POST_LOC_ID, containerDepartPosLocId);
-        String containerArrivePosLocIdFilter = buildSimpleContainerParam(EMPTY_CONTAINER_ARRIVE_POS_LOC_ID, containerArrivePosLocId);
-        String containerNumberFilter = buildSimpleContainerParam(EMPTY_CONTAINER_NUMBER, containerNumber);
-        String containerEquipmentTypeFilter = buildSimpleContainerParam(EMPTY_CONTAINER_EQUIPMENT_TYPE, containerEquipmentType);
-        String containerOperationLineIFilter = buildSimpleContainerParam(EMPTY_CONTAINER_OPERATION_LINE_ID, containerOperationLineId);
+        String containerVisitStateFilter = buildFilter(EMPTY_CONTAINER_VISIT_STATE, parseParams(containerVisitState));
+        String containerTransitStateFilter = buildFilter(EMPTY_CONTAINER_TRANSIT_STATE, parseParams(containerTransitState));
+        String containerIsoGroupFilter = buildFilter(EMPTY_CONTAINER_ISO_GROUP, parseParams(containerIsoGroup));
+        String containerArrivePosLocTypeFilter = buildFilter(EMPTY_CONTAINER_ARRIVE_POS_LOCTYPE, parseParams(containerArrivePosLocType));
+        String containerDepartPosLocTypeFilter = buildFilter(EMPTY_CONTAINER_DEPART_POST_LOCTYPE, parseParams(containerDepartPosLocType));
+        String containerDepartPosLocIdFilter = buildFilter(EMPTY_CONTAINER_DEPART_POST_LOC_ID, parseParams(containerDepartPosLocId));
+        String containerArrivePosLocIdFilter = buildFilter(EMPTY_CONTAINER_ARRIVE_POS_LOC_ID, parseParams(containerArrivePosLocId));
+        String containerNumberFilter = buildFilter(EMPTY_CONTAINER_NUMBER, parseParams(containerNumber));
+        String containerEquipmentTypeFilter = buildFilter(EMPTY_CONTAINER_EQUIPMENT_TYPE, parseParams(containerEquipmentType));
+        String containerOperationLineIFilter = buildFilter(EMPTY_CONTAINER_OPERATION_LINE_ID, parseParams(containerOperationLineId));
 
         String containerTimeInFilter = buildSimpleTimeframeContainerParam(EMPTY_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String containerTimeOutFilter = buildSimpleTimeframeContainerParam(EMPTY_CONTAINER_TIME_OUT, departFrom, departTo);
@@ -1013,5 +1025,99 @@ public class ContainerServiceImpl implements ContainerService {
         results = dataRepository.getSimpleDataFromCosmos(EXPORT_CONTAINER_NAME, sql);
 
         return getExportContainerDto(results);
+    }
+
+    @Override
+    public List<EmptyContainerDto> findEmptyContainer(
+            Query query,
+            String containerType,
+            String facilityId,
+            String containerNumber,
+            String containerOperationLineId,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String impedType,
+            String operationType,
+            List<String> terminalConditions) {
+
+        List<JSONObject> results = new ArrayList<>();
+
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(EMPTY_CONTAINER_BASE_QUERY);
+
+        // Persona filter
+        List<String> personaFilters = buildEmptyContainerConditions(
+                containerVisitState,
+                containerTransitState,
+                containerIsoGroup,
+                containerArrivePosLocType,
+                containerDepartPosLocType,
+                containerDepartPosLocId,
+                containerArrivePosLocId,
+                containerNumber,
+                containerEquipmentType,
+                containerOperationLineId,
+                arriveFrom,
+                arriveTo,
+                departFrom,
+                departTo
+        );
+
+        personaFilters = personaFilters.stream()
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
+                .collect(Collectors.toList());
+
+        if (personaFilters.size() == 0) {
+            queryBuilder.append(" AND ");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+            queryBuilder.append(" AND ");
+        }
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append("1=1");
+
+        // Terminal condition
+        if(!terminalConditions.contains("ALL")) {
+            queryBuilder.append(" AND ");
+            List<String> conditions = new ArrayList<>();
+            for (String terminalCondition : terminalConditions) {
+                conditions.add(String.format("c.facility_id = '%s'", terminalCondition));
+            }
+            queryBuilder.append("(" + String.join(" OR ", conditions) + ")");
+        }
+
+        // Order
+        if (!query.sort.isEmpty()) {
+            String sortBy = filterBuilder.buildOrderByString(query.sort);
+            queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+        }
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        results = dataRepository.getSimpleDataFromCosmos(EMPTY_CONTAINER_NAME, sql);
+        return getEmptyContainerDto(results);
     }
 }

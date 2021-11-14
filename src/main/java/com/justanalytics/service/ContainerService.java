@@ -65,4 +65,27 @@ public interface ContainerService {
     );
 
 
+    List<EmptyContainerDto> findEmptyContainer(
+            Query query,
+            String containerType,
+            String facilityId,
+            String containerNumber,
+            String containerOperationLineId,
+            String containerVisitState,
+            String containerTransitState,
+            String containerEquipmentType,
+            String containerIsoGroup,
+            String containerArrivePosLocType,
+            String containerDepartPosLocType,
+            String containerDepartPosLocId,
+            String containerArrivePosLocId,
+            LocalDateTime arriveFrom,
+            LocalDateTime arriveTo,
+            LocalDateTime departFrom,
+            LocalDateTime departTo,
+            String impedType,
+            String operationType,
+            List<String> terminalConditions
+    );
+
 }
