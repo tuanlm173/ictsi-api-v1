@@ -40,21 +40,21 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jdbc</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-jdbc</artifactId>-->
+<!--		</dependency>-->
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-jdbc</artifactId>-->
+<!--		</dependency>-->
 
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<version>9.2.1.jre11</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.microsoft.sqlserver</groupId>-->
+<!--			<artifactId>mssql-jdbc</artifactId>-->
+<!--			<version>9.2.1.jre11</version>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>com.microsoft.azure</groupId>
@@ -105,28 +105,28 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>install-Transformation lib</id>
-						<phase>clean</phase>
-						<configuration>
-							<file>${basedir}\lib\mssql-jdbc-9.2.1.jre11.jar</file>
-							<repositoryLayout>default</repositoryLayout>
-							<groupId>sqlServerJDBC</groupId>
-							<artifactId>sqlServerJDBC</artifactId>
-							<version>9.2.1.jre11</version>
-							<packaging>jar</packaging>
-							<generatePom>true</generatePom>
-						</configuration>
-						<goals>
-							<goal>install-file</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-install-plugin</artifactId>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>install-Transformation lib</id>-->
+<!--						<phase>clean</phase>-->
+<!--						<configuration>-->
+<!--							<file>${basedir}\lib\mssql-jdbc-9.2.1.jre11.jar</file>-->
+<!--							<repositoryLayout>default</repositoryLayout>-->
+<!--							<groupId>sqlServerJDBC</groupId>-->
+<!--							<artifactId>sqlServerJDBC</artifactId>-->
+<!--							<version>9.2.1.jre11</version>-->
+<!--							<packaging>jar</packaging>-->
+<!--							<generatePom>true</generatePom>-->
+<!--						</configuration>-->
+<!--						<goals>-->
+<!--							<goal>install-file</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 			<plugin>
 				<groupId>com.microsoft.azure</groupId>
 				<artifactId>azure-webapp-maven-plugin</artifactId>

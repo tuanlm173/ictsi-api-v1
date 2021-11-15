@@ -80,7 +80,7 @@ public class DataController {
             @RequestBody Query query
     ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
-            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
+            List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             if (ContainerType.IMPORT.getContainerType().equalsIgnoreCase(containerType) || ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
                 List<ContainerDto> containers = containerService.findContainer(
                         query,
@@ -197,7 +197,7 @@ public class DataController {
             @RequestBody Query query
     ) throws JsonProcessingException {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
-            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
+            List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
                     query, facilityId, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
                     etaFrom, etaTo, ataFrom, ataTo, etdFrom, etdTo, atdFrom, atdTo, operationType, terminalConditions);
@@ -224,7 +224,7 @@ public class DataController {
             @RequestBody Query query
     ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
-            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
+            List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisit(query, facilityId, truckLicenseNbrs,
                     visitPhases, carrierOperatorNames, visitTimeFrom, visitTimeTo, operationType, terminalConditions);
             return ResponseEntity.ok()
@@ -322,7 +322,7 @@ public class DataController {
             @RequestBody Query query
     ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
-            List<String> terminalConditions = dataService.findCondition(productId, apiId, subscriptionId);
+            List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<TruckTransactionsDto> truckTransactions = truckingTransactionsService.findTruckTransactions(
                     query, truckCompany, truckPlate, uniqueKey, visitTimeFrom, visitTimeTo, operationType, terminalConditions);
             return ResponseEntity.ok()

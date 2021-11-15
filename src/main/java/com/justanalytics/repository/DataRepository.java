@@ -18,24 +18,24 @@ import java.util.stream.Collectors;
 @Repository
 public class DataRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+//    private final JdbcTemplate jdbcTemplate;
 
     private final CosmosClient cosmosClient;
 
     private final CosmosDbProperties cosmosDbProperties;
 
     public DataRepository(
-            @Qualifier("synapseJdbcTemplate") JdbcTemplate jdbcTemplate,
+//            @Qualifier("synapseJdbcTemplate") JdbcTemplate jdbcTemplate,
             @Qualifier("cosmos") CosmosClient cosmosClient,
             CosmosDbProperties cosmosDbProperties) {
-        this.jdbcTemplate = jdbcTemplate;
+//        this.jdbcTemplate = jdbcTemplate;
         this.cosmosClient = cosmosClient;
         this.cosmosDbProperties = cosmosDbProperties;
     }
 
-    public List<Map<String, Object>> getData(String query) {
-        return jdbcTemplate.queryForList(query);
-    }
+//    public List<Map<String, Object>> getData(String query) {
+//        return jdbcTemplate.queryForList(query);
+//    }
 
     public List<JSONObject> getSimpleDataFromCosmos(String containerName, String query) {
         CosmosContainer container = cosmosClient.getDatabase(cosmosDbProperties.getDatabase()).getContainer(containerName);
