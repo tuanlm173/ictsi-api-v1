@@ -49,6 +49,9 @@ public class DataController {
     private TruckingTransactionsService truckingTransactionsService;
 
     @Autowired
+    private CustomerService customerService;
+
+    @Autowired
     private DataService dataService;
 
     @PostMapping(path = "/api/v1/getContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -328,6 +331,24 @@ public class DataController {
             return ResponseEntity.ok()
                     .header("row-count", "" + truckTransactions.size())
                     .body(RestEnvelope.of(truckTransactions));
+        }
+        throw new UnAccessibleSystemException();
+    }
+
+    @PostMapping(path = "/api/v1/getCustomer", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getCustomer(
+            @RequestHeader(PRODUCT_ID_HEADER) String productId,
+            @RequestHeader(API_ID_HEADER) String apiId,
+            @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
+            @RequestParam(value = "customer-type", required = false) String customerType,
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestBody Query query
+    ) {
+        if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
+            List<CustomerDto> customers = customerService.findCustomer(query, customerType, operationType);
+            return ResponseEntity.ok()
+                    .header("row-count", "" + customers.size())
+                    .body(RestEnvelope.of(customers));
         }
         throw new UnAccessibleSystemException();
     }
