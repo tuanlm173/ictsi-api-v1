@@ -341,11 +341,12 @@ public class DataController {
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "customer-type", required = false) String customerType,
+            @RequestParam(value = "facility-id", required = false) String facilityId,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
-            List<CustomerDto> customers = customerService.findCustomer(query, customerType, operationType);
+            List<CustomerDto> customers = customerService.findCustomer(query, customerType, facilityId, operationType);
             return ResponseEntity.ok()
                     .header("row-count", "" + customers.size())
                     .body(RestEnvelope.of(customers));

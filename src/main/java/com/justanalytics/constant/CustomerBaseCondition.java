@@ -19,5 +19,6 @@ public final class CustomerBaseCondition {
     public static final String CUSTOMER_CONTAINER_NAME = "api_customer";
 
     public static final String CUSTOMER_TYPE = "(c.terminal_customer_role IN (%s) AND IS_DEFINED(c.terminal_customer_role))";
+    public static final String FACILITY_ID = "(ARRAY_CONTAINS(c.facility_ids, %s, true))";
 
 }

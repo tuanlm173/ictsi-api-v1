@@ -61,9 +61,9 @@ public final class ExportContainerBaseCondition {
                     "c.show_tvarrival_status,\n" +
                     "c.tv_arrival_status,\n" +
                     "c.tv_arrival_remarks " +
-                    "FROM api_container c " +
+                    "FROM api_container_all c " +
                     "WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
-    public static final String EXPORT_CONTAINER_NAME = "api_container";
+    public static final String EXPORT_CONTAINER_NAME = "api_container_all";
 
     public static final String EXPORT_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String EXPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";

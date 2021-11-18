@@ -84,6 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerDto> findCustomer(
             Query query,
             String customerType,
+            String facilityId,
             String operationType) {
 
         // Main query
@@ -93,7 +94,9 @@ public class CustomerServiceImpl implements CustomerService {
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
         String customerTypeFilter = buildFilter(CUSTOMER_TYPE, parseParams(customerType));
+        String facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
         personaFilters.add(customerTypeFilter);
+        personaFilters.add(facilityIdFilter);
 
         personaFilters = personaFilters.stream()
                 .filter(e -> !e.equalsIgnoreCase(""))

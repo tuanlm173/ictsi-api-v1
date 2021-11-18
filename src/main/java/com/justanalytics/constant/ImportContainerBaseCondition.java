@@ -76,9 +76,9 @@ public final class ImportContainerBaseCondition {
             "c.show_tvarrival_status,\n" +
             "c.tv_arrival_status,\n" +
             "c.tv_arrival_remarks " +
-            "FROM api_container_import c " +
+            "FROM api_container_all c " +
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
-    public static final String IMPORT_CONTAINER_NAME = "api_container_import";
+    public static final String IMPORT_CONTAINER_NAME = "api_container_all";
 
     public static final String IMPORT_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String IMPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";
@@ -104,7 +104,7 @@ public final class ImportContainerBaseCondition {
     public static final String IMPORT_CONTAINER_TIME_OUT = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";
 
     public static final String IMPORT_CONTAINER_BOOKING_NUMBER = "(c.booking_number IN (%s) AND IS_DEFINED(c.booking_number))";
-    public static final String IMPORT_CONTAINER_BOL_NUMBER = "((c.bill_of_lading_nbr = '%s' AND IS_DEFINED(c.bill_of_lading_nbr)) OR (c.house_bl_nbr = '%s' AND IS_DEFINED(c.house_bl_nbr)))";
+    public static final String IMPORT_CONTAINER_BOL_NUMBER = "((c.bill_of_lading_nbr IN ('%s') AND IS_DEFINED(c.bill_of_lading_nbr)) OR ((ARRAY_CONTAINS(c.house_bls, {'house_bl_nbr': '%s'}, true)) AND IS_DEFINED(c.house_bls)))";
 
 
 

@@ -12,6 +12,7 @@ public interface CustomerService {
     List<CustomerDto> findCustomer(
             Query query,
             String customerType,
+            String facilityId,
             String operationType
     );
 }

@@ -36,6 +36,8 @@ public class ContainerServiceImpl implements ContainerService {
     @Autowired
     private DataRepository dataRepository;
 
+
+
     private StringBuilder buildSimpleContainerQuery(String query, String size) {
         StringBuilder queryBuilder = new StringBuilder();
         return queryBuilder.append(String.format(query, size));
@@ -66,6 +68,12 @@ public class ContainerServiceImpl implements ContainerService {
     private String buildFilter(String filter, String input) {
         if (input != null && !input.isBlank())
             return String.format(filter, input);
+        else return "";
+    }
+
+    private String buildBolFilter(String filter, String inputBol) {
+        if (inputBol != null && !inputBol.isBlank())
+            return String.format(filter, inputBol, inputBol);
         else return "";
     }
 
@@ -711,7 +719,7 @@ public class ContainerServiceImpl implements ContainerService {
         String timeInFilter = buildSimpleTimeframeContainerParam(IMPORT_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String timeOutFilter = buildSimpleTimeframeContainerParam(IMPORT_CONTAINER_TIME_OUT, departFrom, departTo);
         String containerBookingNumberFilter = buildFilter(IMPORT_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
-        String containerBolNumberFilter = buildBolNbrParam(IMPORT_CONTAINER_BOL_NUMBER, containerBolNumber);
+        String containerBolNumberFilter = buildBolFilter(IMPORT_CONTAINER_BOL_NUMBER, containerBolNumber);
 
         if (ContainerImped.NONE.getContainerImped().equalsIgnoreCase(impedType))
             filters.add(IMPORT_IMPED_TYPE_NONE);

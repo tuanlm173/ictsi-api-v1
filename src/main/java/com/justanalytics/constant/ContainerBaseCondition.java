@@ -54,9 +54,9 @@ public final class ContainerBaseCondition {
             "c.nominal_length,\n" +
             "c.reefer_type,\n" +
             "c.iso_group " +
-            "FROM api_container c " +
+            "FROM api_container_all c " +
             "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N'";
-    public static final String ALL_CONTAINER_NAME = "api_container";
+    public static final String ALL_CONTAINER_NAME = "api_container_all";
 
     public static final String ALL_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String ALL_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";

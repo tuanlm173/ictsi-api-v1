@@ -57,9 +57,9 @@ public final class EmptyContainerBaseCondition {
             "c.show_tvarrival_status,\n" +
             "c.tv_arrival_status,\n" +
             "c.tv_arrival_remarks " +
-            "FROM api_container c " +
+            "FROM api_container_all c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND ((c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind)))) AND c.delete_flag = 'N'";
-    public static final String EMPTY_CONTAINER_NAME = "api_container";
+    public static final String EMPTY_CONTAINER_NAME = "api_container_all";
 
     public static final String EMPTY_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";
     public static final String EMPTY_CONTAINER_TRANSIT_STATE = "(c.transit_state IN (%s) AND IS_DEFINED(c.transit_state))";
