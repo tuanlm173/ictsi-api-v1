@@ -2,8 +2,8 @@ package com.justanalytics.constant;
 
 public final class ExportContainerBaseCondition {
 
-    public static final String EXPORT_CONTAINER_BASE_QUERY =
-            "SELECT c.unique_key,\n" +
+    public static final String EXPORT_CONTAINER_BASE_QUERY = "SELECT " +
+                    "c.unique_key,\n" +
                     "c.operator_id,\n" +
                     "c.complex_id,\n" +
                     "c.facility_id,\n" +
@@ -46,6 +46,20 @@ public final class ExportContainerBaseCondition {
                     "c.nominal_length,\n" +
                     "c.reefer_type,\n" +
                     "c.iso_group,\n" +
+                    "c.master_bl_nbr,\n" +
+                    "c.origin,\n" +
+                    "c.destination,\n" +
+                    "c.consignee_id,\n" +
+                    "c.consignee_name,\n" +
+                    "c.shipper_id,\n" +
+                    "c.shipper_name,\n" +
+                    "c.house_bl_nbr,\t\t\t\n" +
+                    "c.cargo_category,\n" +
+                    "c.cargo_consignee_id,\n" +
+                    "c.cargo_consignee_name,\n" +
+                    "c.cargo_shipper_id,\n" +
+                    "c.cargo_shipper_name,\n" +
+                    "c.cargo_origin,\n" +
                     "c.shipper_declared_vgm,\n" +
                     "c.terminal_measured_vgm,\n" +
                     "c.last_free_day,\n" +
@@ -54,13 +68,15 @@ public final class ExportContainerBaseCondition {
                     "c.power_paid_thru_day,\n" +
                     "c.ib_registry_nbr,\n" +
                     "c.ob_registry_nbr,\n" +
+                    "c.entry_no,\n" +
                     "c.appointment_start_date,\n" +
                     "c.appointment_end_date,\n" +
                     "c.shipper,\n" +
                     "c.consignee,\n" +
                     "c.show_tvarrival_status,\n" +
                     "c.tv_arrival_status,\n" +
-                    "c.tv_arrival_remarks " +
+                    "c.tv_arrival_remarks,\n" +
+                    "c.house_bls " +
                     "FROM api_container_all c " +
                     "WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
     public static final String EXPORT_CONTAINER_NAME = "api_container_all";

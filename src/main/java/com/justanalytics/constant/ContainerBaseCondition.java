@@ -16,6 +16,10 @@ public final class ContainerBaseCondition {
             "c.create_time,\n" +
             "c.category,\n" +
             "c.freight_kind,\n" +
+            "c.goods_and_ctr_wt_kg,\n" +
+            "c.goods_ctr_wt_kg_advised,\n" +
+            "c.goods_ctr_wt_kg_gate_measured,\n" +
+            "c.goods_ctr_wt_kg_yard_measured,\n" +
             "c.seal_nbr1,\n" +
             "c.seal_nbr2,\n" +
             "c.seal_nbr3,\n" +
@@ -33,27 +37,46 @@ public final class ContainerBaseCondition {
             "c.last_pos_locid,\n" +
             "c.last_pos_slot,\n" +
             "c.time_in,\n" +
-            "c.time_out,\t\t\n" +
-            "c.flex_string01,\n" +
-            "c.flex_string02,\n" +
-            "c.flex_string03,\n" +
-            "c.flex_string04,\n" +
-            "c.flex_string05,\n" +
-            "c.flex_string06,\n" +
-            "c.flex_string07,\n" +
-            "c.flex_string08,\n" +
-            "c.flex_string09,\n" +
-            "c.flex_string10,\n" +
-            "c.flex_string11,\n" +
-            "c.flex_string12,\n" +
-            "c.flex_string13,\n" +
-            "c.flex_string14,\n" +
-            "c.flex_string15,\n" +
+            "c.time_out,\n" +
+            "c.booking_number,\t\t\n" +
+            "c.requires_power,\n" +
             "c.time_state_change,\n" +
+            "c.pod,\n" +
             "c.transit_state,\n" +
             "c.nominal_length,\n" +
             "c.reefer_type,\n" +
-            "c.iso_group " +
+            "c.iso_group,\n" +
+            "c.master_bl_nbr,\n" +
+            "c.origin,\n" +
+            "c.destination,\n" +
+            "c.consignee_id,\n" +
+            "c.consignee_name,\n" +
+            "c.shipper_id,\n" +
+            "c.shipper_name,\n" +
+            "c.house_bl_nbr,\t\t\t\n" +
+            "c.cargo_category,\n" +
+            "c.cargo_consignee_id,\n" +
+            "c.cargo_consignee_name,\n" +
+            "c.cargo_shipper_id,\n" +
+            "c.cargo_shipper_name,\n" +
+            "c.cargo_origin,\n" +
+            "c.shipper_declared_vgm,\n" +
+            "c.terminal_measured_vgm,\n" +
+            "c.last_free_day,\n" +
+            "c.paid_thru_day,\n" +
+            "c.power_last_free_day,\n" +
+            "c.power_paid_thru_day,\n" +
+            "c.ib_registry_nbr,\n" +
+            "c.ob_registry_nbr,\n" +
+            "c.entry_no,\n" +
+            "c.appointment_start_date,\n" +
+            "c.appointment_end_date,\n" +
+            "c.shipper,\n" +
+            "c.consignee,\n" +
+            "c.show_tvarrival_status,\n" +
+            "c.tv_arrival_status,\n" +
+            "c.tv_arrival_remarks,\n" +
+            "c.house_bls " +
             "FROM api_container_all c " +
             "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N'";
     public static final String ALL_CONTAINER_NAME = "api_container_all";

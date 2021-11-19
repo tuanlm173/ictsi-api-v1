@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @Getter
@@ -21,7 +23,7 @@ import lombok.*;
         "shipper_id", "shipper_name", "house_bl_nbr", "cargo_category", "cargo_consignee_id", "cargo_consignee_name",
         "cargo_shipper_id", "cargo_shipper_name", "cargo_origin", "shipper_declared_vgm", "terminal_measured_vgm", "last_free_day",
         "paid_thru_day", "power_last_free_day", "power_paid_thru_day", "ib_registry_nbr", "ob_registry_nbr", "entry_no", "appointment_start_date",
-        "appointment_end_date", "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks"})
+        "appointment_end_date", "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks", "house_bls"})
 public class ContainerDto {
 
     @JsonProperty(value = "unique_key")
@@ -171,5 +173,7 @@ public class ContainerDto {
     private String tvArrivalStatus;
     @JsonProperty(value = "tv_arrival_remarks")
     private String tvArrivalRemarks;
+    @JsonProperty(value = "house_bls")
+    private List<HouseBillOfLadings> houseBls;
 
 }

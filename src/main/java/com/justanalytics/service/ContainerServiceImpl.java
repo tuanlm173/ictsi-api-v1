@@ -3,6 +3,7 @@ package com.justanalytics.service;
 import com.justanalytics.dto.ContainerDto;
 import com.justanalytics.dto.EmptyContainerDto;
 import com.justanalytics.dto.ExportContainerDto;
+import com.justanalytics.dto.HouseBillOfLadings;
 import com.justanalytics.query.Query;
 import com.justanalytics.query.filter.DefaultFilter;
 import com.justanalytics.repository.DataRepository;
@@ -177,6 +178,10 @@ public class ContainerServiceImpl implements ContainerService {
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
             String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
 
+            List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
+            List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
+            if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
+
 
             results.add(ContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -252,6 +257,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .showTvarrivalStatus(showTvarrivalStatus)
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
+                    .houseBls(houseBillOfLadings)
                     .build());
 
         }
@@ -277,6 +283,10 @@ public class ContainerServiceImpl implements ContainerService {
             String createTime = String.valueOf(data.get("create_time"));
             String category = String.valueOf(data.get("category"));
             String freightKind = String.valueOf(data.get("freight_kind"));
+            Float goodsAndCtrWtKg = Objects.nonNull(data.get("goods_and_ctr_wt_kg")) ? Float.parseFloat(String.valueOf(data.get("goods_and_ctr_wt_kg"))) : null;
+            Float goodsCtrWtKgAdvised = Objects.nonNull(data.get("goods_ctr_wt_kg_advised")) ? Float.parseFloat(String.valueOf(data.get("goods_ctr_wt_kg_advised"))) : null;
+            Float goodsCtrWtKgGateMeasured = Objects.nonNull(data.get("goods_ctr_wt_kg_gate_measured")) ? Float.parseFloat(String.valueOf(data.get("goods_ctr_wt_kg_gate_measured"))) : null;
+            Float goodsCtrWtKgYardMeasured = Objects.nonNull(data.get("goods_ctr_wt_kg_yard_measured")) ? Float.parseFloat(String.valueOf(data.get("goods_ctr_wt_kg_yard_measured"))) : null;
             String sealNbr1 = String.valueOf(data.get("seal_nbr1"));
             String sealNbr2 = String.valueOf(data.get("seal_nbr2"));
             String sealNbr3 = String.valueOf(data.get("seal_nbr3"));
@@ -296,11 +306,27 @@ public class ContainerServiceImpl implements ContainerService {
             String timeIn = String.valueOf(data.get("time_in"));
             String timeOut = String.valueOf(data.get("time_out"));
             String bookingNumber = String.valueOf(data.get("booking_number"));
+            String requiresPower = String.valueOf(data.get("requires_power"));
             String timeStateChange = String.valueOf(data.get("time_state_change"));
+            String pod = String.valueOf(data.get("POD"));
             String transitState = String.valueOf(data.get("transit_state"));
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
+            String masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
+            String origin = String.valueOf(data.get("origin"));
+            String destination = String.valueOf(data.get("destination"));
+            String consigneeId = String.valueOf(data.get("consignee_id"));
+            String consigneeName = String.valueOf(data.get("consignee_name"));
+            String shipperId = String.valueOf(data.get("shipper_id"));
+            String shipperName = String.valueOf(data.get("shipper_name"));
+            String houseBlNbr = String.valueOf(data.get("house_bl_nbr"));
+            String cargoCategory = String.valueOf(data.get("cargo_category"));
+            String cargoConsigneeId = String.valueOf(data.get("cargo_consignee_id"));
+            String cargoConsigneeName = String.valueOf(data.get("cargo_consignee_name"));
+            String cargoShipperId = String.valueOf(data.get("cargo_shipper_id"));
+            String cargoShipperName = String.valueOf(data.get("cargo_shipper_name"));
+            String cargoOrigin = String.valueOf(data.get("cargo_origin"));
 
             String shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
             String terminalMeasuredVgm = String.valueOf(data.get("terminal_measured_vgm"));
@@ -319,6 +345,10 @@ public class ContainerServiceImpl implements ContainerService {
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
             String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
 
+            List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
+            List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
+            if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
+
 
             results.add(EmptyContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -334,6 +364,10 @@ public class ContainerServiceImpl implements ContainerService {
                     .createTime(createTime)
                     .category(category)
                     .freightKind(freightKind)
+                    .goodsAndCtrWtKg(goodsAndCtrWtKg)
+                    .goodsCtrWtKgAdvised(goodsCtrWtKgAdvised)
+                    .goodsCtrWtKgGateMeasured(goodsCtrWtKgGateMeasured)
+                    .goodsCtrWtKgYardMeasured(goodsCtrWtKgYardMeasured)
                     .sealNbr1(sealNbr1)
                     .sealNbr2(sealNbr2)
                     .sealNbr3(sealNbr3)
@@ -353,11 +387,27 @@ public class ContainerServiceImpl implements ContainerService {
                     .timeIn(timeIn)
                     .timeOut(timeOut)
                     .bookingNumber(bookingNumber)
+                    .requiresPower(requiresPower)
                     .timeStateChange(timeStateChange)
+                    .pod(pod)
                     .transitState(transitState)
                     .nominalLength(nominalLength)
                     .reeferType(reeferType)
                     .isoGroup(isoGroup)
+                    .masterBlNbr(masterBlNbr)
+                    .origin(origin)
+                    .destination(destination)
+                    .consigneeId(consigneeId)
+                    .consigneeName(consigneeName)
+                    .shipperId(shipperId)
+                    .shipperName(shipperName)
+                    .houseBlNbr(houseBlNbr)
+                    .cargoCategory(cargoCategory)
+                    .cargoConsigneeId(cargoConsigneeId)
+                    .cargoConsigneeName(cargoConsigneeName)
+                    .cargoShipperId(cargoShipperId)
+                    .cargoShipperName(cargoShipperName)
+                    .cargoOrigin(cargoOrigin)
                     .shipperDeclaredVgm(shipperDeclaredVgm)
                     .terminalMeasuredVgm(terminalMeasuredVgm)
                     .lastFreeDay(lastFreeDay)
@@ -374,6 +424,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .showTvarrivalStatus(showTvarrivalStatus)
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
+                    .houseBls(houseBillOfLadings)
                     .build());
 
         }
@@ -424,11 +475,25 @@ public class ContainerServiceImpl implements ContainerService {
             String bookingNumber = String.valueOf(data.get("booking_number"));
             String requiresPower = String.valueOf(data.get("requires_power"));
             String timeStateChange = String.valueOf(data.get("time_state_change"));
-            String pod = String.valueOf(data.get("pod"));
+            String pod = String.valueOf(data.get("POD"));
             String transitState = String.valueOf(data.get("transit_state"));
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
+            String masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
+            String origin = String.valueOf(data.get("origin"));
+            String destination = String.valueOf(data.get("destination"));
+            String consigneeId = String.valueOf(data.get("consignee_id"));
+            String consigneeName = String.valueOf(data.get("consignee_name"));
+            String shipperId = String.valueOf(data.get("shipper_id"));
+            String shipperName = String.valueOf(data.get("shipper_name"));
+            String houseBlNbr = String.valueOf(data.get("house_bl_nbr"));
+            String cargoCategory = String.valueOf(data.get("cargo_category"));
+            String cargoConsigneeId = String.valueOf(data.get("cargo_consignee_id"));
+            String cargoConsigneeName = String.valueOf(data.get("cargo_consignee_name"));
+            String cargoShipperId = String.valueOf(data.get("cargo_shipper_id"));
+            String cargoShipperName = String.valueOf(data.get("cargo_shipper_name"));
+            String cargoOrigin = String.valueOf(data.get("cargo_origin"));
 
             String shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
             String terminalMeasuredVgm = String.valueOf(data.get("terminal_measured_vgm"));
@@ -438,6 +503,7 @@ public class ContainerServiceImpl implements ContainerService {
             String powerPaidThruDay = String.valueOf(data.get("power_paid_thru_day"));
             String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
             String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
+            String entryNo = String.valueOf(data.get("entry_no"));
             String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
             String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
             String shipper = String.valueOf(data.get("shipper"));
@@ -445,6 +511,10 @@ public class ContainerServiceImpl implements ContainerService {
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
             String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+
+            List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
+            List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
+            if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
 
 
             results.add(ExportContainerDto.builder()
@@ -491,6 +561,20 @@ public class ContainerServiceImpl implements ContainerService {
                     .nominalLength(nominalLength)
                     .reeferType(reeferType)
                     .isoGroup(isoGroup)
+                    .masterBlNbr(masterBlNbr)
+                    .origin(origin)
+                    .destination(destination)
+                    .consigneeId(consigneeId)
+                    .consigneeName(consigneeName)
+                    .shipperId(shipperId)
+                    .shipperName(shipperName)
+                    .houseBlNbr(houseBlNbr)
+                    .cargoCategory(cargoCategory)
+                    .cargoConsigneeId(cargoConsigneeId)
+                    .cargoConsigneeName(cargoConsigneeName)
+                    .cargoShipperId(cargoShipperId)
+                    .cargoShipperName(cargoShipperName)
+                    .cargoOrigin(cargoOrigin)
                     .shipperDeclaredVgm(shipperDeclaredVgm)
                     .terminalMeasuredVgm(terminalMeasuredVgm)
                     .lastFreeDay(lastFreeDay)
@@ -499,6 +583,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .powerPaidThruDay(powerPaidThruDay)
                     .ibRegistryNbr(ibRegistryNbr)
                     .obRegistryNbr(obRegistryNbr)
+                    .entryNo(entryNo)
                     .appointmentStartDate(appointmentStartDate)
                     .appointmentEndDate(appointmentEndDate)
                     .shipper(shipper)
@@ -506,6 +591,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .showTvarrivalStatus(showTvarrivalStatus)
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
+                    .houseBls(houseBillOfLadings)
                     .build());
 
         }

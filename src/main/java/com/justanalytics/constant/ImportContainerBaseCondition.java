@@ -75,7 +75,8 @@ public final class ImportContainerBaseCondition {
             "c.consignee,\n" +
             "c.show_tvarrival_status,\n" +
             "c.tv_arrival_status,\n" +
-            "c.tv_arrival_remarks " +
+            "c.tv_arrival_remarks,\n" +
+            "c.house_bls " +
             "FROM api_container_all c " +
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
     public static final String IMPORT_CONTAINER_NAME = "api_container_all";

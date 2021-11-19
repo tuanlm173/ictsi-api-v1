@@ -4,7 +4,8 @@ public final class EmptyContainerBaseCondition {
 
     public static final String DEFAULT_CONDITION = "1=1";
 
-    public static final String EMPTY_CONTAINER_BASE_QUERY = "SELECT c.unique_key,\n" +
+    public static final String EMPTY_CONTAINER_BASE_QUERY = "SELECT " +
+            "c.unique_key,\n" +
             "c.operator_id,\n" +
             "c.complex_id,\n" +
             "c.facility_id,\n" +
@@ -17,14 +18,18 @@ public final class EmptyContainerBaseCondition {
             "c.create_time,\n" +
             "c.category,\n" +
             "c.freight_kind,\n" +
+            "c.goods_and_ctr_wt_kg,\n" +
+            "c.goods_ctr_wt_kg_advised,\n" +
+            "c.goods_ctr_wt_kg_gate_measured,\n" +
+            "c.goods_ctr_wt_kg_yard_measured,\n" +
             "c.seal_nbr1,\n" +
             "c.seal_nbr2,\n" +
             "c.seal_nbr3,\n" +
             "c.seal_nbr4,\n" +
-            "c.stopped_vessel,\n" +
+            "c.stopped_vessel,\t\t\n" +
             "c.stopped_rail,\n" +
             "c.stopped_road,\n" +
-            "c.imped_vessel,\n" +
+            "c.imped_vessel,\t\t\n" +
             "c.imped_rail,\n" +
             "c.imped_road,\n" +
             "c.arrive_pos_loctype,\n" +
@@ -35,12 +40,28 @@ public final class EmptyContainerBaseCondition {
             "c.last_pos_slot,\n" +
             "c.time_in,\n" +
             "c.time_out,\n" +
-            "c.booking_number,\n" +
+            "c.booking_number,\t\t\n" +
+            "c.requires_power,\n" +
             "c.time_state_change,\n" +
+            "c.pod,\n" +
             "c.transit_state,\n" +
             "c.nominal_length,\n" +
             "c.reefer_type,\n" +
             "c.iso_group,\n" +
+            "c.master_bl_nbr,\n" +
+            "c.origin,\n" +
+            "c.destination,\n" +
+            "c.consignee_id,\n" +
+            "c.consignee_name,\n" +
+            "c.shipper_id,\n" +
+            "c.shipper_name,\n" +
+            "c.house_bl_nbr,\t\t\t\n" +
+            "c.cargo_category,\n" +
+            "c.cargo_consignee_id,\n" +
+            "c.cargo_consignee_name,\n" +
+            "c.cargo_shipper_id,\n" +
+            "c.cargo_shipper_name,\n" +
+            "c.cargo_origin,\n" +
             "c.shipper_declared_vgm,\n" +
             "c.terminal_measured_vgm,\n" +
             "c.last_free_day,\n" +
@@ -56,7 +77,8 @@ public final class EmptyContainerBaseCondition {
             "c.consignee,\n" +
             "c.show_tvarrival_status,\n" +
             "c.tv_arrival_status,\n" +
-            "c.tv_arrival_remarks " +
+            "c.tv_arrival_remarks,\n" +
+            "c.house_bls " +
             "FROM api_container_all c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND ((c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind)))) AND c.delete_flag = 'N'";
     public static final String EMPTY_CONTAINER_NAME = "api_container_all";

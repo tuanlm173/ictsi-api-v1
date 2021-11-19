@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @Getter
@@ -11,13 +13,16 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "visit_state", "container_nbr", "equipment_type",
-        "teu", "operator_line_id", "operator_name", "create_time", "category", "freight_kind", "seal_nbr1", "seal_nbr2",
+        "teu", "operator_line_id", "operator_name", "create_time", "category", "freight_kind", "goods_and_ctr_wt_kg",
+        "goods_ctr_wt_kg_advised", "goods_ctr_wt_kg_gate_measured", "goods_ctr_wt_kg_yard_measured", "seal_nbr1", "seal_nbr2",
         "seal_nbr3", "seal_nbr4", "stopped_vessel", "stopped_rail", "stopped_road", "imped_vessel", "imped_rail", "imped_road",
         "arrive_pos_loctype", "arrive_pos_locid", "arrive_pos_slot", "last_pos_loctype", "last_pos_locid", "last_pos_slot",
-        "time_in", "time_out", "booking_number", "time_state_change", "transit_state",
-        "nominal_length", "reefer_type", "iso_group", "shipper_declared_vgm", "terminal_measured_vgm", "last_free_day", "paid_thru_day",
-        "power_last_free_day", "power_paid_thru_day", "ib_registry_nbr", "ob_registry_nbr", "entry_no", "appointment_start_date", "appointment_end_date",
-        "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks"})
+        "time_in", "time_out", "booking_number", "requires_power", "time_state_change", "pod", "transit_state",
+        "nominal_length", "reefer_type", "iso_group", "master_bl_nbr", "origin", "destination", "consignee_id", "consignee_name",
+        "shipper_id", "shipper_name", "house_bl_nbr", "cargo_category", "cargo_consignee_id", "cargo_consignee_name",
+        "cargo_shipper_id", "cargo_shipper_name", "cargo_origin", "shipper_declared_vgm", "terminal_measured_vgm", "last_free_day",
+        "paid_thru_day", "power_last_free_day", "power_paid_thru_day", "ib_registry_nbr", "ob_registry_nbr", "entry_no", "appointment_start_date",
+        "appointment_end_date", "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks", "house_bls"})
 public class EmptyContainerDto {
 
     @JsonProperty(value = "unique_key")
@@ -46,6 +51,14 @@ public class EmptyContainerDto {
     private String category;
     @JsonProperty(value = "freight_kind")
     private String freightKind;
+    @JsonProperty(value = "goods_and_ctr_wt_kg")
+    private Float goodsAndCtrWtKg;
+    @JsonProperty(value = "goods_ctr_wt_kg_advised")
+    private Float goodsCtrWtKgAdvised;
+    @JsonProperty(value = "goods_ctr_wt_kg_gate_measured")
+    private Float goodsCtrWtKgGateMeasured;
+    @JsonProperty(value = "goods_ctr_wt_kg_yard_measured")
+    private Float goodsCtrWtKgYardMeasured;
     @JsonProperty(value = "seal_nbr1")
     private String sealNbr1;
     @JsonProperty(value = "seal_nbr2")
@@ -84,8 +97,12 @@ public class EmptyContainerDto {
     private String timeOut;
     @JsonProperty(value = "booking_number")
     private String bookingNumber;
+    @JsonProperty(value = "requires_power")
+    private String requiresPower;
     @JsonProperty(value = "time_state_change")
     private String timeStateChange;
+    @JsonProperty(value = "pod")
+    private String pod;
     @JsonProperty(value = "transit_state")
     private String transitState;
     @JsonProperty(value = "nominal_length")
@@ -94,6 +111,34 @@ public class EmptyContainerDto {
     private String reeferType;
     @JsonProperty(value = "iso_group")
     private String isoGroup;
+    @JsonProperty(value = "master_bl_nbr")
+    private String masterBlNbr;
+    @JsonProperty(value = "origin")
+    private String origin;
+    @JsonProperty(value = "destination")
+    private String destination;
+    @JsonProperty(value = "consignee_id")
+    private String consigneeId;
+    @JsonProperty(value = "consignee_name")
+    private String consigneeName;
+    @JsonProperty(value = "shipper_id")
+    private String shipperId;
+    @JsonProperty(value = "shipper_name")
+    private String shipperName;
+    @JsonProperty(value = "house_bl_nbr")
+    private String houseBlNbr;
+    @JsonProperty(value = "cargo_category")
+    private String cargoCategory;
+    @JsonProperty(value = "cargo_consignee_id")
+    private String cargoConsigneeId;
+    @JsonProperty(value = "cargo_consignee_name")
+    private String cargoConsigneeName;
+    @JsonProperty(value = "cargo_shipper_id")
+    private String cargoShipperId;
+    @JsonProperty(value = "cargo_shipper_name")
+    private String cargoShipperName;
+    @JsonProperty(value = "cargo_origin")
+    private String cargoOrigin;
 
     @JsonProperty(value = "shipper_declared_vgm")
     private String shipperDeclaredVgm;
@@ -127,5 +172,7 @@ public class EmptyContainerDto {
     private String tvArrivalStatus;
     @JsonProperty(value = "tv_arrival_remarks")
     private String tvArrivalRemarks;
+    @JsonProperty(value = "house_bls")
+    private List<HouseBillOfLadings> houseBls;
 
 }
