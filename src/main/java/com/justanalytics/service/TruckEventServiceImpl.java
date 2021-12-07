@@ -64,6 +64,8 @@ public class TruckEventServiceImpl implements TruckEventService {
             String appliedToId = String.valueOf(data.get("applied_to_id"));
             String truckVisitGkey = String.valueOf(data.get("truck_visit_gkey"));
             String notes = String.valueOf(data.get("notes"));
+            String category = String.valueOf(data.get("category"));
+            String subCategory = String.valueOf(data.get("sub_category"));
 
             List<FieldChanges> fieldChanges = new ArrayList<>();
             List<FieldChanges> rawFieldChanges = (List<FieldChanges>) data.get("field_changes");
@@ -88,6 +90,8 @@ public class TruckEventServiceImpl implements TruckEventService {
                     .truckVisitGkey(truckVisitGkey)
                     .notes(notes)
                     .fieldChanges(fieldChanges)
+                    .category(category)
+                    .subCategory(subCategory)
                     .build());
 
         }

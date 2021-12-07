@@ -18,7 +18,9 @@ public final class VesselEventBaseCondition {
             "c.vessel_gkey,\n" +
             "c.applied_to_id,\n" +
             "c.notes,\n" +
-            "c.field_changes \n" +
+            "c.field_changes,\n" +
+            "c.category,\n" +
+            "c.sub_category \n" +
             "FROM api_vessel_event c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
 

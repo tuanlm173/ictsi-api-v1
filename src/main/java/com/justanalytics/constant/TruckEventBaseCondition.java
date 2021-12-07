@@ -16,7 +16,9 @@ public final class TruckEventBaseCondition {
             "c.applied_to_id,\n" +
             "c.truck_visit_gkey,\n" +
             "c.notes,\n" +
-            "c.field_changes \n" +
+            "c.field_changes,\n" +
+            "c.category,\n" +
+            "c.sub_category \n" +
             "FROM api_truck_event c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
 

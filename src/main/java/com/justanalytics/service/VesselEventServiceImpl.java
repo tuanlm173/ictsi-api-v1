@@ -64,6 +64,8 @@ public class VesselEventServiceImpl implements VesselEventService {
             String vesselGkey = String.valueOf(data.get("vessel_gkey"));
             String appliedToId = String.valueOf(data.get("applied_to_id"));
             String notes = String.valueOf(data.get("notes"));
+            String category = String.valueOf(data.get("category"));
+            String subCategory = String.valueOf(data.get("sub_category"));
 
             List<FieldChanges> fieldChanges = new ArrayList<>();
             List<FieldChanges> rawFieldChanges = (List<FieldChanges>) data.get("field_changes");
@@ -88,6 +90,8 @@ public class VesselEventServiceImpl implements VesselEventService {
                     .appliedToId(appliedToId)
                     .notes(notes)
                     .fieldChanges(fieldChanges)
+                    .category(category)
+                    .subCategory(subCategory)
                     .build());
 
         }

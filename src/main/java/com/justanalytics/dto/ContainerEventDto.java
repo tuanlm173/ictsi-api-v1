@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({"unique_key", "operator", "complex", "facility", "yard", "placed_by", "placed_time", "event_type",
-        "event_descriptions", "notifiable", "container_gkey", "applied_to_id", "notes", "field_changes"})
+        "event_descriptions", "notifiable", "container_gkey", "applied_to_id", "notes", "field_changes", "category", "sub_category"})
 public class ContainerEventDto {
 
     @JsonProperty(value = "unique_key")
@@ -45,5 +45,9 @@ public class ContainerEventDto {
     private String notes;
     @JsonProperty(value = "field_changes")
     private List<FieldChanges> fieldChanges;
+    @JsonProperty(value = "category")
+    private String category;
+    @JsonProperty(value = "sub_category")
+    private String subCategory;
 
 }
