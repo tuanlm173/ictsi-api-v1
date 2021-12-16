@@ -23,7 +23,9 @@ import java.util.List;
         "shipper_id", "shipper_name", "house_bl_nbr", "cargo_category", "cargo_consignee_id", "cargo_consignee_name",
         "cargo_shipper_id", "cargo_shipper_name", "cargo_origin", "shipper_declared_vgm", "terminal_measured_vgm", "last_free_day",
         "paid_thru_day", "power_last_free_day", "power_paid_thru_day", "ib_registry_nbr", "ob_registry_nbr", "entry_no", "appointment_start_date",
-        "appointment_end_date", "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks", "house_bls"})
+        "appointment_end_date", "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks", "house_bls",
+        "ib_id", "ib_cv_mode", "ib_carrier_name", "ib_operator_name", "ib_inbound_vyg", "ib_outbound_vyg", "ob_id", "ob_cv_mode", "ob_carrier_name",
+        "ob_carrier_operator_name", "ob_inbound_vyg", "ob_outbound_vyg", "remarks"})
 public class ExportContainerDto {
 
     @JsonProperty(value = "unique_key")
@@ -176,5 +178,30 @@ public class ExportContainerDto {
     @JsonProperty(value = "house_bls")
     private List<HouseBillOfLadings> houseBls;
 
-
+    @JsonProperty(value = "ib_id")
+    private String ibId;
+    @JsonProperty(value = "ib_cv_mode")
+    private String ibCvMode;
+    @JsonProperty(value = "ib_carrier_name")
+    private String ibCarrierName;
+    @JsonProperty(value = "ib_operator_name")
+    private String ibOperatorName;
+    @JsonProperty(value = "ib_inbound_vyg")
+    private String ibInboundVyg;
+    @JsonProperty(value = "ib_outbound_vyg")
+    private String ibOutboundVyg;
+    @JsonProperty(value = "ob_id")
+    private String obId;
+    @JsonProperty(value = "ob_cv_mode")
+    private String obCvMode;
+    @JsonProperty(value = "ob_carrier_name")
+    private String obCarrierName;
+    @JsonProperty(value = "ob_carrier_operator_name")
+    private String obCarrierOperatorName;
+    @JsonProperty(value = "ob_inbound_vyg")
+    private String obInboundVyg;
+    @JsonProperty(value = "ob_outbound_vyg")
+    private String obOutboundVyg;
+    @JsonProperty(value = "remarks")
+    private String remarks;
 }

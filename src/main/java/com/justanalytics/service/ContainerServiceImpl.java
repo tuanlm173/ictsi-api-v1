@@ -177,6 +177,19 @@ public class ContainerServiceImpl implements ContainerService {
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
             String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+            String ibId = String.valueOf(data.get("ib_id"));
+            String ibCvMode = String.valueOf(data.get("ib_cv_mode"));
+            String ibCarrierName = String.valueOf(data.get("ib_carrier_name"));
+            String ibOperatorName = String.valueOf(data.get("ib_operator_name"));
+            String ibInboundVyg = String.valueOf(data.get("ib_inbound_vyg"));
+            String ibOutboundVyg = String.valueOf(data.get("ib_outbound_vyg"));
+            String obId = String.valueOf(data.get("ob_id"));
+            String obCvMode = String.valueOf(data.get("ob_cv_mode"));
+            String obCarrierName = String.valueOf(data.get("ob_carrier_name"));
+            String obCarrierOperatorName = String.valueOf(data.get("ob_carrier_operator_name"));
+            String obInboundVyg = String.valueOf(data.get("ob_inbound_vyg"));
+            String obOutboundVyg = String.valueOf(data.get("ob_outbound_vyg"));
+            String remarks = String.valueOf(data.get("remarks"));
 
             List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
             List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
@@ -258,6 +271,19 @@ public class ContainerServiceImpl implements ContainerService {
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
                     .houseBls(houseBillOfLadings)
+                    .ibId(ibId)
+                    .ibCvMode(ibCvMode)
+                    .ibCarrierName(ibCarrierName)
+                    .ibOperatorName(ibOperatorName)
+                    .ibInboundVyg(ibInboundVyg)
+                    .ibOutboundVyg(ibOutboundVyg)
+                    .obId(obId)
+                    .obCvMode(obCvMode)
+                    .obCarrierName(obCarrierName)
+                    .obCarrierOperatorName(obCarrierOperatorName)
+                    .obInboundVyg(obInboundVyg)
+                    .obOutboundVyg(obOutboundVyg)
+                    .remarks(remarks)
                     .build());
 
         }
@@ -344,6 +370,19 @@ public class ContainerServiceImpl implements ContainerService {
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
             String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+            String ibId = String.valueOf(data.get("ib_id"));
+            String ibCvMode = String.valueOf(data.get("ib_cv_mode"));
+            String ibCarrierName = String.valueOf(data.get("ib_carrier_name"));
+            String ibOperatorName = String.valueOf(data.get("ib_operator_name"));
+            String ibInboundVyg = String.valueOf(data.get("ib_inbound_vyg"));
+            String ibOutboundVyg = String.valueOf(data.get("ib_outbound_vyg"));
+            String obId = String.valueOf(data.get("ob_id"));
+            String obCvMode = String.valueOf(data.get("ob_cv_mode"));
+            String obCarrierName = String.valueOf(data.get("ob_carrier_name"));
+            String obCarrierOperatorName = String.valueOf(data.get("ob_carrier_operator_name"));
+            String obInboundVyg = String.valueOf(data.get("ob_inbound_vyg"));
+            String obOutboundVyg = String.valueOf(data.get("ob_outbound_vyg"));
+            String remarks = String.valueOf(data.get("remarks"));
 
             List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
             List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
@@ -425,6 +464,19 @@ public class ContainerServiceImpl implements ContainerService {
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
                     .houseBls(houseBillOfLadings)
+                    .ibId(ibId)
+                    .ibCvMode(ibCvMode)
+                    .ibCarrierName(ibCarrierName)
+                    .ibOperatorName(ibOperatorName)
+                    .ibInboundVyg(ibInboundVyg)
+                    .ibOutboundVyg(ibOutboundVyg)
+                    .obId(obId)
+                    .obCvMode(obCvMode)
+                    .obCarrierName(obCarrierName)
+                    .obCarrierOperatorName(obCarrierOperatorName)
+                    .obInboundVyg(obInboundVyg)
+                    .obOutboundVyg(obOutboundVyg)
+                    .remarks(remarks)
                     .build());
 
         }
@@ -511,6 +563,19 @@ public class ContainerServiceImpl implements ContainerService {
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
             String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+            String ibId = String.valueOf(data.get("ib_id"));
+            String ibCvMode = String.valueOf(data.get("ib_cv_mode"));
+            String ibCarrierName = String.valueOf(data.get("ib_carrier_name"));
+            String ibOperatorName = String.valueOf(data.get("ib_operator_name"));
+            String ibInboundVyg = String.valueOf(data.get("ib_inbound_vyg"));
+            String ibOutboundVyg = String.valueOf(data.get("ib_outbound_vyg"));
+            String obId = String.valueOf(data.get("ob_id"));
+            String obCvMode = String.valueOf(data.get("ob_cv_mode"));
+            String obCarrierName = String.valueOf(data.get("ob_carrier_name"));
+            String obCarrierOperatorName = String.valueOf(data.get("ob_carrier_operator_name"));
+            String obInboundVyg = String.valueOf(data.get("ob_inbound_vyg"));
+            String obOutboundVyg = String.valueOf(data.get("ob_outbound_vyg"));
+            String remarks = String.valueOf(data.get("remarks"));
 
             List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
             List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
@@ -592,6 +657,19 @@ public class ContainerServiceImpl implements ContainerService {
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
                     .houseBls(houseBillOfLadings)
+                    .ibId(ibId)
+                    .ibCvMode(ibCvMode)
+                    .ibCarrierName(ibCarrierName)
+                    .ibOperatorName(ibOperatorName)
+                    .ibInboundVyg(ibInboundVyg)
+                    .ibOutboundVyg(ibOutboundVyg)
+                    .obId(obId)
+                    .obCvMode(obCvMode)
+                    .obCarrierName(obCarrierName)
+                    .obCarrierOperatorName(obCarrierOperatorName)
+                    .obInboundVyg(obInboundVyg)
+                    .obOutboundVyg(obOutboundVyg)
+                    .remarks(remarks)
                     .build());
 
         }

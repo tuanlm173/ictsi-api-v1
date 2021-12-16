@@ -76,7 +76,20 @@ public final class ContainerBaseCondition {
             "c.show_tvarrival_status,\n" +
             "c.tv_arrival_status,\n" +
             "c.tv_arrival_remarks,\n" +
-            "c.house_bls " +
+            "c.house_bls,\n" +
+            "c.ib_id,\n" +
+            "c.ib_cv_mode,\n" +
+            "c.ib_carrier_name,\n" +
+            "c.ib_operator_name,\n" +
+            "c.ib_inbound_vyg,\n" +
+            "c.ib_outbound_vyg,\n" +
+            "c.ob_id,\n" +
+            "c.ob_cv_mode,\n" +
+            "c.ob_carrier_name,\n" +
+            "c.ob_carrier_operator_name,\n" +
+            "c.ob_inbound_vyg,\n" +
+            "c.ob_outbound_vyg,\n" +
+            "c.remarks " +
             "FROM api_container_all c " +
             "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N'";
     public static final String ALL_CONTAINER_NAME = "api_container_all";
