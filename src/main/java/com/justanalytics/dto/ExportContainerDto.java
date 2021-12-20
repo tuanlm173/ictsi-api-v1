@@ -25,7 +25,7 @@ import java.util.List;
         "paid_thru_day", "power_last_free_day", "power_paid_thru_day", "ib_registry_nbr", "ob_registry_nbr", "entry_no", "appointment_start_date",
         "appointment_end_date", "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks", "house_bls",
         "ib_id", "ib_cv_mode", "ib_carrier_name", "ib_operator_name", "ib_inbound_vyg", "ib_outbound_vyg", "ob_id", "ob_cv_mode", "ob_carrier_name",
-        "ob_carrier_operator_name", "ob_inbound_vyg", "ob_outbound_vyg", "remarks"})
+        "ob_carrier_operator_name", "ob_inbound_vyg", "ob_outbound_vyg", "remarks", "transit_state_descriptions"})
 public class ExportContainerDto {
 
     @JsonProperty(value = "unique_key")
@@ -204,4 +204,6 @@ public class ExportContainerDto {
     private String obOutboundVyg;
     @JsonProperty(value = "remarks")
     private String remarks;
+    @JsonProperty(value = "transit_state_descriptions")
+    private List<LanguageDescription> transitStateDescriptions;
 }
