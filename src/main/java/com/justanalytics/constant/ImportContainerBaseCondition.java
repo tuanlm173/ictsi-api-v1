@@ -89,7 +89,8 @@ public final class ImportContainerBaseCondition {
             "c.ob_carrier_operator_name,\n" +
             "c.ob_inbound_vyg,\n" +
             "c.ob_outbound_vyg,\n" +
-            "c.remarks " +
+            "c.remarks,\n" +
+            "c.transit_state_descriptions " +
             "FROM api_container_all c " +
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
     public static final String IMPORT_CONTAINER_NAME = "api_container_all";

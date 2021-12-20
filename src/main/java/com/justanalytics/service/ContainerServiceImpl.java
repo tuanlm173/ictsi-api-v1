@@ -1,11 +1,7 @@
 package com.justanalytics.service;
 
-import com.justanalytics.dto.ContainerDto;
-import com.justanalytics.dto.EmptyContainerDto;
-import com.justanalytics.dto.ExportContainerDto;
-import com.justanalytics.dto.HouseBillOfLadings;
+import com.justanalytics.dto.*;
 import com.justanalytics.query.Query;
-import com.justanalytics.query.filter.DefaultFilter;
 import com.justanalytics.repository.DataRepository;
 import com.justanalytics.types.ContainerImped;
 import com.justanalytics.types.ContainerType;
@@ -195,6 +191,10 @@ public class ContainerServiceImpl implements ContainerService {
             List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
             if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
 
+            List<LanguageDescription> transitStateDescriptions = new ArrayList<>();
+            List<LanguageDescription> rawTransitStateDescriptions = (List<LanguageDescription>) data.get("transit_state_descriptions");
+            if (rawTransitStateDescriptions != null) transitStateDescriptions = rawTransitStateDescriptions;
+
 
             results.add(ContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -284,6 +284,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .obInboundVyg(obInboundVyg)
                     .obOutboundVyg(obOutboundVyg)
                     .remarks(remarks)
+                    .transitStateDescriptions(transitStateDescriptions)
                     .build());
 
         }
@@ -388,6 +389,10 @@ public class ContainerServiceImpl implements ContainerService {
             List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
             if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
 
+            List<LanguageDescription> transitStateDescriptions = new ArrayList<>();
+            List<LanguageDescription> rawTransitStateDescriptions = (List<LanguageDescription>) data.get("transit_state_descriptions");
+            if (rawTransitStateDescriptions != null) transitStateDescriptions = rawTransitStateDescriptions;
+
 
             results.add(EmptyContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -477,6 +482,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .obInboundVyg(obInboundVyg)
                     .obOutboundVyg(obOutboundVyg)
                     .remarks(remarks)
+                    .transitStateDescriptions(transitStateDescriptions)
                     .build());
 
         }
@@ -581,6 +587,10 @@ public class ContainerServiceImpl implements ContainerService {
             List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
             if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
 
+            List<LanguageDescription> transitStateDescriptions = new ArrayList<>();
+            List<LanguageDescription> rawTransitStateDescriptions = (List<LanguageDescription>) data.get("transit_state_descriptions");
+            if (rawTransitStateDescriptions != null) transitStateDescriptions = rawTransitStateDescriptions;
+
 
             results.add(ExportContainerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -670,6 +680,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .obInboundVyg(obInboundVyg)
                     .obOutboundVyg(obOutboundVyg)
                     .remarks(remarks)
+                    .transitStateDescriptions(transitStateDescriptions)
                     .build());
 
         }
