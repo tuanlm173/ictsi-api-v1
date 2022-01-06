@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "visit_state", "container_nbr", "equipment_type",
-        "teu", "operator_line_id", "operator_name", "create_time", "category", "freight_kind", "goods_and_ctr_wt_kg",
+        "teu", "line_operator_id", "line_operator_name", "create_time", "category", "freight_kind", "goods_and_ctr_wt_kg",
         "goods_ctr_wt_kg_advised", "goods_ctr_wt_kg_gate_measured", "goods_ctr_wt_kg_yard_measured", "seal_nbr1", "seal_nbr2",
         "seal_nbr3", "seal_nbr4", "stopped_vessel", "stopped_rail", "stopped_road", "imped_vessel", "imped_rail", "imped_road",
         "arrive_pos_loctype", "arrive_pos_locid", "arrive_pos_slot", "last_pos_loctype", "last_pos_locid", "last_pos_slot",
@@ -43,9 +43,9 @@ public class EmptyContainerDto {
     private String equipmentType;
     @JsonProperty(value = "teu")
     private Float teu;
-    @JsonProperty(value = "operator_line_id")
+    @JsonProperty(value = "line_operator_id")
     private String operatorLineId;
-    @JsonProperty(value = "operator_name")
+    @JsonProperty(value = "line_operator_name")
     private String operatorName;
     @JsonProperty(value = "create_time")
     private String createTime;

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.justanalytics</groupId>
 	<artifactId>ictsiapi-synapse</artifactId>
-	<version>0.0.5.prod-SNAPSHOT</version>
+	<version>0.0.12.dev-SNAPSHOT</version>
 	<name>ictsiapi-synapse</name>
 	<description>ictsi synapse demo</description>
 	<properties>
@@ -133,13 +133,13 @@
 				<version>1.11.0</version>
 				<configuration>
 					<schemaVersion>v2</schemaVersion>
-					<subscriptionId>f861304e-ffeb-4207-8a96-13523c6185d7</subscriptionId>
-					<resourceGroup>edp-prod-sea-rg-dataplatform</resourceGroup>
-					<appName>ictsi-rest-api</appName>
+					<subscriptionId>da2a7767-6a99-4b7a-8ecd-b1a6f265d721</subscriptionId>
+					<resourceGroup>edp-dev-sea-rg-dataplatform</resourceGroup>
+					<appName>ictsi-restapi-v1</appName>
 					<pricingTier>P1v2</pricingTier>
 					<region>southeastasia</region>
-					<appServicePlanName>ASP-edpprodseargdataplatform-b301</appServicePlanName>
-					<appServicePlanResourceGroup>edp-prod-sea-rg-dataplatform</appServicePlanResourceGroup>
+					<appServicePlanName>ASP-edpdevseargdataplatform-aea6</appServicePlanName>
+					<appServicePlanResourceGroup>edp-dev-sea-rg-dataplatform</appServicePlanResourceGroup>
 					<runtime>
 						<os>Windows</os>
 						<javaVersion>java11</javaVersion>

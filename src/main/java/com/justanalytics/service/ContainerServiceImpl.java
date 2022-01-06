@@ -107,8 +107,8 @@ public class ContainerServiceImpl implements ContainerService {
             String containerNbr = String.valueOf(data.get("container_nbr"));
             String equipmentType = String.valueOf(data.get("equipment_type"));
             Float teu =  Objects.nonNull(data.get("teu")) ? Float.parseFloat(String.valueOf(data.get("teu"))) : null;
-            String operatorLineId = String.valueOf(data.get("operator_line_id"));
-            String operatorName = String.valueOf(data.get("operator_name"));
+            String operatorLineId = String.valueOf(data.get("line_operator_id"));
+            String operatorName = String.valueOf(data.get("line_operator_name"));
             String createTime = String.valueOf(data.get("create_time"));
             String category = String.valueOf(data.get("category"));
             String freightKind = String.valueOf(data.get("freight_kind"));
@@ -305,8 +305,8 @@ public class ContainerServiceImpl implements ContainerService {
             String containerNbr = String.valueOf(data.get("container_nbr"));
             String equipmentType = String.valueOf(data.get("equipment_type"));
             Float teu =  Objects.nonNull(data.get("teu")) ? Float.parseFloat(String.valueOf(data.get("teu"))) : null;
-            String operatorLineId = String.valueOf(data.get("operator_line_id"));
-            String operatorName = String.valueOf(data.get("operator_name"));
+            String operatorLineId = String.valueOf(data.get("line_operator_id"));
+            String operatorName = String.valueOf(data.get("line_operator_name"));
             String createTime = String.valueOf(data.get("create_time"));
             String category = String.valueOf(data.get("category"));
             String freightKind = String.valueOf(data.get("freight_kind"));
@@ -503,8 +503,8 @@ public class ContainerServiceImpl implements ContainerService {
             String containerNbr = String.valueOf(data.get("container_nbr"));
             String equipmentType = String.valueOf(data.get("equipment_type"));
             Float teu =  Objects.nonNull(data.get("teu")) ? Float.parseFloat(String.valueOf(data.get("teu"))) : null;
-            String operatorLineId = String.valueOf(data.get("operator_line_id"));
-            String operatorName = String.valueOf(data.get("operator_name"));
+            String operatorLineId = String.valueOf(data.get("line_operator_id"));
+            String operatorName = String.valueOf(data.get("line_operator_name"));
             String createTime = String.valueOf(data.get("create_time"));
             String category = String.valueOf(data.get("category"));
             String freightKind = String.valueOf(data.get("freight_kind"));

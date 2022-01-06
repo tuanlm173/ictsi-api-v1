@@ -11,8 +11,8 @@ public final class ExportContainerBaseCondition {
                     "c.container_nbr,\n" +
                     "c.equipment_type,\n" +
                     "c.teu,\n" +
-                    "c.operator_line_id,\n" +
-                    "c.operator_name,\n" +
+                    "c.line_operator_id,\n" +
+                    "c.line_operator_name,\n" +
                     "c.create_time,\n" +
                     "c.category,\n" +
                     "c.freight_kind,\n" +
@@ -113,7 +113,7 @@ public final class ExportContainerBaseCondition {
     public static final String EXPORT_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_pos_locid IN (%s) AND IS_DEFINED(c.arrive_pos_locid))";
     public static final String EXPORT_CONTAINER_NUMBER = "(c.container_nbr IN (%s) AND IS_DEFINED(c.container_nbr))";
     public static final String EXPORT_CONTAINER_EQUIPMENT_TYPE = "(c.equipment_type IN (%s) AND IS_DEFINED(c.equipment_type))";
-    public static final String EXPORT_CONTAINER_OPERATION_LINE_ID = "(c.operator_line_id IN (%s) AND IS_DEFINED(c.operator_line_id))";
+    public static final String EXPORT_CONTAINER_OPERATION_LINE_ID = "(c.line_operator_id IN (%s) AND IS_DEFINED(c.line_operator_id))";
 
     public static final String EXPORT_CONTAINER_TIME_IN = "((c.time_in >= '%s' AND c.time_in <= '%s') AND IS_DEFINED(c.time_in))";
     public static final String EXPORT_CONTAINER_TIME_OUT = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";

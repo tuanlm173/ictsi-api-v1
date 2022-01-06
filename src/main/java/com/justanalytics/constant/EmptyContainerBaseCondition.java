@@ -13,8 +13,8 @@ public final class EmptyContainerBaseCondition {
             "c.container_nbr,\n" +
             "c.equipment_type,\n" +
             "c.teu,\n" +
-            "c.operator_line_id,\n" +
-            "c.operator_name,\n" +
+            "c.line_operator_id,\n" +
+            "c.line_operator_name,\n" +
             "c.create_time,\n" +
             "c.category,\n" +
             "c.freight_kind,\n" +
@@ -103,10 +103,10 @@ public final class EmptyContainerBaseCondition {
     public static final String EMPTY_CONTAINER_ARRIVE_POS_LOCTYPE = "(c.arrive_pos_loctype IN (%s) AND IS_DEFINED(c.arrive_pos_loctype))";
     public static final String EMPTY_CONTAINER_DEPART_POST_LOCTYPE = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_loctype IN (%s) AND IS_DEFINED(c.last_pos_loctype)))";
     public static final String EMPTY_CONTAINER_DEPART_POST_LOC_ID = "((c.visit_state = '3DEPARTED' AND IS_DEFINED(c.visit_state)) AND (c.last_pos_locid IN (%s) AND IS_DEFINED(c.last_pos_locid)))";
-    public static final String EMPTY_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_Pos_Locid IN (%s) AND IS_DEFINED(c.arrive_Pos_Locid))";
-    public static final String EMPTY_CONTAINER_NUMBER = "(c.ContainerNbr IN (%s) AND IS_DEFINED(c.ContainerNbr))";
-    public static final String EMPTY_CONTAINER_EQUIPMENT_TYPE = "(c.EquipmentType IN (%s) AND IS_DEFINED(c.EquipmentType))";
-    public static final String EMPTY_CONTAINER_OPERATION_LINE_ID = "(c.OperatorLineID IN (%s) AND IS_DEFINED(c.OperatorLineID))";
+    public static final String EMPTY_CONTAINER_ARRIVE_POS_LOC_ID = "(c.arrive_pos_locid IN (%s) AND IS_DEFINED(c.arrive_pos_locid))";
+    public static final String EMPTY_CONTAINER_NUMBER = "(c.container_nbr IN (%s) AND IS_DEFINED(c.container_nbr))";
+    public static final String EMPTY_CONTAINER_EQUIPMENT_TYPE = "(c.equipment_type IN (%s) AND IS_DEFINED(c.equipment_type))";
+    public static final String EMPTY_CONTAINER_OPERATION_LINE_ID = "(c.line_operator_id IN (%s) AND IS_DEFINED(c.line_operator_id))";
 
     public static final String EMPTY_CONTAINER_TIME_IN = "((c.time_in >= '%s' AND c.time_in <= '%s') AND IS_DEFINED(c.time_in))";
     public static final String EMPTY_CONTAINER_TIME_OUT = "((c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";
