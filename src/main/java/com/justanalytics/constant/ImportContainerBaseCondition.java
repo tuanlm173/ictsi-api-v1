@@ -121,6 +121,6 @@ public final class ImportContainerBaseCondition {
     public static final String IMPORT_CONTAINER_BOOKING_NUMBER = "(c.booking_number IN (%s) AND IS_DEFINED(c.booking_number))";
     public static final String IMPORT_CONTAINER_BOL_NUMBER = "((c.bill_of_lading_nbr IN ('%s') AND IS_DEFINED(c.bill_of_lading_nbr)) OR ((ARRAY_CONTAINS(c.house_bls, {'house_bl_nbr': '%s'}, true)) AND IS_DEFINED(c.house_bls)))";
 
-
+    public static final String IMPORT_CONTAINER_UNIQUE_KEY = "(c.unique_key IN (%s) AND IS_DEFINED(c.unique_key))";
 
 }

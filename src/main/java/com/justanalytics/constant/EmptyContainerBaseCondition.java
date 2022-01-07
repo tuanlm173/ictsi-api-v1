@@ -111,6 +111,6 @@ public final class EmptyContainerBaseCondition {
     public static final String EMPTY_CONTAINER_TIME_IN = "((c.time_in >= '%s' AND c.time_in <= '%s') AND IS_DEFINED(c.time_in))";
     public static final String EMPTY_CONTAINER_TIME_OUT = "((c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";
 
-
+    public static final String EMPTY_CONTAINER_UNIQUE_KEY = "(c.unique_key IN (%s) AND IS_DEFINED(c.unique_key))";
 
 }

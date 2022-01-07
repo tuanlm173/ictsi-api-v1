@@ -60,6 +60,7 @@ public class DataController {
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "container-type") String containerType,
+            @RequestParam(value = "unique-key", required = false) String uniqueKey,
             @RequestParam(value = "facility-id", required = false) String facilityId,
             @RequestParam(value = "container-number", required = false) String containerNumber,
             @RequestParam(value = "operation-line-id", required = false) String containerOperationLineId,
@@ -106,6 +107,7 @@ public class DataController {
                         containerArrivePosLocId,
                         containerBookingNumber,
                         bolNumber,
+                        uniqueKey,
                         impedType,
                         operationType,
                         terminalConditions
@@ -136,6 +138,7 @@ public class DataController {
                         containerArrivePosLocId,
                         containerBookingNumber,
                         bolNumber,
+                        uniqueKey,
                         impedType,
                         operationType,
                         terminalConditions
@@ -163,6 +166,7 @@ public class DataController {
                         arriveTo,
                         departFrom,
                         departTo,
+                        uniqueKey,
                         impedType,
                         operationType,
                         terminalConditions

@@ -702,7 +702,8 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime arriveFrom,
             LocalDateTime arriveTo,
             LocalDateTime departFrom,
-            LocalDateTime departTo
+            LocalDateTime departTo,
+            String containerUniqueKey
     ) {
         List<String> filters = new ArrayList<>();
 
@@ -720,6 +721,8 @@ public class ContainerServiceImpl implements ContainerService {
         String containerTimeInFilter = buildSimpleTimeframeContainerParam(EMPTY_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String containerTimeOutFilter = buildSimpleTimeframeContainerParam(EMPTY_CONTAINER_TIME_OUT, departFrom, departTo);
 
+        String containerUniqueKeyFilter = buildFilter(EMPTY_CONTAINER_UNIQUE_KEY, parseParams(containerUniqueKey));
+
         filters.add(containerVisitStateFilter);
         filters.add(containerTransitStateFilter);
         filters.add(containerIsoGroupFilter);
@@ -732,6 +735,7 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(containerOperationLineIFilter);
         filters.add(containerTimeInFilter);
         filters.add(containerTimeOutFilter);
+        filters.add(containerUniqueKeyFilter);
 
         return filters;
     }
@@ -751,7 +755,8 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime arriveFrom,
             LocalDateTime arriveTo,
             LocalDateTime departFrom,
-            LocalDateTime departTo
+            LocalDateTime departTo,
+            String uniqueKey
     ) {
         List<String> filters = new ArrayList<>();
 
@@ -770,6 +775,8 @@ public class ContainerServiceImpl implements ContainerService {
         String containerTimeInFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String containerTimeOutFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_OUT, departFrom, departTo);
 
+        String containerUniqueKeyFilter = buildFilter(ALL_CONTAINER_UNIQUE_KEY, parseParams(uniqueKey));
+
         filters.add(containerFacilityFilter);
         filters.add(containerVisitStateFilter);
         filters.add(containerTransitStateFilter);
@@ -783,6 +790,7 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(containerOperationLineIFilter);
         filters.add(containerTimeInFilter);
         filters.add(containerTimeOutFilter);
+        filters.add(containerUniqueKeyFilter);
 
         return filters;
     }
@@ -805,6 +813,7 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime departFrom,
             LocalDateTime departTo,
             String containerBookingNumber,
+            String containerUniqueKey,
             String impedType
     ) {
         List<String> filters = new ArrayList<>();
@@ -824,6 +833,8 @@ public class ContainerServiceImpl implements ContainerService {
         String timeInFilter = buildSimpleTimeframeContainerParam(EXPORT_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String timeOutFilter = buildSimpleTimeframeContainerParam(EXPORT_CONTAINER_TIME_OUT, departFrom, departTo);
         String containerBookingNumberFilter = buildFilter(EXPORT_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
+
+        String containerUniqueKeyFilter = buildFilter(EXPORT_CONTAINER_UNIQUE_KEY, parseParams(containerUniqueKey));
 
         if (ContainerImped.NONE.getContainerImped().equalsIgnoreCase(impedType))
             filters.add(EXPORT_IMPED_TYPE_NONE);
@@ -852,6 +863,7 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(timeInFilter);
         filters.add(timeOutFilter);
         filters.add(containerBookingNumberFilter);
+        filters.add(containerUniqueKeyFilter);
 
         return filters;
     }
@@ -875,6 +887,7 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime departTo,
             String containerBookingNumber,
             String containerBolNumber,
+            String containerUniqueKey,
             String impedType
     ) {
         List<String> filters = new ArrayList<>();
@@ -895,6 +908,7 @@ public class ContainerServiceImpl implements ContainerService {
         String timeOutFilter = buildSimpleTimeframeContainerParam(IMPORT_CONTAINER_TIME_OUT, departFrom, departTo);
         String containerBookingNumberFilter = buildFilter(IMPORT_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
         String containerBolNumberFilter = buildBolFilter(IMPORT_CONTAINER_BOL_NUMBER, containerBolNumber);
+        String containerUniqueKeyFilter = buildFilter(IMPORT_CONTAINER_UNIQUE_KEY, parseParams(containerUniqueKey));
 
         if (ContainerImped.NONE.getContainerImped().equalsIgnoreCase(impedType))
             filters.add(IMPORT_IMPED_TYPE_NONE);
@@ -924,6 +938,7 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(timeOutFilter);
         filters.add(containerBookingNumberFilter);
         filters.add(containerBolNumberFilter);
+        filters.add(containerUniqueKeyFilter);
 
         return filters;
     }
@@ -950,6 +965,7 @@ public class ContainerServiceImpl implements ContainerService {
             String containerArrivePosLocId,
             String containerBookingNumber,
             String bolNumber,
+            String containerUniqueKey,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -982,6 +998,7 @@ public class ContainerServiceImpl implements ContainerService {
                     departTo,
                     containerBookingNumber,
                     bolNumber,
+                    containerUniqueKey,
                     impedType
             );
 
@@ -1053,7 +1070,8 @@ public class ContainerServiceImpl implements ContainerService {
                     arriveFrom,
                     arriveTo,
                     departFrom,
-                    departTo
+                    departTo,
+                    containerUniqueKey
             );
 
             personaFilters = personaFilters.stream()
@@ -1130,6 +1148,7 @@ public class ContainerServiceImpl implements ContainerService {
             String containerArrivePosLocId,
             String containerBookingNumber,
             String bolNumber,
+            String containerUniqueKey,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -1159,6 +1178,7 @@ public class ContainerServiceImpl implements ContainerService {
                 departFrom,
                 departTo,
                 containerBookingNumber,
+                containerUniqueKey,
                 impedType
         );
 
@@ -1229,6 +1249,7 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime arriveTo,
             LocalDateTime departFrom,
             LocalDateTime departTo,
+            String containerUniqueKey,
             String impedType,
             String operationType,
             List<String> terminalConditions) {
@@ -1254,7 +1275,8 @@ public class ContainerServiceImpl implements ContainerService {
                 arriveFrom,
                 arriveTo,
                 departFrom,
-                departTo
+                departTo,
+                containerUniqueKey
         );
 
         personaFilters = personaFilters.stream()
