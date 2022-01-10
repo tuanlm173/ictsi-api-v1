@@ -689,6 +689,7 @@ public class ContainerServiceImpl implements ContainerService {
     }
 
     private List<String> buildEmptyContainerConditions(
+            String facilityId,
             String containerVisitState,
             String containerTransitState,
             String containerIsoGroup,
@@ -707,6 +708,7 @@ public class ContainerServiceImpl implements ContainerService {
     ) {
         List<String> filters = new ArrayList<>();
 
+        String containerFacilityIdFilter = buildFilter(EMPTY_CONTAINER_FACILITY, parseParams(facilityId));
         String containerVisitStateFilter = buildFilter(EMPTY_CONTAINER_VISIT_STATE, parseParams(containerVisitState));
         String containerTransitStateFilter = buildFilter(EMPTY_CONTAINER_TRANSIT_STATE, parseParams(containerTransitState));
         String containerIsoGroupFilter = buildFilter(EMPTY_CONTAINER_ISO_GROUP, parseParams(containerIsoGroup));
@@ -723,6 +725,7 @@ public class ContainerServiceImpl implements ContainerService {
 
         String containerUniqueKeyFilter = buildFilter(EMPTY_CONTAINER_UNIQUE_KEY, parseParams(containerUniqueKey));
 
+        filters.add(containerFacilityIdFilter);
         filters.add(containerVisitStateFilter);
         filters.add(containerTransitStateFilter);
         filters.add(containerIsoGroupFilter);
@@ -1262,6 +1265,7 @@ public class ContainerServiceImpl implements ContainerService {
 
         // Persona filter
         List<String> personaFilters = buildEmptyContainerConditions(
+                facilityId,
                 containerVisitState,
                 containerTransitState,
                 containerIsoGroup,
