@@ -121,5 +121,7 @@ public final class ExportContainerBaseCondition {
     public static final String EXPORT_CONTAINER_BOOKING_NUMBER = "(c.booking_number IN (%s) AND IS_DEFINED(c.booking_number))";
 
     public static final String EXPORT_CONTAINER_UNIQUE_KEY = "(c.unique_key IN (%s) AND IS_DEFINED(c.unique_key))";
+    public static final String EXPORT_CONTAINER_BOL_NUMBER = "(c.bill_of_lading_nbr IN (%s) AND IS_DEFINED(c.bill_of_lading_nbr))";
+    public static final String EXPORT_CONTAINER_SHIPPER = "((c.shipper IN (%s) AND IS_DEFINED(c.shipper)) OR (c.consignee IN (%s) AND IS_DEFINED(c.consignee)))";
 
 }

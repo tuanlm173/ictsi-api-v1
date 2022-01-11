@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,22 +36,22 @@ public class ContainerServiceImpl implements ContainerService {
 
 
 
-    private StringBuilder buildSimpleContainerQuery(String query, String size) {
-        StringBuilder queryBuilder = new StringBuilder();
-        return queryBuilder.append(String.format(query, size));
-    }
-
-    private String buildSimpleContainerParam(String filter, String inputContainerFields) {
-        if (inputContainerFields != null && !inputContainerFields.isBlank()) {
-            String[] containers = inputContainerFields.split(",");
-            List<String> results = new ArrayList<>();
-            for (String container: containers) {
-                results.add(String.format(filter, container));
-            }
-            return "(" + String.join(" OR ", results) + ")";
-        }
-        else return DEFAULT_CONDITION;
-    }
+//    private StringBuilder buildSimpleContainerQuery(String query, String size) {
+//        StringBuilder queryBuilder = new StringBuilder();
+//        return queryBuilder.append(String.format(query, size));
+//    }
+//
+//    private String buildSimpleContainerParam(String filter, String inputContainerFields) {
+//        if (inputContainerFields != null && !inputContainerFields.isBlank()) {
+//            String[] containers = inputContainerFields.split(",");
+//            List<String> results = new ArrayList<>();
+//            for (String container: containers) {
+//                results.add(String.format(filter, container));
+//            }
+//            return "(" + String.join(" OR ", results) + ")";
+//        }
+//        else return DEFAULT_CONDITION;
+//    }
 
     private String parseParams(String params) {
         if (params != null && !params.isBlank())
@@ -65,6 +66,48 @@ public class ContainerServiceImpl implements ContainerService {
     private String buildFilter(String filter, String input) {
         if (input != null && !input.isBlank())
             return String.format(filter, input);
+        else return "";
+    }
+
+    private String buildExportShipperFilter(String filter, String input) {
+        if (input != null && !input.isBlank()) {
+            return String.format(filter, input, input);
+        }
+        else return "";
+    }
+
+    private String buildImportShipperFilter(String filter, String input) {
+        if (input != null && !input.isBlank()) {
+            return String.format(filter, input, input, input, input);
+        }
+        else return "";
+    }
+
+    private String buildHouseShipperConsigneeFilter(String houseShipperConsigneeFilter, String input) {
+        if (input != null && !input.isBlank()) {
+            String[] shippers = input.split(",");
+            List<String> results = new ArrayList<>();
+            for (String shipper : shippers) {
+                results.add(String.format(houseShipperConsigneeFilter, shipper));
+            }
+            return "(" + String.join(" OR ", results) + ")";
+        }
+        else return "";
+    }
+
+    private String buildGenericShipperConsigneeFilter(String masterShipperFilter,
+                                                      String masterConsigneeFilter,
+                                                      String houseShipperFilter,
+                                                      String houseConsigneeFilter,
+                                                      String input) {
+        if (input != null && !input.isBlank()) {
+            List<String> results = new ArrayList<>();
+            results.add(buildFilter(masterShipperFilter, parseParams(input)));
+            results.add(buildFilter(masterConsigneeFilter, parseParams(input)));
+            results.add(buildHouseShipperConsigneeFilter(houseShipperFilter, parseParams(input)));
+            results.add(buildHouseShipperConsigneeFilter(houseConsigneeFilter, parseParams(input)));
+            return "(" + String.join(" OR ", results) + ")";
+        }
         else return "";
     }
 
@@ -704,7 +747,9 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime arriveTo,
             LocalDateTime departFrom,
             LocalDateTime departTo,
-            String containerUniqueKey
+            String containerUniqueKey,
+            String bolNumber,
+            String bookingNumber
     ) {
         List<String> filters = new ArrayList<>();
 
@@ -724,6 +769,8 @@ public class ContainerServiceImpl implements ContainerService {
         String containerTimeOutFilter = buildSimpleTimeframeContainerParam(EMPTY_CONTAINER_TIME_OUT, departFrom, departTo);
 
         String containerUniqueKeyFilter = buildFilter(EMPTY_CONTAINER_UNIQUE_KEY, parseParams(containerUniqueKey));
+        String bolNumberFilter = buildFilter(EMPTY_CONTAINER_BOL_NUMBER, parseParams(bolNumber));
+        String bookingNumberFilter = buildFilter(EMPTY_CONTAINER_BOOKING_NUMBER, parseParams(bookingNumber));
 
         filters.add(containerFacilityIdFilter);
         filters.add(containerVisitStateFilter);
@@ -739,6 +786,8 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(containerTimeInFilter);
         filters.add(containerTimeOutFilter);
         filters.add(containerUniqueKeyFilter);
+        filters.add(bolNumberFilter);
+        filters.add(bookingNumberFilter);
 
         return filters;
     }
@@ -759,7 +808,8 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime arriveTo,
             LocalDateTime departFrom,
             LocalDateTime departTo,
-            String uniqueKey
+            String uniqueKey,
+            String shipper
     ) {
         List<String> filters = new ArrayList<>();
 
@@ -779,6 +829,12 @@ public class ContainerServiceImpl implements ContainerService {
         String containerTimeOutFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_OUT, departFrom, departTo);
 
         String containerUniqueKeyFilter = buildFilter(ALL_CONTAINER_UNIQUE_KEY, parseParams(uniqueKey));
+        String containerShipperConsigneeFilter = buildGenericShipperConsigneeFilter(
+                ALL_CONTAINER_MASTER_SHIPPER,
+                ALL_CONTAINER_MASTER_CONSIGNEE,
+                ALL_CONTAINER_HOUSE_SHIPPER,
+                ALL_CONTAINER_HOUSE_CONSIGNEE,
+                shipper);
 
         filters.add(containerFacilityFilter);
         filters.add(containerVisitStateFilter);
@@ -794,6 +850,7 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(containerTimeInFilter);
         filters.add(containerTimeOutFilter);
         filters.add(containerUniqueKeyFilter);
+        filters.add(containerShipperConsigneeFilter);
 
         return filters;
     }
@@ -817,6 +874,8 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime departTo,
             String containerBookingNumber,
             String containerUniqueKey,
+            String bolNumber,
+            String shipper,
             String impedType
     ) {
         List<String> filters = new ArrayList<>();
@@ -838,6 +897,8 @@ public class ContainerServiceImpl implements ContainerService {
         String containerBookingNumberFilter = buildFilter(EXPORT_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
 
         String containerUniqueKeyFilter = buildFilter(EXPORT_CONTAINER_UNIQUE_KEY, parseParams(containerUniqueKey));
+        String containerBolFilter = buildFilter(EXPORT_CONTAINER_BOL_NUMBER, parseParams(bolNumber));
+        String containerShipperFilter = buildExportShipperFilter(EXPORT_CONTAINER_SHIPPER, parseParams(shipper));
 
         if (ContainerImped.NONE.getContainerImped().equalsIgnoreCase(impedType))
             filters.add(EXPORT_IMPED_TYPE_NONE);
@@ -867,6 +928,8 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(timeOutFilter);
         filters.add(containerBookingNumberFilter);
         filters.add(containerUniqueKeyFilter);
+        filters.add(containerBolFilter);
+        filters.add(containerShipperFilter);
 
         return filters;
     }
@@ -891,6 +954,7 @@ public class ContainerServiceImpl implements ContainerService {
             String containerBookingNumber,
             String containerBolNumber,
             String containerUniqueKey,
+            String shipper,
             String impedType
     ) {
         List<String> filters = new ArrayList<>();
@@ -912,6 +976,13 @@ public class ContainerServiceImpl implements ContainerService {
         String containerBookingNumberFilter = buildFilter(IMPORT_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
         String containerBolNumberFilter = buildBolFilter(IMPORT_CONTAINER_BOL_NUMBER, containerBolNumber);
         String containerUniqueKeyFilter = buildFilter(IMPORT_CONTAINER_UNIQUE_KEY, parseParams(containerUniqueKey));
+
+        String containerShipperConsigneeFilter = buildGenericShipperConsigneeFilter(
+                IMPORT_CONTAINER_MASTER_SHIPPER,
+                IMPORT_CONTAINER_MASTER_CONSIGNEE,
+                IMPORT_CONTAINER_HOUSE_SHIPPER,
+                IMPORT_CONTAINER_HOUSE_CONSIGNEE,
+                shipper);
 
         if (ContainerImped.NONE.getContainerImped().equalsIgnoreCase(impedType))
             filters.add(IMPORT_IMPED_TYPE_NONE);
@@ -942,6 +1013,7 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(containerBookingNumberFilter);
         filters.add(containerBolNumberFilter);
         filters.add(containerUniqueKeyFilter);
+        filters.add(containerShipperConsigneeFilter);
 
         return filters;
     }
@@ -969,6 +1041,7 @@ public class ContainerServiceImpl implements ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String containerUniqueKey,
+            String shipper,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -1002,6 +1075,7 @@ public class ContainerServiceImpl implements ContainerService {
                     containerBookingNumber,
                     bolNumber,
                     containerUniqueKey,
+                    shipper,
                     impedType
             );
 
@@ -1074,7 +1148,8 @@ public class ContainerServiceImpl implements ContainerService {
                     arriveTo,
                     departFrom,
                     departTo,
-                    containerUniqueKey
+                    containerUniqueKey,
+                    shipper
             );
 
             personaFilters = personaFilters.stream()
@@ -1152,6 +1227,7 @@ public class ContainerServiceImpl implements ContainerService {
             String containerBookingNumber,
             String bolNumber,
             String containerUniqueKey,
+            String shipper,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -1182,6 +1258,8 @@ public class ContainerServiceImpl implements ContainerService {
                 departTo,
                 containerBookingNumber,
                 containerUniqueKey,
+                bolNumber,
+                shipper,
                 impedType
         );
 
@@ -1253,6 +1331,8 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime departFrom,
             LocalDateTime departTo,
             String containerUniqueKey,
+            String bolNumber,
+            String bookingNumber,
             String impedType,
             String operationType,
             List<String> terminalConditions) {
@@ -1280,7 +1360,9 @@ public class ContainerServiceImpl implements ContainerService {
                 arriveTo,
                 departFrom,
                 departTo,
-                containerUniqueKey
+                containerUniqueKey,
+                bolNumber,
+                bookingNumber
         );
 
         personaFilters = personaFilters.stream()
