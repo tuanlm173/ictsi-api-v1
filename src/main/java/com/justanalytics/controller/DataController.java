@@ -79,6 +79,7 @@ public class DataController {
             @RequestParam(value = "arrive-pos-locid", required = false) String containerArrivePosLocId,
             @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
             @RequestParam(value = "bol-number", required = false) String bolNumber,
+            @RequestParam(value = "shipper", required = false) String shipper,
             @RequestParam(value = "imped-type", required = false) String impedType,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
@@ -108,6 +109,7 @@ public class DataController {
                         containerBookingNumber,
                         bolNumber,
                         uniqueKey,
+                        shipper,
                         impedType,
                         operationType,
                         terminalConditions
@@ -139,6 +141,7 @@ public class DataController {
                         containerBookingNumber,
                         bolNumber,
                         uniqueKey,
+                        shipper,
                         impedType,
                         operationType,
                         terminalConditions
@@ -167,6 +170,8 @@ public class DataController {
                         departFrom,
                         departTo,
                         uniqueKey,
+                        bolNumber,
+                        containerBookingNumber,
                         impedType,
                         operationType,
                         terminalConditions

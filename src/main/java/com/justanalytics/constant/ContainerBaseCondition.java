@@ -111,4 +111,8 @@ public final class ContainerBaseCondition {
     public static final String ALL_CONTAINER_TIME_OUT = "((c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";
 
     public static final String ALL_CONTAINER_UNIQUE_KEY = "(c.unique_key IN (%s) AND IS_DEFINED(c.unique_key))";
+    public static final String ALL_CONTAINER_MASTER_SHIPPER = "(c.shipper IN (%s) AND IS_DEFINED(c.shipper))";
+    public static final String ALL_CONTAINER_MASTER_CONSIGNEE = "(c.consignee IN (%s) AND IS_DEFINED(c.consignee))";
+    public static final String ALL_CONTAINER_HOUSE_SHIPPER = "(ARRAY_CONTAINS(c.house_bls, {'cargo_shipper_name': %s}, true))";
+    public static final String ALL_CONTAINER_HOUSE_CONSIGNEE = "(ARRAY_CONTAINS(c.house_bls, {'cargo_consignee_name': %s}, true))";
 }
