@@ -92,7 +92,8 @@ public final class ExportContainerBaseCondition {
                     "c.remarks,\n" +
                     "c.transit_state_descriptions " +
                     "FROM api_container_all c " +
-                    "WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'";
+                    "WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N'" +
+                    "AND c.last_visit_flag = 1 AND c.time_out >= %s";
     public static final String EXPORT_CONTAINER_NAME = "api_container_all";
 
     public static final String EXPORT_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";

@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.constant.ImportContainerBaseCondition;
 import com.justanalytics.dto.*;
 import com.justanalytics.query.Query;
 import com.justanalytics.repository.DataRepository;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +30,9 @@ public class ContainerServiceImpl implements ContainerService {
 
     private static final String DEFAULT_CONDITION = "1=1";
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
+    private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    String currentTime = "'" + LocalDateTime.now().minusDays(45).format(localDateTimeFormatter) + "Z'";
+    //TODO: define prune date function for each terminal, input: facility-id parameter (e.g: if MICTSI then xxx days, if SBITC then yyy days...)
 
     @Autowired
     private DataRepository dataRepository;
@@ -809,6 +812,7 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime departFrom,
             LocalDateTime departTo,
             String uniqueKey,
+            String bookingNumber,
             String shipper
     ) {
         List<String> filters = new ArrayList<>();
@@ -824,6 +828,7 @@ public class ContainerServiceImpl implements ContainerService {
         String containerNumberFilter = buildFilter(ALL_CONTAINER_NUMBER, parseParams(containerNumber));
         String containerEquipmentTypeFilter = buildFilter(ALL_CONTAINER_EQUIPMENT_TYPE, parseParams(containerEquipmentType));
         String containerOperationLineIFilter = buildFilter(ALL_CONTAINER_OPERATION_LINE_ID, parseParams(containerOperationLineId));
+        String containerBookingNumberFilter = buildFilter(ALL_CONTAINER_BOOKING_NUMBER, parseParams(bookingNumber));
 
         String containerTimeInFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String containerTimeOutFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_OUT, departFrom, departTo);
@@ -851,6 +856,7 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(containerTimeOutFilter);
         filters.add(containerUniqueKeyFilter);
         filters.add(containerShipperConsigneeFilter);
+        filters.add(containerBookingNumberFilter);
 
         return filters;
     }
@@ -1052,7 +1058,7 @@ public class ContainerServiceImpl implements ContainerService {
 
             // Main query
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append(IMPORT_CONTAINER_BASE_QUERY);
+            queryBuilder.append(String.format(IMPORT_CONTAINER_BASE_QUERY, currentTime));
 
             // Persona filter
             List<String> personaFilters = buildImportContainerConditions(
@@ -1129,7 +1135,7 @@ public class ContainerServiceImpl implements ContainerService {
 
             // Main query
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append(ALL_CONTAINER_BASE_QUERY);
+            queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, currentTime));
 
             // Persona filter
             List<String> personaFilters = buildAllContainerConditions(
@@ -1149,6 +1155,7 @@ public class ContainerServiceImpl implements ContainerService {
                     departFrom,
                     departTo,
                     containerUniqueKey,
+                    containerBookingNumber,
                     shipper
             );
 
@@ -1236,7 +1243,7 @@ public class ContainerServiceImpl implements ContainerService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(EXPORT_CONTAINER_BASE_QUERY);
+        queryBuilder.append(String.format(EXPORT_CONTAINER_BASE_QUERY, currentTime));
 
         // Persona filter
         List<String> personaFilters = buildExportContainerConditions(
@@ -1341,7 +1348,7 @@ public class ContainerServiceImpl implements ContainerService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(EMPTY_CONTAINER_BASE_QUERY);
+        queryBuilder.append(String.format(EMPTY_CONTAINER_BASE_QUERY, currentTime));
 
         // Persona filter
         List<String> personaFilters = buildEmptyContainerConditions(
