@@ -37,25 +37,6 @@ public class ContainerServiceImpl implements ContainerService {
     @Autowired
     private DataRepository dataRepository;
 
-
-
-//    private StringBuilder buildSimpleContainerQuery(String query, String size) {
-//        StringBuilder queryBuilder = new StringBuilder();
-//        return queryBuilder.append(String.format(query, size));
-//    }
-//
-//    private String buildSimpleContainerParam(String filter, String inputContainerFields) {
-//        if (inputContainerFields != null && !inputContainerFields.isBlank()) {
-//            String[] containers = inputContainerFields.split(",");
-//            List<String> results = new ArrayList<>();
-//            for (String container: containers) {
-//                results.add(String.format(filter, container));
-//            }
-//            return "(" + String.join(" OR ", results) + ")";
-//        }
-//        else return DEFAULT_CONDITION;
-//    }
-
     private String parseParams(String params) {
         if (params != null && !params.isBlank())
             return String.join(", ",
@@ -98,6 +79,18 @@ public class ContainerServiceImpl implements ContainerService {
         else return "";
     }
 
+    private String buildHouseBolFilter(String houseBolFilter, String input) {
+        if (input != null && !input.isBlank()) {
+            String[] bols = input.split(",");
+            List<String> results = new ArrayList<>();
+            for (String bol : bols) {
+                results.add(String.format(houseBolFilter, bol));
+            }
+            return "(" + String.join(" OR ", results) + ")";
+        }
+        else return "";
+    }
+
     private String buildGenericShipperConsigneeFilter(String masterShipperFilter,
                                                       String masterConsigneeFilter,
                                                       String houseShipperFilter,
@@ -109,6 +102,16 @@ public class ContainerServiceImpl implements ContainerService {
             results.add(buildFilter(masterConsigneeFilter, parseParams(input)));
             results.add(buildHouseShipperConsigneeFilter(houseShipperFilter, parseParams(input)));
             results.add(buildHouseShipperConsigneeFilter(houseConsigneeFilter, parseParams(input)));
+            return "(" + String.join(" OR ", results) + ")";
+        }
+        else return "";
+    }
+
+    private String buildGenericBolFilter(String masterBolFilter, String houseBolFilter, String input) {
+        if (input != null && !input.isBlank()) {
+            List<String> results = new ArrayList<>();
+            results.add(buildFilter(masterBolFilter, parseParams(input)));
+            results.add(buildHouseBolFilter(houseBolFilter, parseParams(input)));
             return "(" + String.join(" OR ", results) + ")";
         }
         else return "";
@@ -813,6 +816,7 @@ public class ContainerServiceImpl implements ContainerService {
             LocalDateTime departTo,
             String uniqueKey,
             String bookingNumber,
+            String bolNumber,
             String shipper
     ) {
         List<String> filters = new ArrayList<>();
@@ -829,6 +833,7 @@ public class ContainerServiceImpl implements ContainerService {
         String containerEquipmentTypeFilter = buildFilter(ALL_CONTAINER_EQUIPMENT_TYPE, parseParams(containerEquipmentType));
         String containerOperationLineIFilter = buildFilter(ALL_CONTAINER_OPERATION_LINE_ID, parseParams(containerOperationLineId));
         String containerBookingNumberFilter = buildFilter(ALL_CONTAINER_BOOKING_NUMBER, parseParams(bookingNumber));
+        String containerBolNumberFilter = buildGenericBolFilter(ALL_CONTAINER_MASTER_BOL_NUMBER, ALL_CONTAINER_HOUSE_BOL_NUMBER, bolNumber);
 
         String containerTimeInFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String containerTimeOutFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_OUT, departFrom, departTo);
@@ -857,6 +862,7 @@ public class ContainerServiceImpl implements ContainerService {
         filters.add(containerUniqueKeyFilter);
         filters.add(containerShipperConsigneeFilter);
         filters.add(containerBookingNumberFilter);
+        filters.add(containerBolNumberFilter);
 
         return filters;
     }
@@ -980,7 +986,7 @@ public class ContainerServiceImpl implements ContainerService {
         String timeInFilter = buildSimpleTimeframeContainerParam(IMPORT_CONTAINER_TIME_IN, arriveFrom, arriveTo);
         String timeOutFilter = buildSimpleTimeframeContainerParam(IMPORT_CONTAINER_TIME_OUT, departFrom, departTo);
         String containerBookingNumberFilter = buildFilter(IMPORT_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
-        String containerBolNumberFilter = buildBolFilter(IMPORT_CONTAINER_BOL_NUMBER, containerBolNumber);
+        String containerBolNumberFilter = buildGenericBolFilter(IMPORT_CONTAINER_MASTER_BOL_NUMBER, IMPORT_CONTAINER_HOUSE_BOL_NUMBER, containerBolNumber);
         String containerUniqueKeyFilter = buildFilter(IMPORT_CONTAINER_UNIQUE_KEY, parseParams(containerUniqueKey));
 
         String containerShipperConsigneeFilter = buildGenericShipperConsigneeFilter(
@@ -1156,6 +1162,7 @@ public class ContainerServiceImpl implements ContainerService {
                     departTo,
                     containerUniqueKey,
                     containerBookingNumber,
+                    bolNumber,
                     shipper
             );
 
