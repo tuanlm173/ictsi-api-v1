@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.dto.TruckTransactionsDto;
 import com.justanalytics.query.Query;
 import com.justanalytics.repository.DataRepository;
@@ -88,7 +89,10 @@ public class TruckingTransactionsServiceImpl implements TruckingTransactionsServ
             String loadDischargeTime = String.valueOf(data.get("load_discharge_time"));
             Boolean showTvarrivalStatus = Objects.nonNull(data.get("show_tvarrival_status")) ? Boolean.valueOf(String.valueOf(data.get("show_tvarrival_status"))) : null;
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
-            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+
+            List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
+            if (rawTvArrivalRemarks != null) tvArrivalRemarks = rawTvArrivalRemarks;
 
 
             results.add(TruckTransactionsDto.builder()
