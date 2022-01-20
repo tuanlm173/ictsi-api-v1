@@ -93,7 +93,7 @@ public final class EmptyContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_all c " +
+            "FROM api_container c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND ((c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind)))) AND c.delete_flag = 'N' " +
             "AND c.last_visit_flag = 1 AND c.time_out >= %s";
     public static final String EMPTY_CONTAINER_NAME = "api_container_all";

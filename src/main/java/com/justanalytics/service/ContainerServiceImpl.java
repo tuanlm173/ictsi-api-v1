@@ -31,7 +31,7 @@ public class ContainerServiceImpl implements ContainerService {
     private static final String DEFAULT_CONDITION = "1=1";
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
     private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    String currentTime = "'" + LocalDateTime.now().minusDays(45).format(localDateTimeFormatter) + "Z'";
+    String currentTime = "'" + LocalDateTime.now().minusDays(90).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
     //TODO: define prune date function for each terminal, input: facility-id parameter (e.g: if MICTSI then xxx days, if SBITC then yyy days...)
 
     @Autowired
@@ -60,36 +60,48 @@ public class ContainerServiceImpl implements ContainerService {
         else return "";
     }
 
-    private String buildImportShipperFilter(String filter, String input) {
-        if (input != null && !input.isBlank()) {
-            return String.format(filter, input, input, input, input);
-        }
-        else return "";
-    }
+//    private String buildImportShipperFilter(String filter, String input) {
+//        if (input != null && !input.isBlank()) {
+//            return String.format(filter, input, input, input, input);
+//        }
+//        else return "";
+//    }
 
-    private String buildHouseShipperConsigneeFilter(String houseShipperConsigneeFilter, String input) {
+    private String buildSimpleCosmosArrayContainSearch(String filter, String input) {
         if (input != null && !input.isBlank()) {
-            String[] shippers = input.split(",");
+            String[] searchInputs = input.split(",");
             List<String> results = new ArrayList<>();
-            for (String shipper : shippers) {
-                results.add(String.format(houseShipperConsigneeFilter, shipper));
+            for (String searchInput : searchInputs) {
+                results.add(String.format(filter, searchInput));
             }
             return "(" + String.join(" OR ", results) + ")";
         }
         else return "";
     }
 
-    private String buildHouseBolFilter(String houseBolFilter, String input) {
-        if (input != null && !input.isBlank()) {
-            String[] bols = input.split(",");
-            List<String> results = new ArrayList<>();
-            for (String bol : bols) {
-                results.add(String.format(houseBolFilter, bol));
-            }
-            return "(" + String.join(" OR ", results) + ")";
-        }
-        else return "";
-    }
+//    private String buildHouseShipperConsigneeFilter(String houseShipperConsigneeFilter, String input) {
+//        if (input != null && !input.isBlank()) {
+//            String[] shippers = input.split(",");
+//            List<String> results = new ArrayList<>();
+//            for (String shipper : shippers) {
+//                results.add(String.format(houseShipperConsigneeFilter, shipper));
+//            }
+//            return "(" + String.join(" OR ", results) + ")";
+//        }
+//        else return "";
+//    }
+//
+//    private String buildHouseBolFilter(String houseBolFilter, String input) {
+//        if (input != null && !input.isBlank()) {
+//            String[] bols = input.split(",");
+//            List<String> results = new ArrayList<>();
+//            for (String bol : bols) {
+//                results.add(String.format(houseBolFilter, bol));
+//            }
+//            return "(" + String.join(" OR ", results) + ")";
+//        }
+//        else return "";
+//    }
 
     private String buildGenericShipperConsigneeFilter(String masterShipperFilter,
                                                       String masterConsigneeFilter,
@@ -100,8 +112,8 @@ public class ContainerServiceImpl implements ContainerService {
             List<String> results = new ArrayList<>();
             results.add(buildFilter(masterShipperFilter, parseParams(input)));
             results.add(buildFilter(masterConsigneeFilter, parseParams(input)));
-            results.add(buildHouseShipperConsigneeFilter(houseShipperFilter, parseParams(input)));
-            results.add(buildHouseShipperConsigneeFilter(houseConsigneeFilter, parseParams(input)));
+            results.add(buildSimpleCosmosArrayContainSearch(houseShipperFilter, parseParams(input)));
+            results.add(buildSimpleCosmosArrayContainSearch(houseConsigneeFilter, parseParams(input)));
             return "(" + String.join(" OR ", results) + ")";
         }
         else return "";
@@ -111,7 +123,7 @@ public class ContainerServiceImpl implements ContainerService {
         if (input != null && !input.isBlank()) {
             List<String> results = new ArrayList<>();
             results.add(buildFilter(masterBolFilter, parseParams(input)));
-            results.add(buildHouseBolFilter(houseBolFilter, parseParams(input)));
+            results.add(buildSimpleCosmosArrayContainSearch(houseBolFilter, parseParams(input)));
             return "(" + String.join(" OR ", results) + ")";
         }
         else return "";

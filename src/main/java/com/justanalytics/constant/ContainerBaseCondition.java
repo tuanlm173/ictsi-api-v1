@@ -91,7 +91,7 @@ public final class ContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_all c " +
+            "FROM api_container c " +
             "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N' " +
             "AND c.last_visit_flag = 1 AND c.time_out >= %s";
     public static final String ALL_CONTAINER_NAME = "api_container_all";
