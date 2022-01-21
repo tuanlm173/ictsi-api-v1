@@ -91,8 +91,9 @@ public final class ContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_all c " +
-            "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N'";
+            "FROM api_container c " +
+            "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N' " +
+            "AND c.last_visit_flag = 1 AND c.time_out >= %s";
     public static final String ALL_CONTAINER_NAME = "api_container_all";
 
     public static final String ALL_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
@@ -109,6 +110,10 @@ public final class ContainerBaseCondition {
 
     public static final String ALL_CONTAINER_TIME_IN = "((c.time_in >= '%s' AND c.time_in <= '%s') AND IS_DEFINED(c.time_in))";
     public static final String ALL_CONTAINER_TIME_OUT = "((c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";
+
+    public static final String ALL_CONTAINER_BOOKING_NUMBER = "(c.booking_number IN (%s) AND IS_DEFINED(c.booking_number))";
+    public static final String ALL_CONTAINER_MASTER_BOL_NUMBER = "(c.bill_of_lading_nbr IN (%s) AND IS_DEFINED(c.bill_of_lading_nbr))";
+    public static final String ALL_CONTAINER_HOUSE_BOL_NUMBER = "(ARRAY_CONTAINS(c.house_bls, {'house_bl_nbr': %s}, true))";
 
     public static final String ALL_CONTAINER_UNIQUE_KEY = "(c.unique_key IN (%s) AND IS_DEFINED(c.unique_key))";
     public static final String ALL_CONTAINER_MASTER_SHIPPER = "(c.shipper IN (%s) AND IS_DEFINED(c.shipper))";

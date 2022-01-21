@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @Getter
@@ -78,6 +80,6 @@ public class TruckTransactionsDto {
     @JsonProperty(value = "tv_arrival_status")
     private String tvArrivalStatus;
     @JsonProperty(value = "tv_arrival_remarks")
-    private String tvArrivalRemarks;
+    private List<LanguageDescription> tvArrivalRemarks;
 
 }

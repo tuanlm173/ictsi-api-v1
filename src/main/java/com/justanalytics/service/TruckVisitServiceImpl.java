@@ -27,6 +27,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
     Logger logger = LoggerFactory.getLogger(TruckVisitServiceImpl.class);
 
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
+    private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    String currentTime = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
 
     @Autowired
     private DataRepository dataRepository;
@@ -54,12 +56,6 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         }
         return DEFAULT_CONDITION;
     }
-
-//    private String parseParams(List<String> params) {
-//        if (params.size() == 0)
-//            return "";
-//        return String.join(", ", params);
-//    }
 
     private String parseParams(String params) {
         if (params != null && !params.isBlank())
@@ -140,7 +136,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(TRUCK_VISIT_BASE_QUERY);
+        queryBuilder.append(String.format(TRUCK_VISIT_BASE_QUERY, currentTime));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
