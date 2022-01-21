@@ -30,7 +30,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
     private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    String currentTime = "'" + LocalDateTime.now().minusDays(90).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
+    String currentTime = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
 
     @Autowired
     private DataRepository dataRepository;

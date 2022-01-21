@@ -31,7 +31,7 @@ public class ContainerServiceImpl implements ContainerService {
     private static final String DEFAULT_CONDITION = "1=1";
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
     private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    String currentTime = "'" + LocalDateTime.now().minusDays(90).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
+    String currentTime = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
     //TODO: define prune date function for each terminal, input: facility-id parameter (e.g: if MICTSI then xxx days, if SBITC then yyy days...)
 
     @Autowired
