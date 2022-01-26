@@ -96,7 +96,7 @@ public final class EmptyContainerBaseCondition {
             "FROM api_container c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND ((c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind)))) AND c.delete_flag = 'N' " +
             "AND c.last_visit_flag = 1 AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true))";
-    public static final String EMPTY_CONTAINER_NAME = "api_container_all";
+    public static final String EMPTY_CONTAINER_NAME = "api_container";
 
     public static final String EMPTY_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String EMPTY_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";

@@ -92,9 +92,9 @@ public final class ContainerBaseCondition {
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
             "FROM api_container c " +
-            "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N' " +
+            "WHERE (1=1) AND IS_DEFINED(c.teu) AND (c.category NOT IN ('THRGH') AND IS_DEFINED(c.category)) AND c.delete_flag = 'N' " +
             "AND c.last_visit_flag = 1 AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true))";
-    public static final String ALL_CONTAINER_NAME = "api_container_all";
+    public static final String ALL_CONTAINER_NAME = "api_container";
 
     public static final String ALL_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String ALL_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";
