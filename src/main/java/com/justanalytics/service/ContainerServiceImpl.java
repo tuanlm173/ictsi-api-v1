@@ -237,8 +237,12 @@ public class ContainerServiceImpl implements ContainerService {
             String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
             String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
             String entryNo = String.valueOf(data.get("entry_no"));
-            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
-            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String requiresXray = String.valueOf(data.get("requires_xray"));
+            String customTag = String.valueOf(data.get("custom_tag"));
+            String ibAppointmentStartDate = String.valueOf(data.get("ib_appointment_start_date"));
+            String ibAppointmentEndDate = String.valueOf(data.get("ib_appointment_end_date"));
+            String obAppointmentStartDate = String.valueOf(data.get("ob_appointment_start_date"));
+            String obAppointmentEndDate = String.valueOf(data.get("ob_appointment_end_date"));
             String shipper = String.valueOf(data.get("shipper"));
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
@@ -334,8 +338,12 @@ public class ContainerServiceImpl implements ContainerService {
                     .ibRegistryNbr(ibRegistryNbr)
                     .obRegistryNbr(obRegistryNbr)
                     .entryNo(entryNo)
-                    .appointmentStartDate(appointmentStartDate)
-                    .appointmentEndDate(appointmentEndDate)
+                    .requiresXray(requiresXray)
+                    .customTag(customTag)
+                    .ibAppointmentStartDate(ibAppointmentStartDate)
+                    .ibAppointmentEndDate(ibAppointmentEndDate)
+                    .obAppointmentStartDate(obAppointmentStartDate)
+                    .obAppointmentEndDate(obAppointmentEndDate)
                     .shipper(shipper)
                     .consignee(consignee)
                     .showTvarrivalStatus(showTvarrivalStatus)
@@ -435,8 +443,12 @@ public class ContainerServiceImpl implements ContainerService {
             String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
             String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
             String entryNo = String.valueOf(data.get("entry_no"));
-            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
-            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String requiresXray = String.valueOf(data.get("requires_xray"));
+            String customTag = String.valueOf(data.get("custom_tag"));
+            String ibAppointmentStartDate = String.valueOf(data.get("ib_appointment_start_date"));
+            String ibAppointmentEndDate = String.valueOf(data.get("ib_appointment_end_date"));
+            String obAppointmentStartDate = String.valueOf(data.get("ob_appointment_start_date"));
+            String obAppointmentEndDate = String.valueOf(data.get("ob_appointment_end_date"));
             String shipper = String.valueOf(data.get("shipper"));
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
@@ -532,8 +544,12 @@ public class ContainerServiceImpl implements ContainerService {
                     .ibRegistryNbr(ibRegistryNbr)
                     .obRegistryNbr(obRegistryNbr)
                     .entryNo(entryNo)
-                    .appointmentStartDate(appointmentStartDate)
-                    .appointmentEndDate(appointmentEndDate)
+                    .requiresXray(requiresXray)
+                    .customTag(customTag)
+                    .ibAppointmentStartDate(ibAppointmentStartDate)
+                    .ibAppointmentEndDate(ibAppointmentEndDate)
+                    .obAppointmentStartDate(obAppointmentStartDate)
+                    .obAppointmentEndDate(obAppointmentEndDate)
                     .shipper(shipper)
                     .consignee(consignee)
                     .showTvarrivalStatus(showTvarrivalStatus)
@@ -633,8 +649,12 @@ public class ContainerServiceImpl implements ContainerService {
             String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
             String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
             String entryNo = String.valueOf(data.get("entry_no"));
-            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
-            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String requiresXray = String.valueOf(data.get("requires_xray"));
+            String customTag = String.valueOf(data.get("custom_tag"));
+            String ibAppointmentStartDate = String.valueOf(data.get("ib_appointment_start_date"));
+            String ibAppointmentEndDate = String.valueOf(data.get("ib_appointment_end_date"));
+            String obAppointmentStartDate = String.valueOf(data.get("ob_appointment_start_date"));
+            String obAppointmentEndDate = String.valueOf(data.get("ob_appointment_end_date"));
             String shipper = String.valueOf(data.get("shipper"));
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
@@ -730,8 +750,12 @@ public class ContainerServiceImpl implements ContainerService {
                     .ibRegistryNbr(ibRegistryNbr)
                     .obRegistryNbr(obRegistryNbr)
                     .entryNo(entryNo)
-                    .appointmentStartDate(appointmentStartDate)
-                    .appointmentEndDate(appointmentEndDate)
+                    .requiresXray(requiresXray)
+                    .customTag(customTag)
+                    .ibAppointmentStartDate(ibAppointmentStartDate)
+                    .ibAppointmentEndDate(ibAppointmentEndDate)
+                    .obAppointmentStartDate(obAppointmentStartDate)
+                    .obAppointmentEndDate(obAppointmentEndDate)
                     .shipper(shipper)
                     .consignee(consignee)
                     .showTvarrivalStatus(showTvarrivalStatus)

@@ -71,8 +71,12 @@ public final class EmptyContainerBaseCondition {
             "c.ib_registry_nbr,\n" +
             "c.ob_registry_nbr,\n" +
             "c.entry_no,\n" +
-            "c.appointment_start_date,\n" +
-            "c.appointment_end_date,\n" +
+            "c.requires_xray,\n" +
+            "c.custom_tag,\n" +
+            "c.ib_appointment_start_date,\n" +
+            "c.ib_appointment_end_date,\n" +
+            "c.ob_appointment_start_date,\n" +
+            "c.ob_appointment_end_date,\n" +
             "c.shipper,\n" +
             "c.consignee,\n" +
             "c.show_tvarrival_status,\n" +
