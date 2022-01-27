@@ -33,6 +33,16 @@ public class TruckVisitServiceImpl implements TruckVisitService {
     @Autowired
     private DataRepository dataRepository;
 
+    private String filterLastVisitFlag(String lastVisitFlag) {
+        String results = "c.last_visit_flag = 1";
+        if (lastVisitFlag != null && !lastVisitFlag.isBlank()) {
+            if (lastVisitFlag.equalsIgnoreCase("false")) {
+                results = "c.last_visit_flag != 1";
+            }
+        }
+        return results;
+    }
+
     private StringBuilder buildSimpleTruckVisitQuery(String query, String size) {
         StringBuilder queryBuilder = new StringBuilder();
         return queryBuilder.append(String.format(query, size));
@@ -130,13 +140,14 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             String carrierOperatorNames,
             LocalDateTime visitTimeFrom,
             LocalDateTime visitTimeTo,
+            String lastVisitFlag,
             String operationType,
             List<String> terminalConditions
     ) {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(TRUCK_VISIT_BASE_QUERY, currentTime));
+        queryBuilder.append(String.format(TRUCK_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();

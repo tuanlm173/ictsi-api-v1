@@ -35,6 +35,7 @@ public interface ContainerService {
             String bolNumber,
             String containerUniqueKey,
             String shipper,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -63,6 +64,7 @@ public interface ContainerService {
             String bolNumber,
             String containerUniqueKey,
             String shipper,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -90,6 +92,7 @@ public interface ContainerService {
             String containerUniqueKey,
             String bolNumber,
             String bookingNumber,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions

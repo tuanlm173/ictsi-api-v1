@@ -63,7 +63,7 @@ public final class VesselVisitBaseCondition {
             "c.vessel_registry_number,\n" +
             "c.vessel_statuses \n" +
             "FROM api_vessel_visit c " +
-            "WHERE (1=1) AND c.delete_flag = 'N' AND c.last_visit_flag = 1 AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true))";
+            "WHERE (1=1) AND c.delete_flag = 'N' AND %s AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true))";
     public static final String CONTAINER_NAME = "api_vessel_visit";
 
     public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";

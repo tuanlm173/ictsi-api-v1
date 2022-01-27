@@ -22,7 +22,7 @@ public final class TruckVisitBaseCondition {
             "c.stage_id,\n" +
             "c.visit_statuses \n" +
             "FROM api_truck_visit c " +
-            "WHERE (1=1) AND c.delete_flag = 'N' AND c.last_visit_flag = 1 AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true))";
+            "WHERE (1=1) AND c.delete_flag = 'N' AND %s AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true))";
     public static final String CONTAINER_NAME = "api_truck_visit";
 
     public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";

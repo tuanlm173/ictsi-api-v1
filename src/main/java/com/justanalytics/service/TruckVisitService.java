@@ -19,6 +19,7 @@ public interface TruckVisitService {
             String carrierOperatorNames,
             LocalDateTime visitTimeFrom,
             LocalDateTime visitTimeTo,
+            String lastVisitFlag,
             String operationType,
             List<String> terminalConditions
     );

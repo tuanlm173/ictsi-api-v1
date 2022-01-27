@@ -27,6 +27,7 @@ public interface VesselVisitService {
             LocalDateTime etdTo,
             LocalDateTime atdFrom,
             LocalDateTime atdTo,
+            String lastVisitFlag,
             String operationType,
             List<String> terminalConditions
     ) throws JsonProcessingException;

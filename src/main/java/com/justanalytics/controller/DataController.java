@@ -80,6 +80,7 @@ public class DataController {
             @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
             @RequestParam(value = "bol-number", required = false) String bolNumber,
             @RequestParam(value = "shipper", required = false) String shipper,
+            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "imped-type", required = false) String impedType,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
@@ -110,6 +111,7 @@ public class DataController {
                         bolNumber,
                         uniqueKey,
                         shipper,
+                        lastVisitFlag,
                         impedType,
                         operationType,
                         terminalConditions
@@ -142,6 +144,7 @@ public class DataController {
                         bolNumber,
                         uniqueKey,
                         shipper,
+                        lastVisitFlag,
                         impedType,
                         operationType,
                         terminalConditions
@@ -172,6 +175,7 @@ public class DataController {
                         uniqueKey,
                         bolNumber,
                         containerBookingNumber,
+                        lastVisitFlag,
                         impedType,
                         operationType,
                         terminalConditions
@@ -205,6 +209,7 @@ public class DataController {
             @RequestParam(value = "etd-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime etdTo,
             @RequestParam(value = "atd-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdFrom,
             @RequestParam(value = "atd-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdTo,
+            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) throws JsonProcessingException {
@@ -212,7 +217,7 @@ public class DataController {
             List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
                     query, facilityId, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
-                    etaFrom, etaTo, ataFrom, ataTo, etdFrom, etdTo, atdFrom, atdTo, operationType, terminalConditions);
+                    etaFrom, etaTo, ataFrom, ataTo, etdFrom, etdTo, atdFrom, atdTo, lastVisitFlag, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselVisits.size())
                     .body(RestEnvelope.of(vesselVisits));
@@ -232,13 +237,14 @@ public class DataController {
             @RequestParam(value = "carrier-operator-name", required = false) String carrierOperatorNames,
             @RequestParam(value = "visit-time-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeFrom,
             @RequestParam(value = "visit-time-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeTo,
+            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisit(query, facilityId, truckLicenseNbrs,
-                    visitPhases, carrierOperatorNames, visitTimeFrom, visitTimeTo, operationType, terminalConditions);
+                    visitPhases, carrierOperatorNames, visitTimeFrom, visitTimeTo, lastVisitFlag, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + truckVisits.size())
                     .body(RestEnvelope.of(truckVisits));
