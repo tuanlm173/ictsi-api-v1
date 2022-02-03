@@ -38,10 +38,10 @@ public class ContainerServiceImpl implements ContainerService {
     private DataRepository dataRepository;
 
     private String filterLastVisitFlag(String lastVisitFlag) {
-        String results = "c.last_visit_flag = 1";
+        String results = "c.last_visit_flag != 1";
         if (lastVisitFlag != null && !lastVisitFlag.isBlank()) {
-            if (lastVisitFlag.equalsIgnoreCase("false")) {
-                results = "c.last_visit_flag != 1";
+            if (lastVisitFlag.equalsIgnoreCase("true")) {
+                results = "c.last_visit_flag = 1";
             }
         }
         return results;
@@ -846,6 +846,7 @@ public class ContainerServiceImpl implements ContainerService {
 
     private List<String> buildAllContainerConditions(
             String facilityId,
+            String containerFreightKind,
             String containerVisitState,
             String containerTransitState,
             String containerIsoGroup,
@@ -879,6 +880,7 @@ public class ContainerServiceImpl implements ContainerService {
         String containerEquipmentTypeFilter = buildFilter(ALL_CONTAINER_EQUIPMENT_TYPE, parseParams(containerEquipmentType));
         String containerOperationLineIFilter = buildFilter(ALL_CONTAINER_OPERATION_LINE_ID, parseParams(containerOperationLineId));
         String containerBookingNumberFilter = buildFilter(ALL_CONTAINER_BOOKING_NUMBER, parseParams(bookingNumber));
+        String containerFreightKindFilter = buildFilter(ALL_CONTAINER_FREIGHT_KIND, parseParams(containerFreightKind));
         String containerBolNumberFilter = buildGenericBolFilter(ALL_CONTAINER_MASTER_BOL_NUMBER, ALL_CONTAINER_HOUSE_BOL_NUMBER, bolNumber);
 
         String containerTimeInFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_IN, arriveFrom, arriveTo);
@@ -893,6 +895,7 @@ public class ContainerServiceImpl implements ContainerService {
                 shipper);
 
         filters.add(containerFacilityFilter);
+        filters.add(containerFreightKindFilter);
         filters.add(containerVisitStateFilter);
         filters.add(containerTransitStateFilter);
         filters.add(containerIsoGroupFilter);
@@ -1193,6 +1196,7 @@ public class ContainerServiceImpl implements ContainerService {
             // Persona filter
             List<String> personaFilters = buildAllContainerConditions(
                     facilityId,
+                    containerFreightKind,
                     containerVisitState,
                     containerTransitState,
                     containerIsoGroup,
