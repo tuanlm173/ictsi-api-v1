@@ -31,6 +31,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
     private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
     String currentTime = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
+    String operatorLike = "%";
 
     @Autowired
     private DataRepository dataRepository;
@@ -83,6 +84,12 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     private String buildFilter(String filter, String input) {
         if (input != null && !input.isBlank())
             return String.format(filter, input);
+        else return "";
+    }
+
+    private String buildPartialSearchCarrierName(String filter, String operator, String input) {
+        if (input != null && !input.isBlank())
+            return  String.format(filter, "'" + operator, input, operator + "'");
         else return "";
     }
 
@@ -250,7 +257,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         List<String> personaFilters = new ArrayList<>();
 
         String personaFacilityId = buildFilter(FACILITY_ID, parseParams(facilityId));
-        String personaCarrierName = buildFilter(CARRIER_NAME, parseParams(carrierName));
+        String personaCarrierName = buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, carrierName);
         String personaCarrierOperatorId = buildFilter(CARRIER_OPERATOR_ID, parseParams(carrierOperatorId));
         String personaCarrierVisitId = buildFilter(CARRIER_VISIT_ID, parseParams(carrierVisitId));
         String personaServiceId = buildFilter(SERVICE_ID, parseParams(serviceId));

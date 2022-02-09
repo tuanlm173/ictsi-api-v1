@@ -67,7 +67,7 @@ public final class VesselVisitBaseCondition {
     public static final String CONTAINER_NAME = "api_vessel_visit";
 
     public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
-    public static final String CARRIER_NAME = "(c.carrier_name IN (%s) AND IS_DEFINED(c.carrier_name))";
+    public static final String CARRIER_NAME = "(c.carrier_name LIKE %s%s%s AND IS_DEFINED(c.carrier_name))";
     public static final String CARRIER_OPERATOR_ID = "(c.carrier_operator_id IN (%s) AND IS_DEFINED(c.carrier_operator_id))";
     public static final String CARRIER_VISIT_ID = "(c.carrier_visit_id IN (%s) AND IS_DEFINED(c.carrier_visit_id))";
     public static final String SERVICE_ID = "(c.service_id IN (%s) AND IS_DEFINED(c.service_id))";
