@@ -21,9 +21,9 @@ public final class TruckVisitBaseCondition {
             "c.exited_yard,\n" +
             "c.stage_id,\n" +
             "c.visit_statuses \n" +
-            "FROM api_truck_visit c " +
-            "WHERE (1=1) AND c.delete_flag = 'N' AND %s AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true))";
-    public static final String CONTAINER_NAME = "api_truck_visit";
+            "FROM api_truck_visit_all c " +
+            "WHERE (1=1) AND c.delete_flag = 'N' AND %s AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) AND c.facility_id NOT IN ('CGT')";
+    public static final String CONTAINER_NAME = "api_truck_visit_all";
 
     public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String TRUCK_LICENSE_NBR = "(c.truck_license_nbr IN (%s) AND IS_DEFINED(c.truck_license_nbr))";

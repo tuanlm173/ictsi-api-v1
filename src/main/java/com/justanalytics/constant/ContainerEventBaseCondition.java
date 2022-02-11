@@ -6,10 +6,10 @@ public final class ContainerEventBaseCondition {
 
     public static final String CONTAINER_EVENT_BASE_QUERY = "SELECT " +
             "c.unique_key,\n" +
-            "c.operator,\n" +
-            "c.complex,\n" +
-            "c.facility,\n" +
-            "c.yard,\n" +
+            "c.operator_id,\n" +
+            "c.complex_id,\n" +
+            "c.facility_id,\n" +
+            "c.yard_id,\n" +
             "c.placed_by,\n" +
             "c.placed_time,\n" +
             "c.event_type,\n" +
@@ -22,7 +22,7 @@ public final class ContainerEventBaseCondition {
             "c.category,\n" +
             "c.sub_category \n" +
             "FROM api_container_event c " +
-            "WHERE (1=1) AND c.delete_flag = 'N'";
+            "WHERE (1=1) AND c.delete_flag = 'N' AND c.facility_id NOT IN ('CGT')";
 
     public static final String CONTAINER_EVENT_CONTAINER_NAME = "api_container_event";
 
