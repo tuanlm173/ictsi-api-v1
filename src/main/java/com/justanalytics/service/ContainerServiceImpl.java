@@ -38,7 +38,7 @@ public class ContainerServiceImpl implements ContainerService {
     private DataRepository dataRepository;
 
     private String filterLastVisitFlag(String lastVisitFlag) {
-        String results = "c.last_visit_flag != 1";
+        String results = "1=1";
         if (lastVisitFlag != null && !lastVisitFlag.isBlank()) {
             if (lastVisitFlag.equalsIgnoreCase("true")) {
                 results = "c.last_visit_flag = 1";

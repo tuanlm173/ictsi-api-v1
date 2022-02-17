@@ -37,7 +37,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     private DataRepository dataRepository;
 
     private String filterLastVisitFlag(String lastVisitFlag) {
-        String results = "c.last_visit_flag != 1";
+        String results = "1=1";
         if (lastVisitFlag != null && !lastVisitFlag.isBlank()) {
             if (lastVisitFlag.equalsIgnoreCase("true")) {
                 results = "c.last_visit_flag = 1";
@@ -46,23 +46,39 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         return results;
     }
 
-
-    private StringBuilder buildSimpleVesselVisitQuery(String query, String size) {
-        StringBuilder queryBuilder = new StringBuilder();
-        return queryBuilder.append(String.format(query, size));
-    }
-
-    private String buildSimpleVesselParam(String filter, String inputVesselVisitFields) {
-        if (inputVesselVisitFields != null && !inputVesselVisitFields.isBlank()) {
-            String[] vesselVisits = inputVesselVisitFields.split(",");
-            List<String> results = new ArrayList<>();
-            for (String vesselVisit: vesselVisits) {
-                results.add(String.format(filter, vesselVisit));
-            }
-            return "(" + String.join(" OR ", results) + ")";
+    private String excludeDummyVesselFilter(String facilityId) {
+        String results = "1=1";
+        if (facilityId != null && !facilityId.isBlank()) {
+            if (facilityId.equalsIgnoreCase("MICT"))
+                results = "c.carrier_operator_id != 'ICTSI'";
+            else if (facilityId.equalsIgnoreCase("SBITC"))
+                results = "c.carrier_name != 'DUMMY VESSEL'";
+            else if (facilityId.equalsIgnoreCase("AGCT"))
+                results = "c.ib_vyg != 'DUMM'";
+            else if (facilityId.equalsIgnoreCase("ZLO"))
+                results = "c.carrier_name != 'TO BE CONFIRM'";
         }
-        else return DEFAULT_CONDITION;
+
+        return results;
     }
+
+
+//    private StringBuilder buildSimpleVesselVisitQuery(String query, String size) {
+//        StringBuilder queryBuilder = new StringBuilder();
+//        return queryBuilder.append(String.format(query, size));
+//    }
+//
+//    private String buildSimpleVesselParam(String filter, String inputVesselVisitFields) {
+//        if (inputVesselVisitFields != null && !inputVesselVisitFields.isBlank()) {
+//            String[] vesselVisits = inputVesselVisitFields.split(",");
+//            List<String> results = new ArrayList<>();
+//            for (String vesselVisit: vesselVisits) {
+//                results.add(String.format(filter, vesselVisit));
+//            }
+//            return "(" + String.join(" OR ", results) + ")";
+//        }
+//        else return DEFAULT_CONDITION;
+//    }
 
     private String buildSimpleTimeframeVesselParam(String filter, LocalDateTime from, LocalDateTime to) {
         if ((from != null && !from.toString().isBlank()) && (to != null && !to.toString().isBlank())) {
@@ -251,7 +267,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     ) throws JsonProcessingException {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime, excludeDummyVesselFilter(facilityId)));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
