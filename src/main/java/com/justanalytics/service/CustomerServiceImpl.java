@@ -24,9 +24,16 @@ public class CustomerServiceImpl implements CustomerService {
     Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
+    String operatorLike = "%";
 
     @Autowired
     private DataRepository dataRepository;
+
+    private String buildPartialCustomerSearch(String filter, String operator, String input) {
+        if (input != null && !input.isBlank())
+            return String.format(filter, "'" + operator, input.toUpperCase(), operator + "'", "'" + operator, input.toUpperCase(), operator + "'");
+        else return "";
+    }
 
     private String parseParams(String params) {
         if (params != null && !params.isBlank())
@@ -59,6 +66,8 @@ public class CustomerServiceImpl implements CustomerService {
             String parentAccountName = String.valueOf(data.get("parent_account_name"));
             String parentAccountNumber = String.valueOf(data.get("parent_account_number"));
             String industry = String.valueOf(data.get("industry"));
+            String taxId = String.valueOf(data.get("tax_id"));
+            String address = String.valueOf(data.get("address"));
 
             results.add(CustomerDto.builder()
                     .uniqueKey(uniqueKey)
@@ -71,6 +80,8 @@ public class CustomerServiceImpl implements CustomerService {
                     .parentAccountName(parentAccountName)
                     .parentAccountNumber(parentAccountNumber)
                     .industry(industry)
+                    .taxId(taxId)
+                    .address(address)
                     .build());
         }
 
@@ -85,6 +96,8 @@ public class CustomerServiceImpl implements CustomerService {
             Query query,
             String customerType,
             String facilityId,
+            String customerName,
+            String taxId,
             String operationType) {
 
         // Main query
@@ -95,8 +108,11 @@ public class CustomerServiceImpl implements CustomerService {
         List<String> personaFilters = new ArrayList<>();
         String customerTypeFilter = buildFilter(CUSTOMER_TYPE, parseParams(customerType));
         String facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
+        String customerNameFilter = buildPartialCustomerSearch(CUSTOMER_NAME, operatorLike, customerName);
+
         personaFilters.add(customerTypeFilter);
         personaFilters.add(facilityIdFilter);
+        personaFilters.add(customerNameFilter);
 
         personaFilters = personaFilters.stream()
                 .filter(e -> !e.equalsIgnoreCase(""))

@@ -105,7 +105,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
     private String buildPartialSearchCarrierName(String filter, String operator, String input) {
         if (input != null && !input.isBlank())
-            return  String.format(filter, "'" + operator, input, operator + "'");
+            return  String.format(filter, "'" + operator, input.toUpperCase(), operator + "'");
         else return "";
     }
 

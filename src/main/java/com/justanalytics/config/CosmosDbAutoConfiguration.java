@@ -17,6 +17,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.lang.Nullable;
 
 import java.text.MessageFormat;
+import java.time.Duration;
 
 @Configuration
 @EnableConfigurationProperties(CosmosDbProperties.class)
@@ -44,11 +45,18 @@ public class CosmosDbAutoConfiguration extends AbstractCosmosConfiguration {
 
             azureKeyCredential = new AzureKeyCredential(cosmosKey);
             DirectConnectionConfig directConnectionConfig = new DirectConnectionConfig();
+            directConnectionConfig.setMaxConnectionsPerEndpoint(10000);
+            directConnectionConfig.setMaxRequestsPerConnection(10000);
             GatewayConnectionConfig gatewayConnectionConfig = new GatewayConnectionConfig();
+            ThrottlingRetryOptions throttlingRetryOptions = new ThrottlingRetryOptions();
+            Duration duration = Duration.ofMinutes(2);
+            throttlingRetryOptions.setMaxRetryAttemptsOnThrottledRequests(10);
+            throttlingRetryOptions.setMaxRetryWaitTime(duration);
             return new CosmosClientBuilder()
                     .endpoint(cosmosUri)
                     .credential(azureKeyCredential)
                     .directMode(directConnectionConfig, gatewayConnectionConfig)
+                    .throttlingRetryOptions(throttlingRetryOptions)
                     .buildClient();
         } catch (Exception ex) {
             log.error(MessageFormat.format("getConfig failed with error: {0}",
