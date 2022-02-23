@@ -57,6 +57,7 @@ public class CosmosDbAutoConfiguration extends AbstractCosmosConfiguration {
                     .credential(azureKeyCredential)
                     .directMode(directConnectionConfig, gatewayConnectionConfig)
                     .throttlingRetryOptions(throttlingRetryOptions)
+                    .consistencyLevel(ConsistencyLevel.SESSION)
                     .buildClient();
         } catch (Exception ex) {
             log.error(MessageFormat.format("getConfig failed with error: {0}",
