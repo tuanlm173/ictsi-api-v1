@@ -52,11 +52,18 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             if (facilityId.equalsIgnoreCase("MICT"))
                 results = "c.carrier_operator_id != 'ICTSI'";
             else if (facilityId.equalsIgnoreCase("SBITC"))
-                results = "c.carrier_name != 'DUMMY VESSEL'";
+                results = "c.carrier_name NOT IN ('DUMMY VESSEL', 'DMMYVESSEL')";
             else if (facilityId.equalsIgnoreCase("AGCT"))
                 results = "c.ib_vyg != 'DUMM'";
             else if (facilityId.equalsIgnoreCase("ZLO"))
                 results = "c.carrier_name != 'TO BE CONFIRM'";
+            else if (facilityId.equalsIgnoreCase("MGT"))
+                results = "c.carrier_name != 'DUMMY VESSEL'";
+            else if (facilityId.equalsIgnoreCase("MICTSI"))
+                results = "c.carrier_name != 'DMMYVESSEL'";
+            else if (facilityId.equalsIgnoreCase("OMT"))
+                results = "c.ib_vyg != 'DUMMY'";
+
         }
 
         return results;

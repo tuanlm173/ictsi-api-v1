@@ -1,5 +1,6 @@
 package com.justanalytics.controller;
 
+import com.azure.cosmos.models.FeedResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.justanalytics.dto.*;
 import com.justanalytics.exception.InvalidParameterException;
@@ -8,11 +9,14 @@ import com.justanalytics.query.Query;
 import com.justanalytics.response.RestEnvelope;
 import com.justanalytics.service.*;
 import com.justanalytics.types.ContainerType;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -370,5 +374,15 @@ public class DataController {
         }
         throw new UnAccessibleSystemException();
     }
+
+//    @PostMapping(path = "/api/v1/testApi", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<RestEnvelope> getTestData(
+//            @RequestParam(value = "container", required = false) String container,
+//            @RequestParam(value = "query", required = false) String query
+//    ) {
+//        Flux<FeedResponse<JSONObject>> results = dataService.findAsyncData(container, query);
+//        return ResponseEntity.ok()
+//                .body(RestEnvelope.of(results));
+//    }
 
 }

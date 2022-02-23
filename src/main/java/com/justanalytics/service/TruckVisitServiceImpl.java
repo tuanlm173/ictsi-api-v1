@@ -201,6 +201,9 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             String sortBy = filterBuilder.buildOrderByString(query.sort);
             queryBuilder.append(String.format(" ORDER BY %s", sortBy));
         }
+        else {
+            queryBuilder.append(" ORDER BY c.truck_license_nbr ASC, c.entered_yard DESC");
+        }
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));

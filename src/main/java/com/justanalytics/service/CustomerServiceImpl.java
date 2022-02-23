@@ -51,6 +51,12 @@ public class CustomerServiceImpl implements CustomerService {
         else return "";
     }
 
+    private String buildTaxIdFilter(String filter, String input) {
+        if (input != null && !input.isBlank())
+            return String.format(filter, input, input);
+        else return "";
+    }
+
     private List<CustomerDto> getCustomerDto(List<JSONObject> rawData) {
 
         List<CustomerDto> results = new ArrayList<>(rawData.size());
@@ -66,7 +72,8 @@ public class CustomerServiceImpl implements CustomerService {
             String parentAccountName = String.valueOf(data.get("parent_account_name"));
             String parentAccountNumber = String.valueOf(data.get("parent_account_number"));
             String industry = String.valueOf(data.get("industry"));
-            String taxId = String.valueOf(data.get("tax_id"));
+            String taxId1 = String.valueOf(data.get("tax_id1"));
+            String taxId2 = String.valueOf(data.get("tax_id2"));
             String address = String.valueOf(data.get("address"));
 
             results.add(CustomerDto.builder()
@@ -80,7 +87,8 @@ public class CustomerServiceImpl implements CustomerService {
                     .parentAccountName(parentAccountName)
                     .parentAccountNumber(parentAccountNumber)
                     .industry(industry)
-                    .taxId(taxId)
+                    .taxId1(taxId1)
+                    .taxId2(taxId2)
                     .address(address)
                     .build());
         }
@@ -109,10 +117,12 @@ public class CustomerServiceImpl implements CustomerService {
         String customerTypeFilter = buildFilter(CUSTOMER_TYPE, parseParams(customerType));
         String facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
         String customerNameFilter = buildPartialCustomerSearch(CUSTOMER_NAME, operatorLike, customerName);
+        String taxIdFilter = buildTaxIdFilter(TAX_ID, parseParams(taxId));
 
         personaFilters.add(customerTypeFilter);
         personaFilters.add(facilityIdFilter);
         personaFilters.add(customerNameFilter);
+        personaFilters.add(taxIdFilter);
 
         personaFilters = personaFilters.stream()
                 .filter(e -> !e.equalsIgnoreCase(""))
