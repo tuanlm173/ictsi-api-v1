@@ -30,5 +30,13 @@ public interface VesselVisitService {
             String lastVisitFlag,
             String operationType,
             List<String> terminalConditions
-    ) throws JsonProcessingException;
+    );
+
+    List<VesselVisitDto> findVesselVisitByCarrierName (
+            Query query,
+            String facilityId,
+            String carrierName,
+            String lastVisitFlag,
+            String operationType
+    );
 }

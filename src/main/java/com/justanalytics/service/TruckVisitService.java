@@ -23,4 +23,11 @@ public interface TruckVisitService {
             String operationType,
             List<String> terminalConditions
     );
+
+    List<TruckVisitDto> findTruckVisitByTruckPlate(
+            Query query,
+            String visitPhases,
+            String lastVisitFlag,
+            String operationType
+    );
 }

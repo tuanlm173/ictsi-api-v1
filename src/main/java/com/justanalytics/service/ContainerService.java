@@ -98,4 +98,14 @@ public interface ContainerService {
             List<String> terminalConditions
     );
 
+    List<ContainerDto> findCommonContainer(
+            Query query,
+            String facilityId,
+            String containerNumber,
+            String containerBookingNumber,
+            String bolNumber,
+            String lastVisitFlag,
+            String operationType
+    );
+
 }

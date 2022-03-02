@@ -56,6 +56,9 @@ public class DataController {
     private CustomerService customerService;
 
     @Autowired
+    private CommonService commonService;
+
+    @Autowired
     private DataService dataService;
 
     @PostMapping(path = "/api/v1/getContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -216,7 +219,7 @@ public class DataController {
             @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
-    ) throws JsonProcessingException {
+    ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
@@ -375,14 +378,22 @@ public class DataController {
         throw new UnAccessibleSystemException();
     }
 
-//    @PostMapping(path = "/api/v1/testApi", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<RestEnvelope> getTestData(
-//            @RequestParam(value = "container", required = false) String container,
-//            @RequestParam(value = "query", required = false) String query
-//    ) {
-//        Flux<FeedResponse<JSONObject>> results = dataService.findAsyncData(container, query);
-//        return ResponseEntity.ok()
-//                .body(RestEnvelope.of(results));
-//    }
+    @PostMapping(path = "/api/v1/getCommonEntities", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getCommonEntities(
+            @RequestParam(value = "facility-id", required = false) String facilityId,
+            @RequestParam(value = "container-number", required = false) String containerNumber,
+            @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
+            @RequestParam(value = "bol-number", required = false) String bolNumber,
+            @RequestParam(value = "carrier-name", required = false) String carrierName,
+            @RequestParam(value = "visit-phase", required = false) String visitPhases,
+            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestBody Query query
+    ) {
+        ContainerVesselTruckDto results = commonService.findCombinedEntity(query, facilityId, containerNumber, containerBookingNumber, bolNumber,
+                carrierName, visitPhases, lastVisitFlag, operationType);
+        return ResponseEntity.ok()
+                .body(RestEnvelope.of(results));
+    }
 
 }

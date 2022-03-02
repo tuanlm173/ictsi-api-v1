@@ -1490,4 +1490,72 @@ public class ContainerServiceImpl implements ContainerService {
         results = dataRepository.getSimpleDataFromCosmos(EMPTY_CONTAINER_NAME, sql);
         return getEmptyContainerDto(results);
     }
+
+    @Override
+    public List<ContainerDto> findCommonContainer(
+            Query query,
+            String facilityId,
+            String containerNumber,
+            String containerBookingNumber,
+            String bolNumber,
+            String lastVisitFlag,
+            String operationType
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+
+        // Persona filter
+        List<String> personaFilters = new ArrayList<>();
+
+        String containerFacilityFilter = buildFilter(ALL_CONTAINER_FACILITY, parseParams(facilityId));
+        String containerNumberFilter = buildFilter(ALL_CONTAINER_NUMBER, parseParams(containerNumber));
+        String containerBookingNumberFilter = buildFilter(ALL_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
+        String containerBolNumberFilter = buildGenericBolFilter(ALL_CONTAINER_MASTER_BOL_NUMBER, ALL_CONTAINER_HOUSE_BOL_NUMBER, bolNumber);
+
+        personaFilters.add(containerFacilityFilter);
+        personaFilters.add(containerNumberFilter);
+        personaFilters.add(containerBookingNumberFilter);
+        personaFilters.add(containerBolNumberFilter);
+
+        personaFilters = personaFilters.stream()
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
+                .collect(Collectors.toList());
+
+        if (personaFilters.size() == 0) {
+            queryBuilder.append(" AND ");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+            queryBuilder.append(" AND ");
+        }
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append("1=1");
+
+        // Order - currently default sort
+//        if (!query.sort.isEmpty()) {
+//            String sortBy = filterBuilder.buildOrderByString(query.sort);
+//            queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+//        }
+//        else {
+//            queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+//        }
+        queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+        return getContainerDto(rawData);
+    }
 }
