@@ -32,5 +32,24 @@ public final class TruckVisitBaseCondition {
 
     public static final String VISIT_TIME = "(('%s' >= c.ata AND '%s' <= c.atd) AND IS_DEFINED(c.ata) AND IS_DEFINED(c.atd))";
 
-
+    public static final String GLOBAL_TRUCK_VISIT_BASE_QUERY = "SELECT " +
+            "c.unique_key,\n" +
+            "c.facility_id,\n" +
+            "c.truck_id,\n" +
+            "c.visit_nbr,\n" +
+            "c.visit_phase,\n" +
+            "c.carrier_operator_id,\n" +
+            "c.carrier_operator_name,\n" +
+            "c.ata,\n" +
+            "c.atd,\n" +
+            "c.driver_license_nbr,\n" +
+            "c.truck_visit_gkey,\n" +
+            "c.truck_license_nbr,\n" +
+            "c.entered_yard,\n" +
+            "c.exited_yard,\n" +
+            "c.stage_id,\n" +
+            "c.visit_statuses \n" +
+            "FROM api_truck_visit_all c " +
+            "WHERE (1=1) AND c.delete_flag = 'N' AND %s AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) AND c.facility_id NOT IN ('CGT') " +
+            "AND %s";
 }

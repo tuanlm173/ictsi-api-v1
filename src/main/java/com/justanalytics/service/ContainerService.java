@@ -108,4 +108,11 @@ public interface ContainerService {
             String operationType
     );
 
+    List<ContainerDto> findSimpleGlobalContainer(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    );
+
 }

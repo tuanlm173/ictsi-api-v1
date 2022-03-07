@@ -39,4 +39,11 @@ public interface VesselVisitService {
             String lastVisitFlag,
             String operationType
     );
+
+    List<VesselVisitDto> findSimpleGlobalVesselVisit(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    );
 }

@@ -378,20 +378,32 @@ public class DataController {
         throw new UnAccessibleSystemException();
     }
 
-    @PostMapping(path = "/api/v1/getCommonEntities", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestEnvelope> getCommonEntities(
-            @RequestParam(value = "facility-id", required = false) String facilityId,
-            @RequestParam(value = "container-number", required = false) String containerNumber,
-            @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
-            @RequestParam(value = "bol-number", required = false) String bolNumber,
-            @RequestParam(value = "carrier-name", required = false) String carrierName,
-            @RequestParam(value = "visit-phase", required = false) String visitPhases,
+//    @PostMapping(path = "/api/v1/getCommonEntities", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<RestEnvelope> getCommonEntities(
+//            @RequestParam(value = "facility-id", required = false) String facilityId,
+//            @RequestParam(value = "container-number", required = false) String containerNumber,
+//            @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
+//            @RequestParam(value = "bol-number", required = false) String bolNumber,
+//            @RequestParam(value = "carrier-name", required = false) String carrierName,
+//            @RequestParam(value = "visit-phase", required = false) String visitPhases,
+//            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
+//            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+//            @RequestBody Query query
+//    ) {
+//        ContainerVesselTruckDto results = commonService.findCombinedEntity(query, facilityId, containerNumber, containerBookingNumber, bolNumber,
+//                carrierName, visitPhases, lastVisitFlag, operationType);
+//        return ResponseEntity.ok()
+//                .body(RestEnvelope.of(results));
+//    }
+
+    @PostMapping(path = "/api/v1/getGlobalSearch", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getGlobalSearch(
+            @RequestParam(value = "search-param", required = false) String searchParam,
             @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        ContainerVesselTruckDto results = commonService.findCombinedEntity(query, facilityId, containerNumber, containerBookingNumber, bolNumber,
-                carrierName, visitPhases, lastVisitFlag, operationType);
+        ContainerVesselTruckDto results = commonService.findSimpleCombinedGlobalEntity(query, searchParam, lastVisitFlag, operationType);
         return ResponseEntity.ok()
                 .body(RestEnvelope.of(results));
     }

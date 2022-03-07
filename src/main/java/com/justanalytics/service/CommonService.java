@@ -20,4 +20,11 @@ public interface CommonService {
             String lastVisitFlag,
             String operationType
     );
+
+    ContainerVesselTruckDto findSimpleCombinedGlobalEntity(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    );
 }

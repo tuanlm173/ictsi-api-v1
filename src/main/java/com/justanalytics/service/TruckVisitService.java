@@ -30,4 +30,11 @@ public interface TruckVisitService {
             String lastVisitFlag,
             String operationType
     );
+
+    List<TruckVisitDto> findSimpleGlobalTruckVisit(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    );
 }

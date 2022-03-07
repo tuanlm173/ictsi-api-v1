@@ -1558,4 +1558,39 @@ public class ContainerServiceImpl implements ContainerService {
         List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
         return getContainerDto(rawData);
     }
+
+
+    @Override
+    public List<ContainerDto> findSimpleGlobalContainer(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(GLOBAL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime,
+                parseParams(searchParam), parseParams(searchParam), parseParams(searchParam), parseParams(searchParam)));
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append(" AND 1=1");
+
+        // Order
+        queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+        return getContainerDto(rawData);
+
+    }
 }

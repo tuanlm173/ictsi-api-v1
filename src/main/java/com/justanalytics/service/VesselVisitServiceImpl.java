@@ -414,5 +414,36 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         return getVesselVisitDto(rawData);
     }
 
+    @Override
+    public List<VesselVisitDto> findSimpleGlobalVesselVisit(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime,
+                buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append(" AND 1=1");
+
+        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata DESC, c.eta DESC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        return getVesselVisitDto(rawData);
+    }
 
 }
