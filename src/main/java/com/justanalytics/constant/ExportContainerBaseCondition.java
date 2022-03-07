@@ -46,7 +46,7 @@ public final class ExportContainerBaseCondition {
                     "c.nominal_length,\n" +
                     "c.reefer_type,\n" +
                     "c.iso_group,\n" +
-                    "c.bill_of_lading_nbr,\n" +
+                    "c.bill_of_lading_nbr as master_bl_nbr,\n" +
                     "c.origin,\n" +
                     "c.destination,\n" +
                     "c.consignee_id,\n" +

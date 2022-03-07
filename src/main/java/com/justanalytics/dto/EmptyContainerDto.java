@@ -18,7 +18,7 @@ import java.util.List;
         "seal_nbr3", "seal_nbr4", "stopped_vessel", "stopped_rail", "stopped_road", "imped_vessel", "imped_rail", "imped_road",
         "arrive_pos_loctype", "arrive_pos_locid", "arrive_pos_slot", "last_pos_loctype", "last_pos_locid", "last_pos_slot",
         "time_in", "time_out", "booking_number", "requires_power", "time_state_change", "pod", "transit_state",
-        "nominal_length", "reefer_type", "iso_group", "bill_of_lading_nbr", "origin", "destination", "consignee_id", "consignee_name",
+        "nominal_length", "reefer_type", "iso_group", "master_bl_nbr", "origin", "destination", "consignee_id", "consignee_name",
         "shipper_id", "shipper_name", "house_bl_nbr", "cargo_category", "cargo_consignee_id", "cargo_consignee_name",
         "cargo_shipper_id", "cargo_shipper_name", "cargo_origin", "shipper_declared_vgm", "terminal_measured_vgm", "last_free_day",
         "paid_thru_day", "power_last_free_day", "power_paid_thru_day", "ib_registry_nbr", "ob_registry_nbr", "entry_no",
@@ -114,7 +114,7 @@ public class EmptyContainerDto {
     private String reeferType;
     @JsonProperty(value = "iso_group")
     private String isoGroup;
-    @JsonProperty(value = "bill_of_lading_nbr")
+    @JsonProperty(value = "master_bl_nbr")
     private String masterBlNbr;
     @JsonProperty(value = "origin")
     private String origin;
