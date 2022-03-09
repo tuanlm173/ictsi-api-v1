@@ -213,7 +213,7 @@ public class ContainerServiceImpl implements ContainerService {
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
-            String masterBlNbr = String.valueOf(data.get("bill_of_lading_nbr"));
+            String masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
             String origin = String.valueOf(data.get("origin"));
             String destination = String.valueOf(data.get("destination"));
             String consigneeId = String.valueOf(data.get("consignee_id"));
@@ -419,7 +419,7 @@ public class ContainerServiceImpl implements ContainerService {
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
-            String masterBlNbr = String.valueOf(data.get("bill_of_lading_nbr"));
+            String masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
             String origin = String.valueOf(data.get("origin"));
             String destination = String.valueOf(data.get("destination"));
             String consigneeId = String.valueOf(data.get("consignee_id"));
@@ -625,7 +625,7 @@ public class ContainerServiceImpl implements ContainerService {
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
-            String masterBlNbr = String.valueOf(data.get("bill_of_lading_nbr"));
+            String masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
             String origin = String.valueOf(data.get("origin"));
             String destination = String.valueOf(data.get("destination"));
             String consigneeId = String.valueOf(data.get("consignee_id"));
