@@ -63,6 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         for (JSONObject data: rawData) {
             String uniqueKey = String.valueOf(data.get("unique_key"));
+            String facilityId = String.valueOf(data.get("facility_id"));
             String terminalCustomerId = String.valueOf(data.get("terminal_customer_id"));
             String terminalAccountName = String.valueOf(data.get("terminal_account_name"));
             String terminalCustomerRole = String.valueOf(data.get("terminal_customer_role"));
@@ -78,6 +79,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             results.add(CustomerDto.builder()
                     .uniqueKey(uniqueKey)
+                    .facilityId(facilityId)
                     .terminalCustomerId(terminalCustomerId)
                     .terminalAccountName(terminalAccountName)
                     .terminalCustomerRole(terminalCustomerRole)

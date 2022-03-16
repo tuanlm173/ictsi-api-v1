@@ -10,12 +10,14 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"unique_key", "terminal_customer_id", "terminal_account_name", "terminal_customer_role", "account_number",
+@JsonPropertyOrder({"unique_key", "facility_id", "terminal_customer_id", "terminal_account_name", "terminal_customer_role", "account_number",
         "account_name", "account_type", "parent_account_name", "parent_account_number", "industry", "tax_id1", "tax_id2", "address"})
 public class CustomerDto {
 
     @JsonProperty(value = "unique_key")
     private String uniqueKey;
+    @JsonProperty(value = "facility_id")
+    private String facilityId;
     @JsonProperty(value = "terminal_customer_id")
     private String terminalCustomerId;
     @JsonProperty(value = "terminal_account_name")

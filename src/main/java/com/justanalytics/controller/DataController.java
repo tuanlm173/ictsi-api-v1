@@ -81,7 +81,7 @@ public class DataController {
             @RequestParam(value = "arrive-pos-locid", required = false) String containerArrivePosLocId,
             @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
             @RequestParam(value = "bol-number", required = false) String bolNumber,
-            @RequestParam(value = "shipper", required = false) String shipper,
+            @RequestParam(value = "shipper-consignee", required = false) String shipper,
             @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "imped-type", required = false) String impedType,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,

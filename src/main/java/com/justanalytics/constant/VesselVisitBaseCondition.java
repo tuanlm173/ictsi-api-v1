@@ -63,7 +63,15 @@ public final class VesselVisitBaseCondition {
             "c.vessel_registry_number,\n" +
             "c.vessel_statuses \n" +
             "FROM api_vessel_visit c " +
-            "WHERE (1=1) AND c.delete_flag = 'N' AND %s AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) AND %s AND c.facility_id NOT IN ('CGT') AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group)";
+            "WHERE (1=1) AND c.delete_flag = 'N' " +
+            "AND %s " + // visit flag
+            "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd
+            "AND c.carrier_name NOT LIKE '%sDUMMY%s' " + // dummy
+            "AND c.facility_id NOT IN ('CGT') " +
+            "AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group) " +
+            "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " +  // past eta - future eta
+            "AND c.carrier_operator_name != 'ICTSI Vessel Operator' " +
+            "AND c.visit_phase NOT IN ('90ARCHIVED', '80CANCELED')";
     public static final String CONTAINER_NAME = "api_vessel_visit";
 
     public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
@@ -77,6 +85,8 @@ public final class VesselVisitBaseCondition {
     public static final String ATA = "(('%s' <= c.ata AND c.ata <= '%s') AND IS_DEFINED(c.ata))";
     public static final String ETD = "(('%s' <= c.etd AND c.etd <= '%s') AND IS_DEFINED(c.etd))";
     public static final String ATD = "(('%s' <= c.atd AND c.atd <= '%s') AND IS_DEFINED(c.atd))";
+
+    public static final String DUMMY_VESSEL = "c.carrier_name NOT LIKE '%sDUMMY%s'";
 
 
     public static final String GLOBAL_VESSEL_VISIT_BASE_QUERY = "SELECT " +
@@ -138,6 +148,14 @@ public final class VesselVisitBaseCondition {
             "c.vessel_registry_number,\n" +
             "c.vessel_statuses \n" +
             "FROM api_vessel_visit c " +
-            "WHERE (1=1) AND c.delete_flag = 'N' AND %s AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) AND c.facility_id NOT IN ('CGT') AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group) " +
-            "AND %s";
+            "WHERE (1=1) AND c.delete_flag = 'N' " +
+            "AND %s " +  // visit flag
+            "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd
+            "AND c.facility_id NOT IN ('CGT') " +
+            "AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group) " +
+            "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " + // past eta - future eta
+            "AND c.carrier_name NOT LIKE '%sDUMMY%s' " + // dummy
+            "AND c.carrier_operator_name != 'ICTSI Vessel Operator' " +
+            "AND c.visit_phase NOT IN ('90ARCHIVED', '80CANCELED') " +
+            "AND %s"; // search param
 }

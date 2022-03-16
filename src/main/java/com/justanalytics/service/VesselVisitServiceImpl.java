@@ -30,7 +30,9 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
     private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    String currentTime = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
+    String atdRestrictDays = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
+    String etaFutureRestrictDays = "'" + LocalDateTime.now().plusDays(14).format(localDateTimeFormatter) + "Z'";
+    String etaPastRestrictDays = "'" + LocalDateTime.now().minusDays(7).format(localDateTimeFormatter) + "Z'";
     String operatorLike = "%";
 
     @Autowired
@@ -274,7 +276,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime, excludeDummyVesselFilter(facilityId)));
+        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, operatorLike, operatorLike, etaPastRestrictDays, etaFutureRestrictDays));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -341,7 +343,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             queryBuilder.append(String.format(" ORDER BY %s", sortBy));
         }
         else {
-            queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata DESC, c.eta DESC");
+            queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
         }
 
         // Offset limit
@@ -364,7 +366,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime, excludeDummyVesselFilter(facilityId)));
+        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, operatorLike, operatorLike, etaPastRestrictDays, etaFutureRestrictDays));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -403,7 +405,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 //        else {
 //            queryBuilder.append(" ORDER BY c.visit_phase ASC, c.atd DESC, c.ata DESC, c.eta DESC");
 //        }
-        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata DESC, c.eta DESC");
+        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
@@ -423,8 +425,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime,
-                buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
+        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, etaFutureRestrictDays, etaPastRestrictDays,
+                operatorLike, operatorLike, buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();
@@ -435,7 +437,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         }
         else queryBuilder.append(" AND 1=1");
 
-        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata DESC, c.eta DESC");
+        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));

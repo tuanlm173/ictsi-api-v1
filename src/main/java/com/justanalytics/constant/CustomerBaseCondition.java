@@ -4,6 +4,7 @@ public final class CustomerBaseCondition {
 
     public static final String CUSTOMER_BASE_QUERY = "SELECT " +
             "c.unique_key,\n" +
+            "c.facility_id,\n" +
             "c.terminal_customer_id,\n" +
             "c.terminal_account_name,\n" +
             "c.terminal_customer_role,\n" +
