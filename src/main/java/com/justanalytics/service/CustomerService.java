@@ -13,6 +13,8 @@ public interface CustomerService {
             Query query,
             String customerType,
             String facilityId,
+            String customerName,
+            String taxId,
             String operationType
     );
 }

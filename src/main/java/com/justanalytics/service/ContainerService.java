@@ -35,6 +35,7 @@ public interface ContainerService {
             String bolNumber,
             String containerUniqueKey,
             String shipper,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -63,6 +64,7 @@ public interface ContainerService {
             String bolNumber,
             String containerUniqueKey,
             String shipper,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -90,9 +92,27 @@ public interface ContainerService {
             String containerUniqueKey,
             String bolNumber,
             String bookingNumber,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions
+    );
+
+    List<ContainerDto> findCommonContainer(
+            Query query,
+            String facilityId,
+            String containerNumber,
+            String containerBookingNumber,
+            String bolNumber,
+            String lastVisitFlag,
+            String operationType
+    );
+
+    List<ContainerDto> findSimpleGlobalContainer(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
     );
 
 }

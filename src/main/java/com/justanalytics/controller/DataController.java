@@ -1,6 +1,5 @@
 package com.justanalytics.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.justanalytics.dto.*;
 import com.justanalytics.exception.InvalidParameterException;
 import com.justanalytics.exception.UnAccessibleSystemException;
@@ -52,6 +51,9 @@ public class DataController {
     private CustomerService customerService;
 
     @Autowired
+    private CommonService commonService;
+
+    @Autowired
     private DataService dataService;
 
     @PostMapping(path = "/api/v1/getContainerDetails", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,7 +81,8 @@ public class DataController {
             @RequestParam(value = "arrive-pos-locid", required = false) String containerArrivePosLocId,
             @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
             @RequestParam(value = "bol-number", required = false) String bolNumber,
-            @RequestParam(value = "shipper", required = false) String shipper,
+            @RequestParam(value = "shipper-consignee", required = false) String shipper,
+            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "imped-type", required = false) String impedType,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
@@ -110,6 +113,7 @@ public class DataController {
                         bolNumber,
                         uniqueKey,
                         shipper,
+                        lastVisitFlag,
                         impedType,
                         operationType,
                         terminalConditions
@@ -142,6 +146,7 @@ public class DataController {
                         bolNumber,
                         uniqueKey,
                         shipper,
+                        lastVisitFlag,
                         impedType,
                         operationType,
                         terminalConditions
@@ -172,6 +177,7 @@ public class DataController {
                         uniqueKey,
                         bolNumber,
                         containerBookingNumber,
+                        lastVisitFlag,
                         impedType,
                         operationType,
                         terminalConditions
@@ -205,14 +211,15 @@ public class DataController {
             @RequestParam(value = "etd-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime etdTo,
             @RequestParam(value = "atd-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdFrom,
             @RequestParam(value = "atd-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime atdTo,
+            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
-    ) throws JsonProcessingException {
+    ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
                     query, facilityId, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
-                    etaFrom, etaTo, ataFrom, ataTo, etdFrom, etdTo, atdFrom, atdTo, operationType, terminalConditions);
+                    etaFrom, etaTo, ataFrom, ataTo, etdFrom, etdTo, atdFrom, atdTo, lastVisitFlag, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselVisits.size())
                     .body(RestEnvelope.of(vesselVisits));
@@ -232,13 +239,14 @@ public class DataController {
             @RequestParam(value = "carrier-operator-name", required = false) String carrierOperatorNames,
             @RequestParam(value = "visit-time-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeFrom,
             @RequestParam(value = "visit-time-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime visitTimeTo,
+            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<TruckVisitDto> truckVisits = truckVisitService.findTruckVisit(query, facilityId, truckLicenseNbrs,
-                    visitPhases, carrierOperatorNames, visitTimeFrom, visitTimeTo, operationType, terminalConditions);
+                    visitPhases, carrierOperatorNames, visitTimeFrom, visitTimeTo, lastVisitFlag, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + truckVisits.size())
                     .body(RestEnvelope.of(truckVisits));
@@ -351,16 +359,48 @@ public class DataController {
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "customer-type", required = false) String customerType,
             @RequestParam(value = "facility-id", required = false) String facilityId,
+            @RequestParam(value = "customer-name", required = false) String customerName,
+            @RequestParam(value = "tax-id", required = false) String taxId,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
-            List<CustomerDto> customers = customerService.findCustomer(query, customerType, facilityId, operationType);
+            List<CustomerDto> customers = customerService.findCustomer(query, customerType, facilityId, customerName, taxId, operationType);
             return ResponseEntity.ok()
                     .header("row-count", "" + customers.size())
                     .body(RestEnvelope.of(customers));
         }
         throw new UnAccessibleSystemException();
+    }
+
+//    @PostMapping(path = "/api/v1/getCommonEntities", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<RestEnvelope> getCommonEntities(
+//            @RequestParam(value = "facility-id", required = false) String facilityId,
+//            @RequestParam(value = "container-number", required = false) String containerNumber,
+//            @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
+//            @RequestParam(value = "bol-number", required = false) String bolNumber,
+//            @RequestParam(value = "carrier-name", required = false) String carrierName,
+//            @RequestParam(value = "visit-phase", required = false) String visitPhases,
+//            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
+//            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+//            @RequestBody Query query
+//    ) {
+//        ContainerVesselTruckDto results = commonService.findCombinedEntity(query, facilityId, containerNumber, containerBookingNumber, bolNumber,
+//                carrierName, visitPhases, lastVisitFlag, operationType);
+//        return ResponseEntity.ok()
+//                .body(RestEnvelope.of(results));
+//    }
+
+    @PostMapping(path = "/api/v1/getGlobalSearch", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestEnvelope> getGlobalSearch(
+            @RequestParam(value = "search-param", required = false) String searchParam,
+            @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
+            @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
+            @RequestBody Query query
+    ) {
+        ContainerVesselTruckDto results = commonService.findSimpleCombinedGlobalEntity(query, searchParam, lastVisitFlag, operationType);
+        return ResponseEntity.ok()
+                .body(RestEnvelope.of(results));
     }
 
 }

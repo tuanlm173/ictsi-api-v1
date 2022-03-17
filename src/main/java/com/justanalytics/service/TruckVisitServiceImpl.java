@@ -33,6 +33,16 @@ public class TruckVisitServiceImpl implements TruckVisitService {
     @Autowired
     private DataRepository dataRepository;
 
+    private String filterLastVisitFlag(String lastVisitFlag) {
+        String results = "1=1";
+        if (lastVisitFlag != null && !lastVisitFlag.isBlank()) {
+            if (lastVisitFlag.equalsIgnoreCase("true")) {
+                results = "c.last_visit_flag = 1";
+            }
+        }
+        return results;
+    }
+
     private StringBuilder buildSimpleTruckVisitQuery(String query, String size) {
         StringBuilder queryBuilder = new StringBuilder();
         return queryBuilder.append(String.format(query, size));
@@ -130,13 +140,14 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             String carrierOperatorNames,
             LocalDateTime visitTimeFrom,
             LocalDateTime visitTimeTo,
+            String lastVisitFlag,
             String operationType,
             List<String> terminalConditions
     ) {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(TRUCK_VISIT_BASE_QUERY, currentTime));
+        queryBuilder.append(String.format(TRUCK_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -190,6 +201,9 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             String sortBy = filterBuilder.buildOrderByString(query.sort);
             queryBuilder.append(String.format(" ORDER BY %s", sortBy));
         }
+        else {
+            queryBuilder.append(" ORDER BY c.truck_license_nbr ASC, c.entered_yard DESC");
+        }
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
@@ -199,5 +213,96 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
         return getTruckVisitDto(rawData);
 
+    }
+
+    @Override
+    public List<TruckVisitDto> findTruckVisitByTruckPlate(
+            Query query,
+            String visitPhases,
+            String lastVisitFlag,
+            String operationType
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(TRUCK_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+
+        // Persona filter
+        List<String> personaFilters = new ArrayList<>();
+        String personaTruckVisitPhaseFilter = buildFilter(VISIT_PHASE, parseParams(visitPhases));
+
+        personaFilters.add(personaTruckVisitPhaseFilter);
+
+        personaFilters = personaFilters.stream()
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
+                .collect(Collectors.toList());
+
+        if (personaFilters.size() == 0) {
+            queryBuilder.append(" AND ");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+            queryBuilder.append(" AND ");
+        }
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append("1=1");
+
+        // Order - currently default sort
+//        if (!query.sort.isEmpty()) {
+//            String sortBy = filterBuilder.buildOrderByString(query.sort);
+//            queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+//        }
+//        else {
+//            queryBuilder.append(" ORDER BY c.truck_license_nbr ASC, c.entered_yard DESC");
+//        }
+        queryBuilder.append(" ORDER BY c.truck_license_nbr ASC, c.entered_yard DESC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        return getTruckVisitDto(rawData);
+    }
+
+    @Override
+    public List<TruckVisitDto> findSimpleGlobalTruckVisit(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    ) {
+
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(GLOBAL_TRUCK_VISIT_BASE_QUERY,
+                filterLastVisitFlag(lastVisitFlag), currentTime, buildFilter(TRUCK_LICENSE_NBR, parseParams(searchParam))));
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append(" AND 1=1");
+
+        queryBuilder.append(" ORDER BY c.truck_license_nbr ASC, c.entered_yard DESC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        return getTruckVisitDto(rawData);
     }
 }

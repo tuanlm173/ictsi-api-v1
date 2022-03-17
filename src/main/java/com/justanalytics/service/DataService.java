@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.azure.cosmos.models.FeedResponse;
 import com.justanalytics.dto.ApiConfigDto;
 import com.justanalytics.repository.DataRepository;
 import net.minidev.json.JSONObject;
@@ -7,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,5 +64,11 @@ public class DataService {
         return results;
 
     }
+
+//    //TODO: test async
+//    public Flux<FeedResponse<JSONObject>> findAsyncData(String containerName, String query) {
+//        return dataRepository.getSimpleDataFromCosmosAsync(containerName, query);
+//    }
+
 
 }

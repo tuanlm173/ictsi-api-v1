@@ -13,19 +13,19 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"unique_key", "operator", "complex", "facility", "yard", "placed_by", "placed_time", "event_type",
+@JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "yard_id", "placed_by", "placed_time", "event_type",
         "event_descriptions", "notifiable", "container_gkey", "applied_to_id", "notes", "field_changes", "category", "sub_category"})
 public class ContainerEventDto {
 
     @JsonProperty(value = "unique_key")
     private String uniqueKey;
-    @JsonProperty(value = "operator")
+    @JsonProperty(value = "operator_id")
     private String operator;
-    @JsonProperty(value = "complex")
+    @JsonProperty(value = "complex_id")
     private String complex;
-    @JsonProperty(value = "facility")
+    @JsonProperty(value = "facility_id")
     private String facility;
-    @JsonProperty(value = "yard")
+    @JsonProperty(value = "yard_id")
     private String yard;
     @JsonProperty(value = "placed_by")
     private String placedBy;

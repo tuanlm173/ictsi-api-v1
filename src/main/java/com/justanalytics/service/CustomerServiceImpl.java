@@ -24,9 +24,16 @@ public class CustomerServiceImpl implements CustomerService {
     Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
+    String operatorLike = "%";
 
     @Autowired
     private DataRepository dataRepository;
+
+    private String buildPartialCustomerSearch(String filter, String operator, String input) {
+        if (input != null && !input.isBlank())
+            return String.format(filter, "'" + operator, input.toUpperCase(), operator + "'", "'" + operator, input.toUpperCase(), operator + "'");
+        else return "";
+    }
 
     private String parseParams(String params) {
         if (params != null && !params.isBlank())
@@ -44,12 +51,19 @@ public class CustomerServiceImpl implements CustomerService {
         else return "";
     }
 
+    private String buildTaxIdFilter(String filter, String input) {
+        if (input != null && !input.isBlank())
+            return String.format(filter, input, input);
+        else return "";
+    }
+
     private List<CustomerDto> getCustomerDto(List<JSONObject> rawData) {
 
         List<CustomerDto> results = new ArrayList<>(rawData.size());
 
         for (JSONObject data: rawData) {
             String uniqueKey = String.valueOf(data.get("unique_key"));
+            String facilityId = String.valueOf(data.get("facility_id"));
             String terminalCustomerId = String.valueOf(data.get("terminal_customer_id"));
             String terminalAccountName = String.valueOf(data.get("terminal_account_name"));
             String terminalCustomerRole = String.valueOf(data.get("terminal_customer_role"));
@@ -59,9 +73,13 @@ public class CustomerServiceImpl implements CustomerService {
             String parentAccountName = String.valueOf(data.get("parent_account_name"));
             String parentAccountNumber = String.valueOf(data.get("parent_account_number"));
             String industry = String.valueOf(data.get("industry"));
+            String taxId1 = String.valueOf(data.get("tax_id1"));
+            String taxId2 = String.valueOf(data.get("tax_id2"));
+            String address = String.valueOf(data.get("address"));
 
             results.add(CustomerDto.builder()
                     .uniqueKey(uniqueKey)
+                    .facilityId(facilityId)
                     .terminalCustomerId(terminalCustomerId)
                     .terminalAccountName(terminalAccountName)
                     .terminalCustomerRole(terminalCustomerRole)
@@ -71,6 +89,9 @@ public class CustomerServiceImpl implements CustomerService {
                     .parentAccountName(parentAccountName)
                     .parentAccountNumber(parentAccountNumber)
                     .industry(industry)
+                    .taxId1(taxId1)
+                    .taxId2(taxId2)
+                    .address(address)
                     .build());
         }
 
@@ -85,6 +106,8 @@ public class CustomerServiceImpl implements CustomerService {
             Query query,
             String customerType,
             String facilityId,
+            String customerName,
+            String taxId,
             String operationType) {
 
         // Main query
@@ -95,8 +118,13 @@ public class CustomerServiceImpl implements CustomerService {
         List<String> personaFilters = new ArrayList<>();
         String customerTypeFilter = buildFilter(CUSTOMER_TYPE, parseParams(customerType));
         String facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
+        String customerNameFilter = buildPartialCustomerSearch(CUSTOMER_NAME, operatorLike, customerName);
+        String taxIdFilter = buildTaxIdFilter(TAX_ID, parseParams(taxId));
+
         personaFilters.add(customerTypeFilter);
         personaFilters.add(facilityIdFilter);
+        personaFilters.add(customerNameFilter);
+        personaFilters.add(taxIdFilter);
 
         personaFilters = personaFilters.stream()
                 .filter(e -> !e.equalsIgnoreCase(""))

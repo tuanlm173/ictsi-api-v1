@@ -46,7 +46,7 @@ public final class ContainerBaseCondition {
             "c.nominal_length,\n" +
             "c.reefer_type,\n" +
             "c.iso_group,\n" +
-            "c.master_bl_nbr,\n" +
+            "c.bill_of_lading_nbr as master_bl_nbr,\n" +
             "c.origin,\n" +
             "c.destination,\n" +
             "c.consignee_id,\n" +
@@ -69,8 +69,12 @@ public final class ContainerBaseCondition {
             "c.ib_registry_nbr,\n" +
             "c.ob_registry_nbr,\n" +
             "c.entry_no,\n" +
-            "c.appointment_start_date,\n" +
-            "c.appointment_end_date,\n" +
+            "c.requires_xray,\n" +
+            "c.custom_tag,\n" +
+            "c.ib_appointment_start_date,\n" +
+            "c.ib_appointment_end_date,\n" +
+            "c.ob_appointment_start_date,\n" +
+            "c.ob_appointment_end_date,\n" +
             "c.shipper,\n" +
             "c.consignee,\n" +
             "c.show_tvarrival_status,\n" +
@@ -91,9 +95,9 @@ public final class ContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container c " +
-            "WHERE (1=1) AND IS_DEFINED(c.teu) and c.delete_flag = 'N' " +
-            "AND c.last_visit_flag = 1 AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true))";
+            "FROM api_container_all c " +
+            "WHERE (1=1) AND IS_DEFINED(c.teu) AND (c.category NOT IN ('THRGH') AND IS_DEFINED(c.category)) AND c.delete_flag = 'N' " +
+            "AND %s AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) AND c.facility_id NOT IN ('CGT') AND isnull(c.time_in) = false AND c.freight_kind != 'BBK'";
     public static final String ALL_CONTAINER_NAME = "api_container_all";
 
     public static final String ALL_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
@@ -107,6 +111,7 @@ public final class ContainerBaseCondition {
     public static final String ALL_CONTAINER_NUMBER = "(c.container_nbr IN (%s) AND IS_DEFINED(c.container_nbr))";
     public static final String ALL_CONTAINER_EQUIPMENT_TYPE = "(c.equipment_type IN (%s) AND IS_DEFINED(c.equipment_type))";
     public static final String ALL_CONTAINER_OPERATION_LINE_ID = "(c.line_operator_id IN (%s) AND IS_DEFINED(c.line_operator_id))";
+    public static final String ALL_CONTAINER_FREIGHT_KIND = "(c.freight_kind IN (%s) AND IS_DEFINED(c.freight_kind))";
 
     public static final String ALL_CONTAINER_TIME_IN = "((c.time_in >= '%s' AND c.time_in <= '%s') AND IS_DEFINED(c.time_in))";
     public static final String ALL_CONTAINER_TIME_OUT = "((c.time_out >= '%s' AND c.time_out <= '%s') AND IS_DEFINED(c.time_out))";
@@ -120,4 +125,102 @@ public final class ContainerBaseCondition {
     public static final String ALL_CONTAINER_MASTER_CONSIGNEE = "(c.consignee IN (%s) AND IS_DEFINED(c.consignee))";
     public static final String ALL_CONTAINER_HOUSE_SHIPPER = "(ARRAY_CONTAINS(c.house_bls, {'cargo_shipper_name': %s}, true))";
     public static final String ALL_CONTAINER_HOUSE_CONSIGNEE = "(ARRAY_CONTAINS(c.house_bls, {'cargo_consignee_name': %s}, true))";
+
+    public static final String GLOBAL_CONTAINER_BASE_QUERY = "SELECT " +
+            "c.unique_key,\n" +
+            "c.operator_id,\n" +
+            "c.complex_id,\n" +
+            "c.facility_id,\n" +
+            "c.visit_state,\n" +
+            "c.container_nbr,\n" +
+            "c.equipment_type,\n" +
+            "c.teu,\n" +
+            "c.line_operator_id,\n" +
+            "c.line_operator_name,\n" +
+            "c.create_time,\n" +
+            "c.category,\n" +
+            "c.freight_kind,\n" +
+            "c.goods_and_ctr_wt_kg,\n" +
+            "c.goods_ctr_wt_kg_advised,\n" +
+            "c.goods_ctr_wt_kg_gate_measured,\n" +
+            "c.goods_ctr_wt_kg_yard_measured,\n" +
+            "c.seal_nbr1,\n" +
+            "c.seal_nbr2,\n" +
+            "c.seal_nbr3,\n" +
+            "c.seal_nbr4,\n" +
+            "c.stopped_vessel,\t\t\n" +
+            "c.stopped_rail,\n" +
+            "c.stopped_road,\n" +
+            "c.imped_vessel,\t\t\n" +
+            "c.imped_rail,\n" +
+            "c.imped_road,\n" +
+            "c.arrive_pos_loctype,\n" +
+            "c.arrive_pos_locid,\n" +
+            "c.arrive_pos_slot,\n" +
+            "c.last_pos_loctype,\n" +
+            "c.last_pos_locid,\n" +
+            "c.last_pos_slot,\n" +
+            "c.time_in,\n" +
+            "c.time_out,\n" +
+            "c.booking_number,\t\t\n" +
+            "c.requires_power,\n" +
+            "c.time_state_change,\n" +
+            "c.pod,\n" +
+            "c.transit_state,\n" +
+            "c.nominal_length,\n" +
+            "c.reefer_type,\n" +
+            "c.iso_group,\n" +
+            "c.bill_of_lading_nbr as master_bl_nbr,\n" +
+            "c.origin,\n" +
+            "c.destination,\n" +
+            "c.consignee_id,\n" +
+            "c.consignee_name,\n" +
+            "c.shipper_id,\n" +
+            "c.shipper_name,\n" +
+            "c.house_bl_nbr,\t\t\t\n" +
+            "c.cargo_category,\n" +
+            "c.cargo_consignee_id,\n" +
+            "c.cargo_consignee_name,\n" +
+            "c.cargo_shipper_id,\n" +
+            "c.cargo_shipper_name,\n" +
+            "c.cargo_origin,\n" +
+            "c.shipper_declared_vgm,\n" +
+            "c.terminal_measured_vgm,\n" +
+            "c.last_free_day,\n" +
+            "c.paid_thru_day,\n" +
+            "c.power_last_free_day,\n" +
+            "c.power_paid_thru_day,\n" +
+            "c.ib_registry_nbr,\n" +
+            "c.ob_registry_nbr,\n" +
+            "c.entry_no,\n" +
+            "c.requires_xray,\n" +
+            "c.custom_tag,\n" +
+            "c.ib_appointment_start_date,\n" +
+            "c.ib_appointment_end_date,\n" +
+            "c.ob_appointment_start_date,\n" +
+            "c.ob_appointment_end_date,\n" +
+            "c.shipper,\n" +
+            "c.consignee,\n" +
+            "c.show_tvarrival_status,\n" +
+            "c.tv_arrival_status,\n" +
+            "c.tv_arrival_remarks,\n" +
+            "c.house_bls,\n" +
+            "c.ib_id,\n" +
+            "c.ib_cv_mode,\n" +
+            "c.ib_carrier_name,\n" +
+            "c.ib_operator_name,\n" +
+            "c.ib_inbound_vyg,\n" +
+            "c.ib_outbound_vyg,\n" +
+            "c.ob_id,\n" +
+            "c.ob_cv_mode,\n" +
+            "c.ob_carrier_name,\n" +
+            "c.ob_carrier_operator_name,\n" +
+            "c.ob_inbound_vyg,\n" +
+            "c.ob_outbound_vyg,\n" +
+            "c.remarks,\n" +
+            "c.transit_state_descriptions " +
+            "FROM api_container_all c " +
+            "WHERE (1=1) AND IS_DEFINED(c.teu) AND (c.category NOT IN ('THRGH') AND IS_DEFINED(c.category)) AND c.delete_flag = 'N' " +
+            "AND %s AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) AND c.facility_id NOT IN ('CGT') " +
+            "AND ((c.container_nbr IN (%s) AND IS_DEFINED(c.container_nbr)) OR (c.booking_number IN (%s) AND IS_DEFINED(c.booking_number)) OR (c.bill_of_lading_nbr IN (%s) AND IS_DEFINED(c.bill_of_lading_nbr)) OR (ARRAY_CONTAINS(c.house_bls, {'house_bl_nbr': %s}, true)))  AND isnull(c.time_in) = false AND c.freight_kind != 'BBK'";
 }

@@ -37,6 +37,16 @@ public class ContainerServiceImpl implements ContainerService {
     @Autowired
     private DataRepository dataRepository;
 
+    private String filterLastVisitFlag(String lastVisitFlag) {
+        String results = "1=1";
+        if (lastVisitFlag != null && !lastVisitFlag.isBlank()) {
+            if (lastVisitFlag.equalsIgnoreCase("true")) {
+                results = "c.last_visit_flag = 1";
+            }
+        }
+        return results;
+    }
+
     private String parseParams(String params) {
         if (params != null && !params.isBlank())
             return String.join(", ",
@@ -227,8 +237,12 @@ public class ContainerServiceImpl implements ContainerService {
             String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
             String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
             String entryNo = String.valueOf(data.get("entry_no"));
-            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
-            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String requiresXray = String.valueOf(data.get("requires_xray"));
+            String customTag = String.valueOf(data.get("custom_tag"));
+            String ibAppointmentStartDate = String.valueOf(data.get("ib_appointment_start_date"));
+            String ibAppointmentEndDate = String.valueOf(data.get("ib_appointment_end_date"));
+            String obAppointmentStartDate = String.valueOf(data.get("ob_appointment_start_date"));
+            String obAppointmentEndDate = String.valueOf(data.get("ob_appointment_end_date"));
             String shipper = String.valueOf(data.get("shipper"));
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
@@ -324,8 +338,12 @@ public class ContainerServiceImpl implements ContainerService {
                     .ibRegistryNbr(ibRegistryNbr)
                     .obRegistryNbr(obRegistryNbr)
                     .entryNo(entryNo)
-                    .appointmentStartDate(appointmentStartDate)
-                    .appointmentEndDate(appointmentEndDate)
+                    .requiresXray(requiresXray)
+                    .customTag(customTag)
+                    .ibAppointmentStartDate(ibAppointmentStartDate)
+                    .ibAppointmentEndDate(ibAppointmentEndDate)
+                    .obAppointmentStartDate(obAppointmentStartDate)
+                    .obAppointmentEndDate(obAppointmentEndDate)
                     .shipper(shipper)
                     .consignee(consignee)
                     .showTvarrivalStatus(showTvarrivalStatus)
@@ -425,8 +443,12 @@ public class ContainerServiceImpl implements ContainerService {
             String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
             String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
             String entryNo = String.valueOf(data.get("entry_no"));
-            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
-            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String requiresXray = String.valueOf(data.get("requires_xray"));
+            String customTag = String.valueOf(data.get("custom_tag"));
+            String ibAppointmentStartDate = String.valueOf(data.get("ib_appointment_start_date"));
+            String ibAppointmentEndDate = String.valueOf(data.get("ib_appointment_end_date"));
+            String obAppointmentStartDate = String.valueOf(data.get("ob_appointment_start_date"));
+            String obAppointmentEndDate = String.valueOf(data.get("ob_appointment_end_date"));
             String shipper = String.valueOf(data.get("shipper"));
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
@@ -522,8 +544,12 @@ public class ContainerServiceImpl implements ContainerService {
                     .ibRegistryNbr(ibRegistryNbr)
                     .obRegistryNbr(obRegistryNbr)
                     .entryNo(entryNo)
-                    .appointmentStartDate(appointmentStartDate)
-                    .appointmentEndDate(appointmentEndDate)
+                    .requiresXray(requiresXray)
+                    .customTag(customTag)
+                    .ibAppointmentStartDate(ibAppointmentStartDate)
+                    .ibAppointmentEndDate(ibAppointmentEndDate)
+                    .obAppointmentStartDate(obAppointmentStartDate)
+                    .obAppointmentEndDate(obAppointmentEndDate)
                     .shipper(shipper)
                     .consignee(consignee)
                     .showTvarrivalStatus(showTvarrivalStatus)
@@ -623,8 +649,12 @@ public class ContainerServiceImpl implements ContainerService {
             String ibRegistryNbr = String.valueOf(data.get("ib_registry_nbr"));
             String obRegistryNbr = String.valueOf(data.get("ob_registry_nbr"));
             String entryNo = String.valueOf(data.get("entry_no"));
-            String appointmentStartDate = String.valueOf(data.get("appointment_start_date"));
-            String appointmentEndDate = String.valueOf(data.get("appointment_end_date"));
+            String requiresXray = String.valueOf(data.get("requires_xray"));
+            String customTag = String.valueOf(data.get("custom_tag"));
+            String ibAppointmentStartDate = String.valueOf(data.get("ib_appointment_start_date"));
+            String ibAppointmentEndDate = String.valueOf(data.get("ib_appointment_end_date"));
+            String obAppointmentStartDate = String.valueOf(data.get("ob_appointment_start_date"));
+            String obAppointmentEndDate = String.valueOf(data.get("ob_appointment_end_date"));
             String shipper = String.valueOf(data.get("shipper"));
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
@@ -720,8 +750,12 @@ public class ContainerServiceImpl implements ContainerService {
                     .ibRegistryNbr(ibRegistryNbr)
                     .obRegistryNbr(obRegistryNbr)
                     .entryNo(entryNo)
-                    .appointmentStartDate(appointmentStartDate)
-                    .appointmentEndDate(appointmentEndDate)
+                    .requiresXray(requiresXray)
+                    .customTag(customTag)
+                    .ibAppointmentStartDate(ibAppointmentStartDate)
+                    .ibAppointmentEndDate(ibAppointmentEndDate)
+                    .obAppointmentStartDate(obAppointmentStartDate)
+                    .obAppointmentEndDate(obAppointmentEndDate)
                     .shipper(shipper)
                     .consignee(consignee)
                     .showTvarrivalStatus(showTvarrivalStatus)
@@ -812,6 +846,7 @@ public class ContainerServiceImpl implements ContainerService {
 
     private List<String> buildAllContainerConditions(
             String facilityId,
+            String containerFreightKind,
             String containerVisitState,
             String containerTransitState,
             String containerIsoGroup,
@@ -845,6 +880,7 @@ public class ContainerServiceImpl implements ContainerService {
         String containerEquipmentTypeFilter = buildFilter(ALL_CONTAINER_EQUIPMENT_TYPE, parseParams(containerEquipmentType));
         String containerOperationLineIFilter = buildFilter(ALL_CONTAINER_OPERATION_LINE_ID, parseParams(containerOperationLineId));
         String containerBookingNumberFilter = buildFilter(ALL_CONTAINER_BOOKING_NUMBER, parseParams(bookingNumber));
+        String containerFreightKindFilter = buildFilter(ALL_CONTAINER_FREIGHT_KIND, parseParams(containerFreightKind));
         String containerBolNumberFilter = buildGenericBolFilter(ALL_CONTAINER_MASTER_BOL_NUMBER, ALL_CONTAINER_HOUSE_BOL_NUMBER, bolNumber);
 
         String containerTimeInFilter = buildSimpleTimeframeContainerParam(ALL_CONTAINER_TIME_IN, arriveFrom, arriveTo);
@@ -859,6 +895,7 @@ public class ContainerServiceImpl implements ContainerService {
                 shipper);
 
         filters.add(containerFacilityFilter);
+        filters.add(containerFreightKindFilter);
         filters.add(containerVisitStateFilter);
         filters.add(containerTransitStateFilter);
         filters.add(containerIsoGroupFilter);
@@ -1066,6 +1103,7 @@ public class ContainerServiceImpl implements ContainerService {
             String bolNumber,
             String containerUniqueKey,
             String shipper,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -1076,7 +1114,7 @@ public class ContainerServiceImpl implements ContainerService {
 
             // Main query
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append(String.format(IMPORT_CONTAINER_BASE_QUERY, currentTime));
+            queryBuilder.append(String.format(IMPORT_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
 
             // Persona filter
             List<String> personaFilters = buildImportContainerConditions(
@@ -1140,6 +1178,9 @@ public class ContainerServiceImpl implements ContainerService {
                 String sortBy = filterBuilder.buildOrderByString(query.sort);
                 queryBuilder.append(String.format(" ORDER BY %s", sortBy));
             }
+            else {
+                queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+            }
 
             // Offset limit
             queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
@@ -1153,11 +1194,12 @@ public class ContainerServiceImpl implements ContainerService {
 
             // Main query
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, currentTime));
+            queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
 
             // Persona filter
             List<String> personaFilters = buildAllContainerConditions(
                     facilityId,
+                    containerFreightKind,
                     containerVisitState,
                     containerTransitState,
                     containerIsoGroup,
@@ -1215,6 +1257,9 @@ public class ContainerServiceImpl implements ContainerService {
                 String sortBy = filterBuilder.buildOrderByString(query.sort);
                 queryBuilder.append(String.format(" ORDER BY %s", sortBy));
             }
+            else {
+                queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+            }
 
             // Offset limit
             queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
@@ -1254,6 +1299,7 @@ public class ContainerServiceImpl implements ContainerService {
             String bolNumber,
             String containerUniqueKey,
             String shipper,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions
@@ -1262,7 +1308,7 @@ public class ContainerServiceImpl implements ContainerService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(EXPORT_CONTAINER_BASE_QUERY, currentTime));
+        queryBuilder.append(String.format(EXPORT_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
 
         // Persona filter
         List<String> personaFilters = buildExportContainerConditions(
@@ -1326,6 +1372,9 @@ public class ContainerServiceImpl implements ContainerService {
             String sortBy = filterBuilder.buildOrderByString(query.sort);
             queryBuilder.append(String.format(" ORDER BY %s", sortBy));
         }
+        else {
+            queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+        }
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
@@ -1359,6 +1408,7 @@ public class ContainerServiceImpl implements ContainerService {
             String containerUniqueKey,
             String bolNumber,
             String bookingNumber,
+            String lastVisitFlag,
             String impedType,
             String operationType,
             List<String> terminalConditions) {
@@ -1367,7 +1417,7 @@ public class ContainerServiceImpl implements ContainerService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(EMPTY_CONTAINER_BASE_QUERY, currentTime));
+        queryBuilder.append(String.format(EMPTY_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
 
         // Persona filter
         List<String> personaFilters = buildEmptyContainerConditions(
@@ -1428,6 +1478,9 @@ public class ContainerServiceImpl implements ContainerService {
             String sortBy = filterBuilder.buildOrderByString(query.sort);
             queryBuilder.append(String.format(" ORDER BY %s", sortBy));
         }
+        else {
+            queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+        }
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
@@ -1436,5 +1489,108 @@ public class ContainerServiceImpl implements ContainerService {
         logger.info("Cosmos SQL statement: {}", sql);
         results = dataRepository.getSimpleDataFromCosmos(EMPTY_CONTAINER_NAME, sql);
         return getEmptyContainerDto(results);
+    }
+
+    @Override
+    public List<ContainerDto> findCommonContainer(
+            Query query,
+            String facilityId,
+            String containerNumber,
+            String containerBookingNumber,
+            String bolNumber,
+            String lastVisitFlag,
+            String operationType
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+
+        // Persona filter
+        List<String> personaFilters = new ArrayList<>();
+
+        String containerFacilityFilter = buildFilter(ALL_CONTAINER_FACILITY, parseParams(facilityId));
+        String containerNumberFilter = buildFilter(ALL_CONTAINER_NUMBER, parseParams(containerNumber));
+        String containerBookingNumberFilter = buildFilter(ALL_CONTAINER_BOOKING_NUMBER, parseParams(containerBookingNumber));
+        String containerBolNumberFilter = buildGenericBolFilter(ALL_CONTAINER_MASTER_BOL_NUMBER, ALL_CONTAINER_HOUSE_BOL_NUMBER, bolNumber);
+
+        personaFilters.add(containerFacilityFilter);
+        personaFilters.add(containerNumberFilter);
+        personaFilters.add(containerBookingNumberFilter);
+        personaFilters.add(containerBolNumberFilter);
+
+        personaFilters = personaFilters.stream()
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
+                .collect(Collectors.toList());
+
+        if (personaFilters.size() == 0) {
+            queryBuilder.append(" AND ");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+            queryBuilder.append(" AND ");
+        }
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append("1=1");
+
+        // Order - currently default sort
+//        if (!query.sort.isEmpty()) {
+//            String sortBy = filterBuilder.buildOrderByString(query.sort);
+//            queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+//        }
+//        else {
+//            queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+//        }
+        queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+        return getContainerDto(rawData);
+    }
+
+
+    @Override
+    public List<ContainerDto> findSimpleGlobalContainer(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(GLOBAL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime,
+                parseParams(searchParam), parseParams(searchParam), parseParams(searchParam), parseParams(searchParam)));
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append(" AND 1=1");
+
+        // Order
+        queryBuilder.append(" ORDER BY c.container_nbr ASC, c.time_in DESC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+        return getContainerDto(rawData);
+
     }
 }

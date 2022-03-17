@@ -48,7 +48,7 @@ public final class EmptyContainerBaseCondition {
             "c.nominal_length,\n" +
             "c.reefer_type,\n" +
             "c.iso_group,\n" +
-            "c.master_bl_nbr,\n" +
+            "c.bill_of_lading_nbr as master_bl_nbr,\n" +
             "c.origin,\n" +
             "c.destination,\n" +
             "c.consignee_id,\n" +
@@ -71,8 +71,12 @@ public final class EmptyContainerBaseCondition {
             "c.ib_registry_nbr,\n" +
             "c.ob_registry_nbr,\n" +
             "c.entry_no,\n" +
-            "c.appointment_start_date,\n" +
-            "c.appointment_end_date,\n" +
+            "c.requires_xray,\n" +
+            "c.custom_tag,\n" +
+            "c.ib_appointment_start_date,\n" +
+            "c.ib_appointment_end_date,\n" +
+            "c.ob_appointment_start_date,\n" +
+            "c.ob_appointment_end_date,\n" +
             "c.shipper,\n" +
             "c.consignee,\n" +
             "c.show_tvarrival_status,\n" +
@@ -93,9 +97,9 @@ public final class EmptyContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container c " +
+            "FROM api_container_all c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND ((c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind)))) AND c.delete_flag = 'N' " +
-            "AND c.last_visit_flag = 1 AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true))";
+            "AND %s AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) AND c.facility_id NOT IN ('CGT') AND isnull(c.time_in) = false AND c.freight_kind != 'BBK'";
     public static final String EMPTY_CONTAINER_NAME = "api_container_all";
 
     public static final String EMPTY_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";

@@ -27,7 +27,23 @@ public interface VesselVisitService {
             LocalDateTime etdTo,
             LocalDateTime atdFrom,
             LocalDateTime atdTo,
+            String lastVisitFlag,
             String operationType,
             List<String> terminalConditions
-    ) throws JsonProcessingException;
+    );
+
+    List<VesselVisitDto> findVesselVisitByCarrierName (
+            Query query,
+            String facilityId,
+            String carrierName,
+            String lastVisitFlag,
+            String operationType
+    );
+
+    List<VesselVisitDto> findSimpleGlobalVesselVisit(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    );
 }

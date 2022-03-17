@@ -22,7 +22,7 @@ public final class VesselEventBaseCondition {
             "c.category,\n" +
             "c.sub_category \n" +
             "FROM api_vessel_event c " +
-            "WHERE (1=1) AND c.delete_flag = 'N'";
+            "WHERE (1=1) AND c.delete_flag = 'N' AND c.facility_id NOT IN ('CGT')";
 
     public static final String VESSEL_EVENT_CONTAINER_NAME = "api_vessel_event";
 

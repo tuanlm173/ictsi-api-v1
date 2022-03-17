@@ -19,7 +19,22 @@ public interface TruckVisitService {
             String carrierOperatorNames,
             LocalDateTime visitTimeFrom,
             LocalDateTime visitTimeTo,
+            String lastVisitFlag,
             String operationType,
             List<String> terminalConditions
+    );
+
+    List<TruckVisitDto> findTruckVisitByTruckPlate(
+            Query query,
+            String visitPhases,
+            String lastVisitFlag,
+            String operationType
+    );
+
+    List<TruckVisitDto> findSimpleGlobalTruckVisit(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
     );
 }

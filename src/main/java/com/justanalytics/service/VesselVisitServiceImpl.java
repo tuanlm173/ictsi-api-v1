@@ -30,28 +30,64 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
     private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    String currentTime = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
+    String atdRestrictDays = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
+    String etaFutureRestrictDays = "'" + LocalDateTime.now().plusDays(14).format(localDateTimeFormatter) + "Z'";
+    String etaPastRestrictDays = "'" + LocalDateTime.now().minusDays(7).format(localDateTimeFormatter) + "Z'";
+    String operatorLike = "%";
 
     @Autowired
     private DataRepository dataRepository;
 
-
-    private StringBuilder buildSimpleVesselVisitQuery(String query, String size) {
-        StringBuilder queryBuilder = new StringBuilder();
-        return queryBuilder.append(String.format(query, size));
-    }
-
-    private String buildSimpleVesselParam(String filter, String inputVesselVisitFields) {
-        if (inputVesselVisitFields != null && !inputVesselVisitFields.isBlank()) {
-            String[] vesselVisits = inputVesselVisitFields.split(",");
-            List<String> results = new ArrayList<>();
-            for (String vesselVisit: vesselVisits) {
-                results.add(String.format(filter, vesselVisit));
+    private String filterLastVisitFlag(String lastVisitFlag) {
+        String results = "1=1";
+        if (lastVisitFlag != null && !lastVisitFlag.isBlank()) {
+            if (lastVisitFlag.equalsIgnoreCase("true")) {
+                results = "c.last_visit_flag = 1";
             }
-            return "(" + String.join(" OR ", results) + ")";
         }
-        else return DEFAULT_CONDITION;
+        return results;
     }
+
+    private String excludeDummyVesselFilter(String facilityId) {
+        String results = "1=1";
+        if (facilityId != null && !facilityId.isBlank()) {
+            if (facilityId.equalsIgnoreCase("MICT"))
+                results = "c.carrier_operator_id != 'ICTSI'";
+            else if (facilityId.equalsIgnoreCase("SBITC"))
+                results = "c.carrier_name NOT IN ('DUMMY VESSEL', 'DMMYVESSEL')";
+            else if (facilityId.equalsIgnoreCase("AGCT"))
+                results = "c.ib_vyg != 'DUMM'";
+            else if (facilityId.equalsIgnoreCase("ZLO"))
+                results = "c.carrier_name != 'TO BE CONFIRM'";
+            else if (facilityId.equalsIgnoreCase("MGT"))
+                results = "c.carrier_name != 'DUMMY VESSEL'";
+            else if (facilityId.equalsIgnoreCase("MICTSI"))
+                results = "c.carrier_name != 'DMMYVESSEL'";
+            else if (facilityId.equalsIgnoreCase("OMT"))
+                results = "c.ib_vyg != 'DUMMY'";
+
+        }
+
+        return results;
+    }
+
+
+//    private StringBuilder buildSimpleVesselVisitQuery(String query, String size) {
+//        StringBuilder queryBuilder = new StringBuilder();
+//        return queryBuilder.append(String.format(query, size));
+//    }
+//
+//    private String buildSimpleVesselParam(String filter, String inputVesselVisitFields) {
+//        if (inputVesselVisitFields != null && !inputVesselVisitFields.isBlank()) {
+//            String[] vesselVisits = inputVesselVisitFields.split(",");
+//            List<String> results = new ArrayList<>();
+//            for (String vesselVisit: vesselVisits) {
+//                results.add(String.format(filter, vesselVisit));
+//            }
+//            return "(" + String.join(" OR ", results) + ")";
+//        }
+//        else return DEFAULT_CONDITION;
+//    }
 
     private String buildSimpleTimeframeVesselParam(String filter, LocalDateTime from, LocalDateTime to) {
         if ((from != null && !from.toString().isBlank()) && (to != null && !to.toString().isBlank())) {
@@ -76,7 +112,13 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         else return "";
     }
 
-    private List<VesselVisitDto> getVesselVisitDto(List<JSONObject> rawData) throws JsonProcessingException {
+    private String buildPartialSearchCarrierName(String filter, String operator, String input) {
+        if (input != null && !input.isBlank())
+            return  String.format(filter, "'" + operator, input.toUpperCase(), operator + "'");
+        else return "";
+    }
+
+    private List<VesselVisitDto> getVesselVisitDto(List<JSONObject> rawData) {
 
         JsonFactory factory = new JsonFactory();
         factory.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
@@ -228,18 +270,19 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             LocalDateTime etdTo,
             LocalDateTime atdFrom,
             LocalDateTime atdTo,
+            String lastVisitFlag,
             String operationType,
             List<String> terminalConditions
-    ) throws JsonProcessingException {
+    ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, currentTime));
+        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, operatorLike, operatorLike, etaPastRestrictDays, etaFutureRestrictDays));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
 
         String personaFacilityId = buildFilter(FACILITY_ID, parseParams(facilityId));
-        String personaCarrierName = buildFilter(CARRIER_NAME, parseParams(carrierName));
+        String personaCarrierName = buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, carrierName);
         String personaCarrierOperatorId = buildFilter(CARRIER_OPERATOR_ID, parseParams(carrierOperatorId));
         String personaCarrierVisitId = buildFilter(CARRIER_VISIT_ID, parseParams(carrierVisitId));
         String personaServiceId = buildFilter(SERVICE_ID, parseParams(serviceId));
@@ -299,6 +342,9 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             String sortBy = filterBuilder.buildOrderByString(query.sort);
             queryBuilder.append(String.format(" ORDER BY %s", sortBy));
         }
+        else {
+            queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
+        }
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
@@ -310,5 +356,96 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
     }
 
+    @Override
+    public List<VesselVisitDto> findVesselVisitByCarrierName (
+            Query query,
+            String facilityId,
+            String carrierName,
+            String lastVisitFlag,
+            String operationType
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, operatorLike, operatorLike, etaPastRestrictDays, etaFutureRestrictDays));
+
+        // Persona filter
+        List<String> personaFilters = new ArrayList<>();
+
+        String personaCarrierName = buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, carrierName);
+
+        personaFilters.add(personaCarrierName);
+
+        personaFilters = personaFilters.stream()
+                .filter(e -> !e.equalsIgnoreCase(""))
+                .filter(e -> !e.equalsIgnoreCase("1=1"))
+                .collect(Collectors.toList());
+
+        if (personaFilters.size() == 0) {
+            queryBuilder.append(" AND ");
+        }
+        else {
+            queryBuilder.append(String.format(" AND %s", "(" + String.join(" " + operationType + " ", personaFilters) + ")"));
+            queryBuilder.append(" AND ");
+        }
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append("1=1");
+
+        // Order - currently default sort
+//        if (!query.sort.isEmpty()) {
+//            String sortBy = filterBuilder.buildOrderByString(query.sort);
+//            queryBuilder.append(String.format(" ORDER BY %s", sortBy));
+//        }
+//        else {
+//            queryBuilder.append(" ORDER BY c.visit_phase ASC, c.atd DESC, c.ata DESC, c.eta DESC");
+//        }
+        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        return getVesselVisitDto(rawData);
+    }
+
+    @Override
+    public List<VesselVisitDto> findSimpleGlobalVesselVisit(
+            Query query,
+            String searchParam,
+            String lastVisitFlag,
+            String operationType
+    ) {
+        // Main query
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, etaFutureRestrictDays, etaPastRestrictDays,
+                operatorLike, operatorLike, buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
+
+        // Search filter
+        QueryBuilder filterBuilder = new QueryBuilder();
+
+        if (query.filter != null) {
+            String filter = filterBuilder.buildCosmosSearchFilter(query);
+            queryBuilder.append(filter);
+        }
+        else queryBuilder.append(" AND 1=1");
+
+        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
+
+        // Offset limit
+        queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
+
+        String sql = queryBuilder.toString();
+        logger.info("Cosmos SQL statement: {}", sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        return getVesselVisitDto(rawData);
+    }
 
 }
