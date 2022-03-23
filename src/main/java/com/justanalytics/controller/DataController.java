@@ -393,7 +393,7 @@ public class DataController {
 
     @PostMapping(path = "/api/v1/getGlobalSearch", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getGlobalSearch(
-            @RequestParam(value = "search-param", required = false) String searchParam,
+            @RequestParam(value = "search-param") String searchParam,
             @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query

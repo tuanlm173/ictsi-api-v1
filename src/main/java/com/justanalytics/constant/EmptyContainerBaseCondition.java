@@ -99,7 +99,7 @@ public final class EmptyContainerBaseCondition {
             "c.transit_state_descriptions " +
             "FROM api_container_all c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) AND ((c.freight_kind = 'MTY' AND IS_DEFINED(c.freight_kind)))) AND c.delete_flag = 'N' " +
-            "AND %s AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) AND c.facility_id NOT IN ('CGT') AND isnull(c.time_in) = false AND c.freight_kind != 'BBK'";
+            "AND %s AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) AND c.facility_id NOT IN ('CGT') AND c.freight_kind != 'BBK'";
     public static final String EMPTY_CONTAINER_NAME = "api_container_all";
 
     public static final String EMPTY_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
