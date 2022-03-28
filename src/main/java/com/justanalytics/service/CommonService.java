@@ -24,6 +24,7 @@ public interface CommonService {
     ContainerVesselTruckDto findSimpleCombinedGlobalEntity(
             Query query,
             String searchParam,
+            String facilityId,
             String lastVisitFlag,
             String operationType
     );

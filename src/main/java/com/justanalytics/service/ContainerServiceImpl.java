@@ -1564,12 +1564,13 @@ public class ContainerServiceImpl implements ContainerService {
     public List<ContainerDto> findSimpleGlobalContainer(
             Query query,
             String searchParam,
+            String facilityId,
             String lastVisitFlag,
             String operationType
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(GLOBAL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime,
+        queryBuilder.append(String.format(GLOBAL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime, parseParams(facilityId),
                 parseParams(searchParam), parseParams(searchParam), parseParams(searchParam), parseParams(searchParam)));
 
         // Search filter

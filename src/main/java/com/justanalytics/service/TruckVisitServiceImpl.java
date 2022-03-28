@@ -277,6 +277,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
     public List<TruckVisitDto> findSimpleGlobalTruckVisit(
             Query query,
             String searchParam,
+            String facilityId,
             String lastVisitFlag,
             String operationType
     ) {
@@ -284,7 +285,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append(String.format(GLOBAL_TRUCK_VISIT_BASE_QUERY,
-                filterLastVisitFlag(lastVisitFlag), currentTime, buildFilter(TRUCK_LICENSE_NBR, parseParams(searchParam))));
+                filterLastVisitFlag(lastVisitFlag), currentTime, parseParams(facilityId), buildFilter(TRUCK_LICENSE_NBR, parseParams(searchParam))));
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();

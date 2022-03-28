@@ -111,6 +111,7 @@ public interface ContainerService {
     List<ContainerDto> findSimpleGlobalContainer(
             Query query,
             String searchParam,
+            String facilityId,
             String lastVisitFlag,
             String operationType
     );

@@ -43,6 +43,7 @@ public interface VesselVisitService {
     List<VesselVisitDto> findSimpleGlobalVesselVisit(
             Query query,
             String searchParam,
+            String facilityId,
             String lastVisitFlag,
             String operationType
     );

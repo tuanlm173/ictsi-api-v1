@@ -220,7 +220,16 @@ public final class ContainerBaseCondition {
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
             "FROM api_container_all c " +
-            "WHERE (1=1) AND IS_DEFINED(c.teu) AND (c.category NOT IN ('THRGH') AND IS_DEFINED(c.category)) AND c.delete_flag = 'N' " +
-            "AND %s AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) AND c.facility_id NOT IN ('CGT') " +
-            "AND ((c.container_nbr IN (%s) AND IS_DEFINED(c.container_nbr)) OR (c.booking_number IN (%s) AND IS_DEFINED(c.booking_number)) OR (c.bill_of_lading_nbr IN (%s) AND IS_DEFINED(c.bill_of_lading_nbr)) OR (ARRAY_CONTAINS(c.house_bls, {'house_bl_nbr': %s}, true))) AND c.freight_kind != 'BBK'";
+            "WHERE (1=1) AND IS_DEFINED(c.teu) " +
+            "AND (c.category NOT IN ('THRGH') AND IS_DEFINED(c.category)) " +
+            "AND c.delete_flag = 'N' " +
+            "AND %s " + // last visit flag
+            "AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) " + // time out
+            "AND c.facility_id NOT IN ('CGT') " +
+            "AND c.facility_id IN (%s) " + // facility id
+            "AND ((c.container_nbr IN (%s) AND IS_DEFINED(c.container_nbr)) " +
+            "OR (c.booking_number IN (%s) AND IS_DEFINED(c.booking_number)) " +
+            "OR (c.bill_of_lading_nbr IN (%s) AND IS_DEFINED(c.bill_of_lading_nbr)) " +
+            "OR (ARRAY_CONTAINS(c.house_bls, {'house_bl_nbr': %s}, true))) " +
+            "AND c.freight_kind != 'BBK'";
 }

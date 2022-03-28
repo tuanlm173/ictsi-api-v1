@@ -152,6 +152,7 @@ public final class VesselVisitBaseCondition {
             "AND %s " +  // visit flag
             "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd
             "AND c.facility_id NOT IN ('CGT') " +
+            "AND c.facility_id IN (%s) " + // facility id
             "AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group) " +
             "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " + // past eta - future eta
             "AND c.carrier_name NOT LIKE '%sDUMMY%s' " + // dummy

@@ -420,12 +420,13 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     public List<VesselVisitDto> findSimpleGlobalVesselVisit(
             Query query,
             String searchParam,
+            String facilityId,
             String lastVisitFlag,
             String operationType
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, etaFutureRestrictDays, etaPastRestrictDays,
+        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, parseParams(facilityId), etaFutureRestrictDays, etaPastRestrictDays,
                 operatorLike, operatorLike, buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
 
         // Search filter

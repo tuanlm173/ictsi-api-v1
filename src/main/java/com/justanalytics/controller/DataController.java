@@ -394,11 +394,12 @@ public class DataController {
     @PostMapping(path = "/api/v1/getGlobalSearch", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestEnvelope> getGlobalSearch(
             @RequestParam(value = "search-param") String searchParam,
+            @RequestParam(value = "facility-id", required = false) String facilityId,
             @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        ContainerVesselTruckDto results = commonService.findSimpleCombinedGlobalEntity(query, searchParam, lastVisitFlag, operationType);
+        ContainerVesselTruckDto results = commonService.findSimpleCombinedGlobalEntity(query, searchParam, facilityId, lastVisitFlag, operationType);
         return ResponseEntity.ok()
                 .body(RestEnvelope.of(results));
     }
