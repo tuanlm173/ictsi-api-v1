@@ -1570,7 +1570,13 @@ public class ContainerServiceImpl implements ContainerService {
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(GLOBAL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime, parseParams(facilityId),
+
+        // facility id
+        String facilityIdFilter = "1=1";
+        if (facilityId != null && !facilityId.isBlank())
+            facilityIdFilter = buildFilter(ALL_CONTAINER_FACILITY, parseParams(facilityId));
+
+        queryBuilder.append(String.format(GLOBAL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime, facilityIdFilter,
                 parseParams(searchParam), parseParams(searchParam), parseParams(searchParam), parseParams(searchParam)));
 
         // Search filter

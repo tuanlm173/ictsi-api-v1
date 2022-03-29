@@ -277,7 +277,7 @@ public class DataController {
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "unique-key", required = false) String uniqueKey,
-            @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
+            @RequestParam(value = "language", required = false) String language,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
@@ -296,7 +296,7 @@ public class DataController {
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "unique-key", required = false) String uniqueKey,
-            @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
+            @RequestParam(value = "language", required = false) String language,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
@@ -315,7 +315,7 @@ public class DataController {
             @RequestHeader(API_ID_HEADER) String apiId,
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "unique-key", required = false) String uniqueKey,
-            @RequestParam(value = "language", required = false, defaultValue = "en-us") String language,
+            @RequestParam(value = "language", required = false) String language,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {

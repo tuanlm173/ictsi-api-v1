@@ -53,6 +53,6 @@ public final class TruckVisitBaseCondition {
             "WHERE (1=1) AND c.delete_flag = 'N' AND %s " + // last visit flag
             "AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) " + // exited yard
             "AND c.facility_id NOT IN ('CGT') " +
-            "AND c.facility_id IN (%s) " + // facility id
+            "AND %s " + // facility id
             "AND %s";
 }

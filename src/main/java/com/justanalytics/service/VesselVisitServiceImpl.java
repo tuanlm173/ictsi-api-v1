@@ -426,7 +426,13 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, parseParams(facilityId), etaFutureRestrictDays, etaPastRestrictDays,
+
+        // facility id
+        String facilityIdFilter = "1=1";
+        if (facilityId != null && !facilityId.isBlank())
+            facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
+
+        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, facilityIdFilter, etaFutureRestrictDays, etaPastRestrictDays,
                 operatorLike, operatorLike, buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
 
         // Search filter

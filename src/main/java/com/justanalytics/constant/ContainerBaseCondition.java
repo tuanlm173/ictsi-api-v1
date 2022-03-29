@@ -226,7 +226,7 @@ public final class ContainerBaseCondition {
             "AND %s " + // last visit flag
             "AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) " + // time out
             "AND c.facility_id NOT IN ('CGT') " +
-            "AND c.facility_id IN (%s) " + // facility id
+            "AND %s " + // facility id
             "AND ((c.container_nbr IN (%s) AND IS_DEFINED(c.container_nbr)) " +
             "OR (c.booking_number IN (%s) AND IS_DEFINED(c.booking_number)) " +
             "OR (c.bill_of_lading_nbr IN (%s) AND IS_DEFINED(c.bill_of_lading_nbr)) " +

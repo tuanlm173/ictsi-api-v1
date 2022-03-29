@@ -284,8 +284,14 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
+
+        // facility id
+        String facilityIdFilter = "1=1";
+        if (facilityId != null && !facilityId.isBlank())
+            facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
+
         queryBuilder.append(String.format(GLOBAL_TRUCK_VISIT_BASE_QUERY,
-                filterLastVisitFlag(lastVisitFlag), currentTime, parseParams(facilityId), buildFilter(TRUCK_LICENSE_NBR, parseParams(searchParam))));
+                filterLastVisitFlag(lastVisitFlag), currentTime, facilityIdFilter, buildFilter(TRUCK_LICENSE_NBR, parseParams(searchParam))));
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();
