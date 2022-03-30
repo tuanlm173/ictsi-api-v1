@@ -95,11 +95,11 @@ public final class ImportContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_all c " +
+            "FROM api_container_test c " +
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) AND c.delete_flag = 'N' " +
             "AND %s AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) AND c.facility_id NOT IN ('CGT') AND c.freight_kind != 'BBK'";
 
-    public static final String IMPORT_CONTAINER_NAME = "api_container_all";
+    public static final String IMPORT_CONTAINER_NAME = "api_container_test";
 
     public static final String IMPORT_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String IMPORT_DEFAULT_IMPED = "(c.visit_state = '1ACTIVE' AND IS_DEFINED(c.visit_state))";

@@ -203,7 +203,7 @@ public class ContainerServiceImpl implements ContainerService {
             String lastPosLoctype = String.valueOf(data.get("last_pos_loctype"));
             String lastPosLocId = String.valueOf(data.get("last_pos_locid"));
             String lastPosSlot = String.valueOf(data.get("last_pos_slot"));
-            String timeIn = String.valueOf(data.get("time_in"));
+            String timeIn = Objects.nonNull(data.get("time_in")) ? data.get("time_in").toString() : null;
             String timeOut = String.valueOf(data.get("time_out"));
             String bookingNumber = String.valueOf(data.get("booking_number"));
             String requiresPower = String.valueOf(data.get("requires_power"));
