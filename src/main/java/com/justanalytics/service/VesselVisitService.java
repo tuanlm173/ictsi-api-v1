@@ -19,6 +19,8 @@ public interface VesselVisitService {
             String carrierVisitId,
             String serviceId,
             String visitPhase,
+            String ibVyg,
+            String obVyg,
             LocalDateTime etaFrom,
             LocalDateTime etaTo,
             LocalDateTime ataFrom,

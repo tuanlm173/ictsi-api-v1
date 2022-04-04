@@ -19,10 +19,10 @@ public final class TruckEventBaseCondition {
             "c.field_changes,\n" +
             "c.category,\n" +
             "c.sub_category \n" +
-            "FROM api_truck_event c " +
+            "FROM api_mimic_truck_event c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
 
-    public static final String TRUCK_EVENT_CONTAINER_NAME = "api_truck_event";
+    public static final String TRUCK_EVENT_CONTAINER_NAME = "api_mimic_truck_event";
 
     public static final String UNIQUE_KEY = "(c.truck_visit_gkey IN (%s) AND IS_DEFINED(c.truck_visit_gkey))";
     public static final String LANGUAGE = "(ARRAY_CONTAINS(c.event_descriptions, {'language': %s}, true))";

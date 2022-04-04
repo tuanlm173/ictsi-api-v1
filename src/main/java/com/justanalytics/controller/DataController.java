@@ -203,6 +203,8 @@ public class DataController {
             @RequestParam(value = "carrier-visit-id", required = false) String carrierVisitId,
             @RequestParam(value = "service-id", required = false) String serviceId,
             @RequestParam(value = "visit-phase", required = false) String visitPhase,
+            @RequestParam(value = "ib-vyg", required = false) String ibVyg,
+            @RequestParam(value = "ob-vyg", required = false) String obVyg,
             @RequestParam(value = "eta-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime etaFrom,
             @RequestParam(value = "eta-to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime etaTo,
             @RequestParam(value = "ata-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ataFrom,
@@ -218,7 +220,7 @@ public class DataController {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
             List<String> terminalConditions = dataService.findConditionCosmos(productId, apiId, subscriptionId);
             List<VesselVisitDto> vesselVisits = vesselVisitService.findVesselVisit(
-                    query, facilityId, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase,
+                    query, facilityId, carrierName, carrierOperatorId, carrierVisitId, serviceId, visitPhase, ibVyg, obVyg,
                     etaFrom, etaTo, ataFrom, ataTo, etdFrom, etdTo, atdFrom, atdTo, lastVisitFlag, operationType, terminalConditions);
             return ResponseEntity.ok()
                     .header("row-count", "" + vesselVisits.size())

@@ -86,6 +86,9 @@ public final class VesselVisitBaseCondition {
     public static final String ETD = "(('%s' <= c.etd AND c.etd <= '%s') AND IS_DEFINED(c.etd))";
     public static final String ATD = "(('%s' <= c.atd AND c.atd <= '%s') AND IS_DEFINED(c.atd))";
 
+    public static final String IB_VYG = "(c.ib_vyg IN (%s) AND IS_DEFINED(c.ib_vyg))";
+    public static final String OB_VYG = "(c.ob_vyg IN (%s) AND IS_DEFINED(c.ob_vyg))";
+
     public static final String DUMMY_VESSEL = "c.carrier_name NOT LIKE '%sDUMMY%s'";
 
 

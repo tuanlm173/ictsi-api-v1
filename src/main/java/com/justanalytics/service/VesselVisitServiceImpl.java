@@ -262,6 +262,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             String carrierVisitId,
             String serviceId,
             String visitPhase,
+            String ibVyg,
+            String obVyg,
             LocalDateTime etaFrom,
             LocalDateTime etaTo,
             LocalDateTime ataFrom,
@@ -287,6 +289,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         String personaCarrierVisitId = buildFilter(CARRIER_VISIT_ID, parseParams(carrierVisitId));
         String personaServiceId = buildFilter(SERVICE_ID, parseParams(serviceId));
         String personaVisitPhase = buildFilter(VISIT_PHASE, parseParams(visitPhase));
+        String personalIbVyg = buildFilter(IB_VYG, parseParams(ibVyg));
+        String personalObVyg = buildFilter(OB_VYG, parseParams(obVyg));
 
         String vesselVisitEtaFilter = buildSimpleTimeframeVesselParam(ETA, etaFrom, etaTo);
         String vesselVisitAtaFilter = buildSimpleTimeframeVesselParam(ATA, ataFrom, ataTo);
@@ -299,6 +303,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         personaFilters.add(personaCarrierVisitId);
         personaFilters.add(personaServiceId);
         personaFilters.add(personaVisitPhase);
+        personaFilters.add(personalIbVyg);
+        personaFilters.add(personalObVyg);
 
         personaFilters.add(vesselVisitEtaFilter);
         personaFilters.add(vesselVisitAtaFilter);

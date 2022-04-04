@@ -21,10 +21,10 @@ public final class VesselEventBaseCondition {
             "c.field_changes,\n" +
             "c.category,\n" +
             "c.sub_category \n" +
-            "FROM api_vessel_event c " +
+            "FROM api_mimic_vessel_event c " +
             "WHERE (1=1) AND c.delete_flag = 'N' AND c.facility_id NOT IN ('CGT')";
 
-    public static final String VESSEL_EVENT_CONTAINER_NAME = "api_vessel_event";
+    public static final String VESSEL_EVENT_CONTAINER_NAME = "api_mimic_vessel_event";
 
     public static final String UNIQUE_KEY = "(c.vessel_gkey IN (%s) AND IS_DEFINED(c.vessel_gkey))";
     public static final String LANGUAGE = "(ARRAY_CONTAINS(c.event_descriptions, {'language': %s}, true))";
