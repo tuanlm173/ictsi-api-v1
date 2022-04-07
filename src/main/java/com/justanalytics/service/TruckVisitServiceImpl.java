@@ -147,7 +147,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(TRUCK_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+        queryBuilder.append(String.format(TRUCK_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag)));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -291,7 +291,7 @@ public class TruckVisitServiceImpl implements TruckVisitService {
             facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
 
         queryBuilder.append(String.format(GLOBAL_TRUCK_VISIT_BASE_QUERY,
-                filterLastVisitFlag(lastVisitFlag), currentTime, facilityIdFilter, buildFilter(TRUCK_LICENSE_NBR, parseParams(searchParam))));
+                filterLastVisitFlag(lastVisitFlag), facilityIdFilter, buildFilter(TRUCK_LICENSE_NBR, parseParams(searchParam))));
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();

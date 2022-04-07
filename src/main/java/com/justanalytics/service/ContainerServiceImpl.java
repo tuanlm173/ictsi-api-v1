@@ -1114,7 +1114,7 @@ public class ContainerServiceImpl implements ContainerService {
 
             // Main query
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append(String.format(IMPORT_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+            queryBuilder.append(String.format(IMPORT_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag)));
 
             // Persona filter
             List<String> personaFilters = buildImportContainerConditions(
@@ -1194,7 +1194,7 @@ public class ContainerServiceImpl implements ContainerService {
 
             // Main query
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+            queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag)));
 
             // Persona filter
             List<String> personaFilters = buildAllContainerConditions(
@@ -1308,7 +1308,7 @@ public class ContainerServiceImpl implements ContainerService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(EXPORT_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+        queryBuilder.append(String.format(EXPORT_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag)));
 
         // Persona filter
         List<String> personaFilters = buildExportContainerConditions(
@@ -1417,7 +1417,7 @@ public class ContainerServiceImpl implements ContainerService {
 
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(EMPTY_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+        queryBuilder.append(String.format(EMPTY_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag)));
 
         // Persona filter
         List<String> personaFilters = buildEmptyContainerConditions(
@@ -1503,7 +1503,7 @@ public class ContainerServiceImpl implements ContainerService {
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime));
+        queryBuilder.append(String.format(ALL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag)));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -1576,7 +1576,7 @@ public class ContainerServiceImpl implements ContainerService {
         if (facilityId != null && !facilityId.isBlank())
             facilityIdFilter = buildFilter(ALL_CONTAINER_FACILITY, parseParams(facilityId));
 
-        queryBuilder.append(String.format(GLOBAL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), currentTime, facilityIdFilter,
+        queryBuilder.append(String.format(GLOBAL_CONTAINER_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), facilityIdFilter,
                 parseParams(searchParam), parseParams(searchParam), parseParams(searchParam), parseParams(searchParam)));
 
         // Search filter

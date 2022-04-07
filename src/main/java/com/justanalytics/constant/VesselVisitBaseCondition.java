@@ -65,18 +65,19 @@ public final class VesselVisitBaseCondition {
             "FROM api_vessel_visit c " +
             "WHERE (1=1) AND c.delete_flag = 'N' " +
             "AND %s " + // visit flag
-            "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd
+//            "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd
             "AND c.carrier_name NOT LIKE '%sDUMMY%s' " + // dummy
             "AND c.facility_id NOT IN ('CGT') " +
             "AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group) " +
-            "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " +  // past eta - future eta
-            "AND c.carrier_operator_name != 'ICTSI Vessel Operator' " +
+//            "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " +  // past eta - future eta
+            "AND c.carrier_operator_name NOT IN ('ICTSI Vessel Operator', 'MANILA NORTH HARBOUR PORT INC.') " +
             "AND c.visit_phase NOT IN ('90ARCHIVED', '80CANCELED')";
     public static final String CONTAINER_NAME = "api_vessel_visit";
 
     public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String CARRIER_NAME = "(c.carrier_name LIKE %s%s%s AND IS_DEFINED(c.carrier_name))";
     public static final String CARRIER_OPERATOR_ID = "(c.carrier_operator_id IN (%s) AND IS_DEFINED(c.carrier_operator_id))";
+    public static final String CARRIER_OPERATOR_NAME = "(c.carrier_operator_name IN (%s) AND IS_DEFINED(c.carrier_operator_name))";
     public static final String CARRIER_VISIT_ID = "(c.carrier_visit_id IN (%s) AND IS_DEFINED(c.carrier_visit_id))";
     public static final String SERVICE_ID = "(c.service_id IN (%s) AND IS_DEFINED(c.service_id))";
     public static final String VISIT_PHASE = "(c.visit_phase IN (%s) AND IS_DEFINED(c.visit_phase))";
@@ -153,11 +154,11 @@ public final class VesselVisitBaseCondition {
             "FROM api_vessel_visit c " +
             "WHERE (1=1) AND c.delete_flag = 'N' " +
             "AND %s " +  // visit flag
-            "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd
+//            "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd
             "AND c.facility_id NOT IN ('CGT') " +
             "AND %s " + // facility id
             "AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group) " +
-            "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " + // past eta - future eta
+//            "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " + // past eta - future eta
             "AND c.carrier_name NOT LIKE '%sDUMMY%s' " + // dummy
             "AND c.carrier_operator_name != 'ICTSI Vessel Operator' " +
             "AND c.visit_phase NOT IN ('90ARCHIVED', '80CANCELED') " +

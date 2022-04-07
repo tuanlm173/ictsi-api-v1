@@ -22,7 +22,10 @@ public final class TruckVisitBaseCondition {
             "c.stage_id,\n" +
             "c.visit_statuses \n" +
             "FROM api_truck_visit_all c " +
-            "WHERE (1=1) AND c.delete_flag = 'N' AND %s AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) AND c.facility_id NOT IN ('CGT')";
+            "WHERE (1=1) AND c.delete_flag = 'N' " +
+            "AND %s " +
+//            "AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) " +
+            "AND c.facility_id NOT IN ('CGT')";
     public static final String CONTAINER_NAME = "api_truck_visit_all";
 
     public static final String FACILITY_ID = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
@@ -50,8 +53,9 @@ public final class TruckVisitBaseCondition {
             "c.stage_id,\n" +
             "c.visit_statuses \n" +
             "FROM api_truck_visit_all c " +
-            "WHERE (1=1) AND c.delete_flag = 'N' AND %s " + // last visit flag
-            "AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) " + // exited yard
+            "WHERE (1=1) AND c.delete_flag = 'N' " +
+            "AND %s " + // last visit flag
+//            "AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) " + // exited yard
             "AND c.facility_id NOT IN ('CGT') " +
             "AND %s " + // facility id
             "AND %s";

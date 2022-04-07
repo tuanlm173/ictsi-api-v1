@@ -16,6 +16,7 @@ public interface VesselVisitService {
             String facilityId,
             String carrierName,
             String carrierOperatorId,
+            String carrierOperatorName,
             String carrierVisitId,
             String serviceId,
             String visitPhase,

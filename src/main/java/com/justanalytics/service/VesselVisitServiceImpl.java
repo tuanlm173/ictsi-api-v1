@@ -259,6 +259,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             String facilityId,
             String carrierName,
             String carrierOperatorId,
+            String carrierOperatorName,
             String carrierVisitId,
             String serviceId,
             String visitPhase,
@@ -278,7 +279,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, operatorLike, operatorLike, etaPastRestrictDays, etaFutureRestrictDays));
+        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), operatorLike, operatorLike));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -286,6 +287,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         String personaFacilityId = buildFilter(FACILITY_ID, parseParams(facilityId));
         String personaCarrierName = buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, carrierName);
         String personaCarrierOperatorId = buildFilter(CARRIER_OPERATOR_ID, parseParams(carrierOperatorId));
+        String personaCarrierOperatorName = buildFilter(CARRIER_OPERATOR_NAME, parseParams(carrierOperatorName));
         String personaCarrierVisitId = buildFilter(CARRIER_VISIT_ID, parseParams(carrierVisitId));
         String personaServiceId = buildFilter(SERVICE_ID, parseParams(serviceId));
         String personaVisitPhase = buildFilter(VISIT_PHASE, parseParams(visitPhase));
@@ -300,6 +302,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         personaFilters.add(personaFacilityId);
         personaFilters.add(personaCarrierName);
         personaFilters.add(personaCarrierOperatorId);
+        personaFilters.add(personaCarrierOperatorName);
         personaFilters.add(personaCarrierVisitId);
         personaFilters.add(personaServiceId);
         personaFilters.add(personaVisitPhase);
@@ -438,7 +441,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         if (facilityId != null && !facilityId.isBlank())
             facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
 
-        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), atdRestrictDays, facilityIdFilter, etaFutureRestrictDays, etaPastRestrictDays,
+        queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), facilityIdFilter,
                 operatorLike, operatorLike, buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
 
         // Search filter
