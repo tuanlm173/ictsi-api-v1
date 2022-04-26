@@ -279,7 +279,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
     ) {
         // Main query
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), operatorLike, operatorLike));
+        queryBuilder.append(String.format(VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), operatorLike, operatorLike,
+                etaPastRestrictDays, etaFutureRestrictDays));
 
         // Persona filter
         List<String> personaFilters = new ArrayList<>();
@@ -442,7 +443,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             facilityIdFilter = buildFilter(FACILITY_ID, parseParams(facilityId));
 
         queryBuilder.append(String.format(GLOBAL_VESSEL_VISIT_BASE_QUERY, filterLastVisitFlag(lastVisitFlag), facilityIdFilter,
-                operatorLike, operatorLike, buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
+                etaPastRestrictDays, etaFutureRestrictDays, operatorLike, operatorLike,
+                buildPartialSearchCarrierName(CARRIER_NAME, operatorLike, searchParam)));
 
         // Search filter
         QueryBuilder filterBuilder = new QueryBuilder();
