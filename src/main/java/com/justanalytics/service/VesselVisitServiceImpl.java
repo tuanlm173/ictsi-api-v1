@@ -353,7 +353,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
             queryBuilder.append(String.format(" ORDER BY %s", sortBy));
         }
         else {
-            queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
+            queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.estimated_time_of_berthing ASC");
         }
 
         // Offset limit
@@ -415,7 +415,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 //        else {
 //            queryBuilder.append(" ORDER BY c.visit_phase ASC, c.atd DESC, c.ata DESC, c.eta DESC");
 //        }
-        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
+        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.estimated_time_of_berthing ASC");
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
@@ -455,7 +455,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
         }
         else queryBuilder.append(" AND 1=1");
 
-        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.eta ASC");
+        queryBuilder.append(" ORDER BY c.visit_phase_group ASC, c.atd DESC, c.ata ASC, c.estimated_time_of_berthing ASC");
 
         // Offset limit
         queryBuilder.append(String.format(" OFFSET %s LIMIT %s", query.offset, query.limit));
