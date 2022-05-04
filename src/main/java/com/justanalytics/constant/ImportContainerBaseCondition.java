@@ -73,8 +73,8 @@ public final class ImportContainerBaseCondition {
             "c.custom_tag,\n" +
             "c.ib_appointment_start_date,\n" +
             "c.ib_appointment_end_date,\n" +
-            "c.ob_appointment_start_date,\n" +
-            "c.ob_appointment_end_date,\n" +
+            "c.appointment_start_date as ob_appointment_start_date,\n" +
+            "c.appointment_end_date as ob_appointment_end_date,\n" +
             "c.shipper,\n" +
             "c.consignee,\n" +
             "c.show_tvarrival_status,\n" +
@@ -90,7 +90,7 @@ public final class ImportContainerBaseCondition {
             "c.ob_id,\n" +
             "c.ob_cv_mode,\n" +
             "c.ob_carrier_name,\n" +
-            "c.ob_carrier_operator_name,\n" +
+            "c.ob_operator_name,\n" +
             "c.ob_inbound_vyg,\n" +
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +

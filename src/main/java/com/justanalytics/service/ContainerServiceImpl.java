@@ -257,7 +257,7 @@ public class ContainerServiceImpl implements ContainerService {
             String obId = String.valueOf(data.get("ob_id"));
             String obCvMode = String.valueOf(data.get("ob_cv_mode"));
             String obCarrierName = String.valueOf(data.get("ob_carrier_name"));
-            String obCarrierOperatorName = String.valueOf(data.get("ob_carrier_operator_name"));
+            String obOperatorName = String.valueOf(data.get("ob_operator_name"));
             String obInboundVyg = String.valueOf(data.get("ob_inbound_vyg"));
             String obOutboundVyg = String.valueOf(data.get("ob_outbound_vyg"));
             String remarks = String.valueOf(data.get("remarks"));
@@ -359,7 +359,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .obId(obId)
                     .obCvMode(obCvMode)
                     .obCarrierName(obCarrierName)
-                    .obCarrierOperatorName(obCarrierOperatorName)
+                    .obOperatorName(obOperatorName)
                     .obInboundVyg(obInboundVyg)
                     .obOutboundVyg(obOutboundVyg)
                     .remarks(remarks)
@@ -463,7 +463,7 @@ public class ContainerServiceImpl implements ContainerService {
             String obId = String.valueOf(data.get("ob_id"));
             String obCvMode = String.valueOf(data.get("ob_cv_mode"));
             String obCarrierName = String.valueOf(data.get("ob_carrier_name"));
-            String obCarrierOperatorName = String.valueOf(data.get("ob_carrier_operator_name"));
+            String obOperatorName = String.valueOf(data.get("ob_operator_name"));
             String obInboundVyg = String.valueOf(data.get("ob_inbound_vyg"));
             String obOutboundVyg = String.valueOf(data.get("ob_outbound_vyg"));
             String remarks = String.valueOf(data.get("remarks"));
@@ -565,7 +565,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .obId(obId)
                     .obCvMode(obCvMode)
                     .obCarrierName(obCarrierName)
-                    .obCarrierOperatorName(obCarrierOperatorName)
+                    .obOperatorName(obOperatorName)
                     .obInboundVyg(obInboundVyg)
                     .obOutboundVyg(obOutboundVyg)
                     .remarks(remarks)
@@ -669,7 +669,7 @@ public class ContainerServiceImpl implements ContainerService {
             String obId = String.valueOf(data.get("ob_id"));
             String obCvMode = String.valueOf(data.get("ob_cv_mode"));
             String obCarrierName = String.valueOf(data.get("ob_carrier_name"));
-            String obCarrierOperatorName = String.valueOf(data.get("ob_carrier_operator_name"));
+            String obOperatorName = String.valueOf(data.get("ob_operator_name"));
             String obInboundVyg = String.valueOf(data.get("ob_inbound_vyg"));
             String obOutboundVyg = String.valueOf(data.get("ob_outbound_vyg"));
             String remarks = String.valueOf(data.get("remarks"));
@@ -771,7 +771,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .obId(obId)
                     .obCvMode(obCvMode)
                     .obCarrierName(obCarrierName)
-                    .obCarrierOperatorName(obCarrierOperatorName)
+                    .obOperatorName(obOperatorName)
                     .obInboundVyg(obInboundVyg)
                     .obOutboundVyg(obOutboundVyg)
                     .remarks(remarks)

@@ -92,7 +92,7 @@ public final class EmptyContainerBaseCondition {
             "c.ob_id,\n" +
             "c.ob_cv_mode,\n" +
             "c.ob_carrier_name,\n" +
-            "c.ob_carrier_operator_name,\n" +
+            "c.ob_operator_name,\n" +
             "c.ob_inbound_vyg,\n" +
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +

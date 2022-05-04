@@ -71,8 +71,8 @@ public final class ExportContainerBaseCondition {
                     "c.entry_no,\n" +
                     "c.requires_xray,\n" +
                     "c.custom_tag,\n" +
-                    "c.ib_appointment_start_date,\n" +
-                    "c.ib_appointment_end_date,\n" +
+                    "c.appointment_start_date as ib_appointment_start_date,\n" +
+                    "c.appointment_end_date as ib_appointment_end_date,\n" +
                     "c.ob_appointment_start_date,\n" +
                     "c.ob_appointment_end_date,\n" +
                     "c.shipper,\n" +
@@ -90,7 +90,7 @@ public final class ExportContainerBaseCondition {
                     "c.ob_id,\n" +
                     "c.ob_cv_mode,\n" +
                     "c.ob_carrier_name,\n" +
-                    "c.ob_carrier_operator_name,\n" +
+                    "c.ob_operator_name,\n" +
                     "c.ob_inbound_vyg,\n" +
                     "c.ob_outbound_vyg,\n" +
                     "c.remarks,\n" +

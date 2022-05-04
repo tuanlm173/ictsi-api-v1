@@ -25,7 +25,7 @@ import java.util.List;
         "requires_xray", "custom_tag", "ib_appointment_start_date", "ib_appointment_end_date", "ob_appointment_start_date", "ob_appointment_end_date",
         "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks", "house_bls",
         "ib_id", "ib_cv_mode", "ib_carrier_name", "ib_operator_name", "ib_inbound_vyg", "ib_outbound_vyg", "ob_id", "ob_cv_mode", "ob_carrier_name",
-        "ob_carrier_operator_name", "ob_inbound_vyg", "ob_outbound_vyg", "remarks", "transit_state_descriptions"})
+        "ob_operator_name", "ob_inbound_vyg", "ob_outbound_vyg", "remarks", "transit_state_descriptions"})
 public class EmptyContainerDto {
 
     @JsonProperty(value = "unique_key")
@@ -204,8 +204,8 @@ public class EmptyContainerDto {
     private String obCvMode;
     @JsonProperty(value = "ob_carrier_name")
     private String obCarrierName;
-    @JsonProperty(value = "ob_carrier_operator_name")
-    private String obCarrierOperatorName;
+    @JsonProperty(value = "ob_operator_name")
+    private String obOperatorName;
     @JsonProperty(value = "ob_inbound_vyg")
     private String obInboundVyg;
     @JsonProperty(value = "ob_outbound_vyg")
