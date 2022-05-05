@@ -71,10 +71,10 @@ public final class ContainerBaseCondition {
             "c.entry_no,\n" +
             "c.requires_xray,\n" +
             "c.custom_tag,\n" +
-            "c.category = 'EXPRT' ? c.appointment_start_date : null as c.ib_appointment_start_date,\n" +
-            "c.category = 'EXPRT' ? c.appointment_end_date : null as c.ib_appointment_end_date,\n" +
-            "c.category = 'IMPRT' ? c.appointment_start_date : null as c.ob_appointment_start_date,\n" +
-            "c.category = 'IMPRT' ? c.appointment_end_date : null as c.ob_appointment_end_date,\n" +
+            "c.category = 'EXPRT' ? c.appointment_start_date : null as ib_appointment_start_date,\n" +
+            "c.category = 'EXPRT' ? c.appointment_end_date : null as ib_appointment_end_date,\n" +
+            "c.category = 'IMPRT' ? c.appointment_start_date : null as ob_appointment_start_date,\n" +
+            "c.category = 'IMPRT' ? c.appointment_end_date : null as ob_appointment_end_date,\n" +
             "c.shipper,\n" +
             "c.consignee,\n" +
             "c.show_tvarrival_status,\n" +
@@ -199,10 +199,10 @@ public final class ContainerBaseCondition {
             "c.entry_no,\n" +
             "c.requires_xray,\n" +
             "c.custom_tag,\n" +
-            "c.category = 'EXPRT' ? c.appointment_start_date : null as c.ib_appointment_start_date,\n" +
-            "c.category = 'EXPRT' ? c.appointment_end_date : null as c.ib_appointment_end_date,\n" +
-            "c.category = 'IMPRT' ? c.appointment_start_date : null as c.ob_appointment_start_date,\n" +
-            "c.category = 'IMPRT' ? c.appointment_end_date : null as c.ob_appointment_end_date,\n" +
+            "c.category = 'EXPRT' ? c.appointment_start_date : null as ib_appointment_start_date,\n" +
+            "c.category = 'EXPRT' ? c.appointment_end_date : null as ib_appointment_end_date,\n" +
+            "c.category = 'IMPRT' ? c.appointment_start_date : null as ob_appointment_start_date,\n" +
+            "c.category = 'IMPRT' ? c.appointment_end_date : null as ob_appointment_end_date,\n" +
             "c.shipper,\n" +
             "c.consignee,\n" +
             "c.show_tvarrival_status,\n" +
