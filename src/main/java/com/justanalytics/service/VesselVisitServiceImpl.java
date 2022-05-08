@@ -30,7 +30,7 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
     private static final DateTimeFormatter iso_formatter = DateTimeFormatter.ISO_DATE_TIME;
     private static final DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    String atdRestrictDays = "'" + LocalDateTime.now().minusDays(180).format(localDateTimeFormatter) + "Z'"; // DEV: 90 PROD: 45
+    String atdRestrictDays = "'" + LocalDateTime.now().minusDays(14).format(localDateTimeFormatter) + "Z'";
     String etaFutureRestrictDays = "'" + LocalDateTime.now().plusDays(14).format(localDateTimeFormatter) + "Z'";
     String etaPastRestrictDays = "'" + LocalDateTime.now().minusDays(7).format(localDateTimeFormatter) + "Z'";
     String operatorLike = "%";

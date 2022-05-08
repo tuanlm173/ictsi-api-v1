@@ -169,27 +169,48 @@ public class ContainerServiceImpl implements ContainerService {
 
         List<ContainerDto> results = new ArrayList<>(rawData.size());
 
+        ArrayList<String> facilities = new ArrayList<>();
+//        facilities.add("MICTSI");
+        facilities.add("SBITC");
+        facilities.add("AGCT");
+        facilities.add("MICT");
+        facilities.add("OMT");
+        facilities.add("PLP");
+        facilities.add("MNHP");
+        facilities.add("ZLO");
+        facilities.add("MGT");
+
         for (JSONObject data: rawData) {
+
+            String facilityId = String.valueOf(data.get("facility_id"));
+
             // fields to mask
             String masterBlNbr = "null";
             List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
             String bookingNumber = "null";
             String shipperDeclaredVgm = "null";
 
-            // demo condition for testing
+            // demo condition for testing (consider replacing facilityParam by facilityId)
             if ((facilityParam.equals("MICTSI")) && ((shipperConsignee != null && !shipperConsignee.isBlank()) || (bolNumber != null && !bolNumber.isBlank()))) {
                 masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
                 bookingNumber = String.valueOf(data.get("booking_number"));
                 shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
 
-//                List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
+                List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
+                if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
+            }
+            else if (facilities.contains(facilityId)) {
+                masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
+                bookingNumber = String.valueOf(data.get("booking_number"));
+                shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
+
                 List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
                 if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
             }
             String uniqueKey = String.valueOf(data.get("unique_key"));
             String operatorId = String.valueOf(data.get("operator_id"));
             String complexId = String.valueOf(data.get("complex_id"));
-            String facilityId = String.valueOf(data.get("facility_id"));
+//            String facilityId = String.valueOf(data.get("facility_id"));
             String visitState = String.valueOf(data.get("visit_state"));
             String containerNbr = String.valueOf(data.get("container_nbr"));
             String equipmentType = String.valueOf(data.get("equipment_type"));

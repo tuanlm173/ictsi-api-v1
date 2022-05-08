@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.justanalytics</groupId>
 	<artifactId>ictsiapi-synapse</artifactId>
-	<version>0.0.40.prod-SNAPSHOT</version>
+	<version>0.0.42.prod-SNAPSHOT</version>
 	<name>ictsiapi-synapse</name>
 	<description>ictsi synapse demo</description>
 	<properties>

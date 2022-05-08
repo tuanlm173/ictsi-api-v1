@@ -21,10 +21,10 @@ public final class ContainerEventBaseCondition {
             "c.field_changes,\n" +
             "c.category,\n" +
             "c.sub_category \n" +
-            "FROM api_container_event c " +
+            "FROM api_container_event_all c " +
             "WHERE (1=1) AND c.delete_flag = 'N' AND c.facility_id NOT IN ('CGT')";
 
-    public static final String CONTAINER_EVENT_CONTAINER_NAME = "api_container_event";
+    public static final String CONTAINER_EVENT_CONTAINER_NAME = "api_container_event_all";
 
     public static final String UNIQUE_KEY = "(c.container_gkey IN (%s) AND IS_DEFINED(c.container_gkey))";
     public static final String LANGUAGE = "(ARRAY_CONTAINS(c.event_descriptions, {'language': %s}, true))";
