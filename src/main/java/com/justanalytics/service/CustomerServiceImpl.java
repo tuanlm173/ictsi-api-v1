@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private String buildPartialCustomerSearch(String filter, String operator, String input) {
         if (input != null && !input.isBlank())
-            return String.format(filter, "'" + operator, input.toUpperCase(), operator + "'", "'" + operator, input.toUpperCase(), operator + "'");
+            return String.format(filter, "'" + operator, input, operator + "'", "'" + operator, input, operator + "'");
         else return "";
     }
 
