@@ -70,7 +70,7 @@ public final class VesselVisitBaseCondition {
             "AND c.facility_id NOT IN ('CGT') " +
             "AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group) " +
             "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " +  // past eta - future eta
-//            "AND (c.visit_phase_group != 1 AND c.atd >= %s) " +  //TODO: to confirm with Riza DL-512
+            "AND (c.visit_phase_group != 1 OR (c.visit_phase_group = 1 and (isnull(c.atd) = true or c.atd >= %s))) " +  //TODO: to confirm with Riza DL-512
             "AND c.carrier_operator_name NOT IN ('ICTSI Vessel Operator', 'MANILA NORTH HARBOUR PORT INC.') " +
             "AND c.visit_phase NOT IN ('90ARCHIVED', '80CANCELED')";
     public static final String CONTAINER_NAME = "api_vessel_visit";
@@ -160,6 +160,7 @@ public final class VesselVisitBaseCondition {
             "AND %s " + // facility id
             "AND isnull(c.eta) = false AND IS_DEFINED(c.visit_phase_group) " +
             "AND (isnull(c.ata) = false OR (c.eta > %s AND c.eta <= %s)) " + // past eta - future eta
+            "AND (c.visit_phase_group != 1 OR (c.visit_phase_group = 1 and (isnull(c.atd) = true or c.atd >= %s))) " + // atd DL-518
             "AND c.carrier_name NOT LIKE '%sDUMMY%s' " + // dummy
             "AND c.carrier_operator_name != 'ICTSI Vessel Operator' " +
             "AND c.visit_phase NOT IN ('90ARCHIVED', '80CANCELED') " +

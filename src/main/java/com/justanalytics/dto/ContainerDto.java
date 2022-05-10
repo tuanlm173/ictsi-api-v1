@@ -183,7 +183,7 @@ public class ContainerDto {
     @JsonProperty(value = "tv_arrival_status")
     private String tvArrivalStatus;
     @JsonProperty(value = "tv_arrival_remarks")
-    private String tvArrivalRemarks;
+    private List<LanguageDescription> tvArrivalRemarks;
     @JsonProperty(value = "house_bls")
     private List<HouseBillOfLadings> houseBls;
 

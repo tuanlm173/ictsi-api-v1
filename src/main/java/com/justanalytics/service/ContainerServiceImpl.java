@@ -284,7 +284,10 @@ public class ContainerServiceImpl implements ContainerService {
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
-            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+//            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+            List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
+            if (rawTvArrivalRemarks != null) tvArrivalRemarks = rawTvArrivalRemarks;
             String ibId = String.valueOf(data.get("ib_id"));
             String ibCvMode = String.valueOf(data.get("ib_cv_mode"));
             String ibCarrierName = String.valueOf(data.get("ib_carrier_name"));
@@ -490,7 +493,10 @@ public class ContainerServiceImpl implements ContainerService {
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
-            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+//            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+            List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
+            if (rawTvArrivalRemarks != null) tvArrivalRemarks = rawTvArrivalRemarks;
             String ibId = String.valueOf(data.get("ib_id"));
             String ibCvMode = String.valueOf(data.get("ib_cv_mode"));
             String ibCarrierName = String.valueOf(data.get("ib_carrier_name"));
@@ -697,7 +703,10 @@ public class ContainerServiceImpl implements ContainerService {
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
-            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+//            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+            List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
+            if (rawTvArrivalRemarks != null) tvArrivalRemarks = rawTvArrivalRemarks;
             String ibId = String.valueOf(data.get("ib_id"));
             String ibCvMode = String.valueOf(data.get("ib_cv_mode"));
             String ibCarrierName = String.valueOf(data.get("ib_carrier_name"));
@@ -821,15 +830,53 @@ public class ContainerServiceImpl implements ContainerService {
         return results;
     }
 
-    private List<ExportContainerDto> getExportContainerDto(List<JSONObject> rawData) {
+    private List<ExportContainerDto> getExportContainerDto(List<JSONObject> rawData, String facilityParam, String shipperConsignee, String bolNumber) {
 
         List<ExportContainerDto> results = new ArrayList<>(rawData.size());
 
+        ArrayList<String> facilities = new ArrayList<>();
+//        facilities.add("MICTSI");
+        facilities.add("SBITC");
+        facilities.add("AGCT");
+        facilities.add("MICT");
+        facilities.add("OMT");
+        facilities.add("PLP");
+        facilities.add("MNHP");
+        facilities.add("ZLO");
+        facilities.add("MGT");
+
         for (JSONObject data: rawData) {
+
+            String facilityId = String.valueOf(data.get("facility_id"));
+
+            // fields to mask
+            String masterBlNbr = "null";
+            List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
+            String bookingNumber = "null";
+            String shipperDeclaredVgm = "null";
+
+            // demo condition for testing (consider replacing facilityParam by facilityId)
+            if ((facilityParam.equals("MICTSI")) && ((shipperConsignee != null && !shipperConsignee.isBlank()) || (bolNumber != null && !bolNumber.isBlank()))) {
+                masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
+                bookingNumber = String.valueOf(data.get("booking_number"));
+                shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
+
+                List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
+                if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
+            }
+            else if (facilities.contains(facilityId)) {
+                masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
+                bookingNumber = String.valueOf(data.get("booking_number"));
+                shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
+
+                List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
+                if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
+            }
+
             String uniqueKey = String.valueOf(data.get("unique_key"));
             String operatorId = String.valueOf(data.get("operator_id"));
             String complexId = String.valueOf(data.get("complex_id"));
-            String facilityId = String.valueOf(data.get("facility_id"));
+//            String facilityId = String.valueOf(data.get("facility_id"));
             String visitState = String.valueOf(data.get("visit_state"));
             String containerNbr = String.valueOf(data.get("container_nbr"));
             String equipmentType = String.valueOf(data.get("equipment_type"));
@@ -861,7 +908,7 @@ public class ContainerServiceImpl implements ContainerService {
             String lastPosSlot = String.valueOf(data.get("last_pos_slot"));
             String timeIn = String.valueOf(data.get("time_in"));
             String timeOut = String.valueOf(data.get("time_out"));
-            String bookingNumber = String.valueOf(data.get("booking_number"));
+//            String bookingNumber = String.valueOf(data.get("booking_number"));
             String requiresPower = String.valueOf(data.get("requires_power"));
             String timeStateChange = String.valueOf(data.get("time_state_change"));
             String pod = String.valueOf(data.get("POD"));
@@ -869,7 +916,7 @@ public class ContainerServiceImpl implements ContainerService {
             String nominalLength = String.valueOf(data.get("nominal_length"));
             String reeferType = String.valueOf(data.get("reefer_type"));
             String isoGroup = String.valueOf(data.get("iso_group"));
-            String masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
+//            String masterBlNbr = String.valueOf(data.get("master_bl_nbr"));
             String origin = String.valueOf(data.get("origin"));
             String destination = String.valueOf(data.get("destination"));
             String consigneeId = String.valueOf(data.get("consignee_id"));
@@ -884,7 +931,7 @@ public class ContainerServiceImpl implements ContainerService {
             String cargoShipperName = String.valueOf(data.get("cargo_shipper_name"));
             String cargoOrigin = String.valueOf(data.get("cargo_origin"));
 
-            String shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
+//            String shipperDeclaredVgm = String.valueOf(data.get("shipper_declared_vgm"));
             String terminalMeasuredVgm = String.valueOf(data.get("terminal_measured_vgm"));
             String lastFreeDay = String.valueOf(data.get("last_free_day"));
             String paidThruDay = String.valueOf(data.get("paid_thru_day"));
@@ -903,7 +950,10 @@ public class ContainerServiceImpl implements ContainerService {
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
-            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+//            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
+            List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
+            if (rawTvArrivalRemarks != null) tvArrivalRemarks = rawTvArrivalRemarks;
             String ibId = String.valueOf(data.get("ib_id"));
             String ibCvMode = String.valueOf(data.get("ib_cv_mode"));
             String ibCarrierName = String.valueOf(data.get("ib_carrier_name"));
@@ -918,9 +968,9 @@ public class ContainerServiceImpl implements ContainerService {
             String obOutboundVyg = String.valueOf(data.get("ob_outbound_vyg"));
             String remarks = String.valueOf(data.get("remarks"));
 
-            List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
-            List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
-            if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
+//            List<HouseBillOfLadings> houseBillOfLadings = new ArrayList<>();
+//            List<HouseBillOfLadings> rawHouseBillOfLadings = (List<HouseBillOfLadings>) data.get("house_bls");
+//            if (rawHouseBillOfLadings != null) houseBillOfLadings = rawHouseBillOfLadings;
 
             List<LanguageDescription> transitStateDescriptions = new ArrayList<>();
             List<LanguageDescription> rawTransitStateDescriptions = (List<LanguageDescription>) data.get("transit_state_descriptions");
@@ -1627,7 +1677,7 @@ public class ContainerServiceImpl implements ContainerService {
         logger.info("Cosmos SQL statement: {}", sql);
         results = dataRepository.getSimpleDataFromCosmos(EXPORT_CONTAINER_NAME, sql);
 
-        return getExportContainerDto(results);
+        return getExportContainerDto(results, facilityId, shipper, bolNumber);
     }
 
     @Override
