@@ -12,9 +12,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.justanalytics.dto.CustomerDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 @RestController
 public class DataController {
@@ -364,14 +367,23 @@ public class DataController {
             @RequestParam(value = "facility-id", required = false) String facilityId,
             @RequestParam(value = "customer-name", required = false) String customerName,
             @RequestParam(value = "tax-id", required = false) String taxId,
+            @RequestParam(value = "update-ts", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updateTs,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
         if (dataService.checkAccessFromCosmos(productId, apiId, subscriptionId)) {
-            List<CustomerDto> customers = customerService.findCustomer(query, customerType, facilityId, customerName, taxId, operationType);
+//            List<CustomerDto> customers = customerService.findCustomer(query, customerType, facilityId, customerName, taxId, updateTs, operationType);
+//            return ResponseEntity.ok()
+//                    .header("row-count", "" + customers.size())
+//                    .body(RestEnvelope.of(customers));
+            Map<String, Object> customers = customerService.findCustomerv2(query, customerType, facilityId, customerName, taxId, updateTs, operationType);
+            RestEnvelope mainData = RestEnvelope.of(customers.get("mainData"));
+            mainData.putProperty("countOfAccountName", customers.get("countOfAccountName"));
             return ResponseEntity.ok()
-                    .header("row-count", "" + customers.size())
-                    .body(RestEnvelope.of(customers));
+                    .header("row-count", "" + customers.get("countOfRecords"))
+                    .body(mainData);
+
+
         }
         throw new UnAccessibleSystemException();
     }
