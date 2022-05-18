@@ -60,7 +60,7 @@ public class QueryBuilder {
     //TODO: buildComparisonCosmosFilter
     private String buildComparisonCosmosFilter(ComparisonFilter comparisonFilter) {
         String comparedValue = comparisonFilter.getValue().toString();
-        return String.format("%s %s %s", "c." + comparisonFilter.getField().toLowerCase(), comparisonFilter.getCondition().value, comparedValue);
+        return String.format("%s %s %s", "c." + comparisonFilter.getField().toLowerCase(), comparisonFilter.getCondition().value, "'" + comparedValue + "'");
     }
 
     private Function<String, String> getConversionFunction(String dataType) {
