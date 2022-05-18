@@ -82,6 +82,10 @@ public final class EmptyContainerBaseCondition {
             "c.show_tvarrival_status,\n" +
             "c.tv_arrival_status,\n" +
             "c.tv_arrival_remarks,\n" +
+            "c.ib_tv_arrival_status,\n" +
+            "c.ob_tv_arrival_status,\n" +
+            "c.ib_tv_arrival_remarks,\n" +
+            "c.ob_tv_arrival_remarks,\n" +
             "c.house_bls,\n" +
             "c.ib_id,\n" +
             "c.ib_cv_mode,\n" +
@@ -97,7 +101,7 @@ public final class EmptyContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_test c " +
+            "FROM api_container c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) " +
             "AND ((c.freight_kind = 'MTY' " +
             "AND IS_DEFINED(c.freight_kind)))) " +
@@ -106,7 +110,7 @@ public final class EmptyContainerBaseCondition {
 //            "AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) " +
             "AND c.facility_id NOT IN ('CGT') " +
             "AND c.freight_kind != 'BBK'";
-    public static final String EMPTY_CONTAINER_NAME = "api_container_test";
+    public static final String EMPTY_CONTAINER_NAME = "api_container";
 
     public static final String EMPTY_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String EMPTY_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";

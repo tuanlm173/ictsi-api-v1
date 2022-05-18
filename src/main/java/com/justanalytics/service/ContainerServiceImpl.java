@@ -284,6 +284,17 @@ public class ContainerServiceImpl implements ContainerService {
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
+            String ibTvArrivalStatus = String.valueOf(data.get("ib_tv_arrival_status"));
+            String obTvArrivalStatus = String.valueOf(data.get("ob_tv_arrival_status"));
+
+            List<LanguageDescription> ibTvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawIbTvArrivalRemarks = (List<LanguageDescription>) data.get("ib_tv_arrival_remarks");
+            if (rawIbTvArrivalRemarks != null) ibTvArrivalRemarks = rawIbTvArrivalRemarks;
+
+            List<LanguageDescription> obTvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawObTvArrivalRemarks = (List<LanguageDescription>) data.get("ob_tv_arrival_remarks");
+            if (rawObTvArrivalRemarks != null) obTvArrivalRemarks = rawObTvArrivalRemarks;
+
 //            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
             List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
             List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
@@ -389,6 +400,10 @@ public class ContainerServiceImpl implements ContainerService {
                     .showTvarrivalStatus(showTvarrivalStatus)
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
+                    .ibTvArrivalStatus(ibTvArrivalStatus)
+                    .obTvArrivalStatus(obTvArrivalStatus)
+                    .ibTvArrivalRemarks(ibTvArrivalRemarks)
+                    .obTvArrivalRemarks(obTvArrivalRemarks)
                     .houseBls(houseBillOfLadings)
                     .ibId(ibId)
                     .ibCvMode(ibCvMode)
@@ -493,6 +508,17 @@ public class ContainerServiceImpl implements ContainerService {
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
+            String ibTvArrivalStatus = String.valueOf(data.get("ib_tv_arrival_status"));
+            String obTvArrivalStatus = String.valueOf(data.get("ob_tv_arrival_status"));
+
+            List<LanguageDescription> ibTvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawIbTvArrivalRemarks = (List<LanguageDescription>) data.get("ib_tv_arrival_remarks");
+            if (rawIbTvArrivalRemarks != null) ibTvArrivalRemarks = rawIbTvArrivalRemarks;
+
+            List<LanguageDescription> obTvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawObTvArrivalRemarks = (List<LanguageDescription>) data.get("ob_tv_arrival_remarks");
+            if (rawObTvArrivalRemarks != null) obTvArrivalRemarks = rawObTvArrivalRemarks;
+
 //            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
             List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
             List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
@@ -598,6 +624,10 @@ public class ContainerServiceImpl implements ContainerService {
                     .showTvarrivalStatus(showTvarrivalStatus)
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
+                    .ibTvArrivalStatus(ibTvArrivalStatus)
+                    .obTvArrivalStatus(obTvArrivalStatus)
+                    .ibTvArrivalRemarks(ibTvArrivalRemarks)
+                    .obTvArrivalRemarks(obTvArrivalRemarks)
                     .houseBls(houseBillOfLadings)
                     .ibId(ibId)
                     .ibCvMode(ibCvMode)
@@ -703,6 +733,17 @@ public class ContainerServiceImpl implements ContainerService {
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
+            String ibTvArrivalStatus = String.valueOf(data.get("ib_tv_arrival_status"));
+            String obTvArrivalStatus = String.valueOf(data.get("ob_tv_arrival_status"));
+
+            List<LanguageDescription> ibTvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawIbTvArrivalRemarks = (List<LanguageDescription>) data.get("ib_tv_arrival_remarks");
+            if (rawIbTvArrivalRemarks != null) ibTvArrivalRemarks = rawIbTvArrivalRemarks;
+
+            List<LanguageDescription> obTvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawObTvArrivalRemarks = (List<LanguageDescription>) data.get("ob_tv_arrival_remarks");
+            if (rawObTvArrivalRemarks != null) obTvArrivalRemarks = rawObTvArrivalRemarks;
+
 //            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
             List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
             List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
@@ -808,6 +849,10 @@ public class ContainerServiceImpl implements ContainerService {
                     .showTvarrivalStatus(showTvarrivalStatus)
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
+                    .ibTvArrivalStatus(ibTvArrivalStatus)
+                    .obTvArrivalStatus(obTvArrivalStatus)
+                    .ibTvArrivalRemarks(ibTvArrivalRemarks)
+                    .obTvArrivalRemarks(obTvArrivalRemarks)
                     .houseBls(houseBillOfLadings)
                     .ibId(ibId)
                     .ibCvMode(ibCvMode)
@@ -950,6 +995,17 @@ public class ContainerServiceImpl implements ContainerService {
             String consignee = String.valueOf(data.get("consignee"));
             String showTvarrivalStatus = String.valueOf(data.get("show_tvarrival_status"));
             String tvArrivalStatus = String.valueOf(data.get("tv_arrival_status"));
+            String ibTvArrivalStatus = String.valueOf(data.get("ib_tv_arrival_status"));
+            String obTvArrivalStatus = String.valueOf(data.get("ob_tv_arrival_status"));
+
+            List<LanguageDescription> ibTvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawIbTvArrivalRemarks = (List<LanguageDescription>) data.get("ib_tv_arrival_remarks");
+            if (rawIbTvArrivalRemarks != null) ibTvArrivalRemarks = rawIbTvArrivalRemarks;
+
+            List<LanguageDescription> obTvArrivalRemarks = new ArrayList<>();
+            List<LanguageDescription> rawObTvArrivalRemarks = (List<LanguageDescription>) data.get("ob_tv_arrival_remarks");
+            if (rawObTvArrivalRemarks != null) obTvArrivalRemarks = rawObTvArrivalRemarks;
+
 //            String tvArrivalRemarks = String.valueOf(data.get("tv_arrival_remarks"));
             List<LanguageDescription> tvArrivalRemarks = new ArrayList<>();
             List<LanguageDescription> rawTvArrivalRemarks = (List<LanguageDescription>) data.get("tv_arrival_remarks");
@@ -1055,6 +1111,10 @@ public class ContainerServiceImpl implements ContainerService {
                     .showTvarrivalStatus(showTvarrivalStatus)
                     .tvArrivalStatus(tvArrivalStatus)
                     .tvArrivalRemarks(tvArrivalRemarks)
+                    .ibTvArrivalStatus(ibTvArrivalStatus)
+                    .obTvArrivalStatus(obTvArrivalStatus)
+                    .ibTvArrivalRemarks(ibTvArrivalRemarks)
+                    .obTvArrivalRemarks(obTvArrivalRemarks)
                     .houseBls(houseBillOfLadings)
                     .ibId(ibId)
                     .ibCvMode(ibCvMode)
