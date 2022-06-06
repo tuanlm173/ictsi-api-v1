@@ -66,11 +66,14 @@ public class CommonServiceImpl implements CommonService {
             Query query,
             String searchParam,
             String facilityId,
+            String msBooking,
+            String msBillOfLading,
+            String msUniqueKey,
             String lastVisitFlag,
             String operationType
     ) {
 
-        List<ContainerDto> containers = containerService.findSimpleGlobalContainer(query, searchParam, facilityId, lastVisitFlag, operationType);
+        List<ContainerDto> containers = containerService.findSimpleGlobalContainer(query, searchParam, facilityId, msBooking, msBillOfLading, msUniqueKey, lastVisitFlag, operationType);
         List<VesselVisitDto> vesselVisits = vesselVisitService.findSimpleGlobalVesselVisit(query, searchParam, facilityId, lastVisitFlag, operationType);
         List<TruckVisitDto> truckVisits = truckVisitService.findSimpleGlobalTruckVisit(query, searchParam, facilityId, lastVisitFlag, operationType);
         return getCombinedEntityDto(containers, vesselVisits, truckVisits);

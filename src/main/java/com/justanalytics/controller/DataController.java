@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.justanalytics.dto.CustomerDto;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,9 @@ public class DataController {
             @RequestParam(value = "booking-number", required = false) String containerBookingNumber,
             @RequestParam(value = "bol-number", required = false) String bolNumber,
             @RequestParam(value = "shipper-consignee", required = false) String shipper,
+            @RequestParam(value = "ms-booking", required = false) String msBooking,
+            @RequestParam(value = "ms-bill-of-lading", required = false) String msBillOfLading,
+            @RequestParam(value = "ms-uniquekeys", required = false) String msUniqueKey,
             @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "imped-type", required = false) String impedType,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
@@ -116,6 +120,9 @@ public class DataController {
                         bolNumber,
                         uniqueKey,
                         shipper,
+                        msBooking,
+                        msBillOfLading,
+                        msUniqueKey,
                         lastVisitFlag,
                         impedType,
                         operationType,
@@ -410,11 +417,15 @@ public class DataController {
     public ResponseEntity<RestEnvelope> getGlobalSearch(
             @RequestParam(value = "search-param") String searchParam,
             @RequestParam(value = "facility-id", required = false) String facilityId,
+            @RequestParam(value = "ms-booking", required = false) String msBooking,
+            @RequestParam(value = "ms-bill-of-lading", required = false) String msBillOfLading,
+            @RequestParam(value = "ms-uniquekeys", required = false) String msUniqueKey,
             @RequestParam(value = "last-visit-flag", required = false) String lastVisitFlag,
             @RequestParam(value = "operation-type", required = false, defaultValue = "AND") String operationType,
             @RequestBody Query query
     ) {
-        ContainerVesselTruckDto results = commonService.findSimpleCombinedGlobalEntity(query, searchParam, facilityId, lastVisitFlag, operationType);
+        ContainerVesselTruckDto results = commonService.findSimpleCombinedGlobalEntity(query, searchParam, facilityId,
+                msBooking, msBillOfLading, msUniqueKey, lastVisitFlag, operationType);
         return ResponseEntity.ok()
                 .body(RestEnvelope.of(results));
     }

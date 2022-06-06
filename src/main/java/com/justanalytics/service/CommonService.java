@@ -25,6 +25,9 @@ public interface CommonService {
             Query query,
             String searchParam,
             String facilityId,
+            String msBooking,
+            String msBillOfLading,
+            String msUniqueKey,
             String lastVisitFlag,
             String operationType
     );

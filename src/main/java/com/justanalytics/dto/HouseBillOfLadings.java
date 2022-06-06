@@ -19,4 +19,9 @@ public class HouseBillOfLadings {
     private String cargoShipperName;
     @JsonProperty(value = "cargo_origin")
     private String cargoOrigin;
+    @JsonProperty(value = "bizu_shipper_gkey")
+    private String bizuShipperGkey;
+    @JsonProperty(value = "bizu_consignee_gkey")
+    private String bizuConsigneeGkey;
+
 }

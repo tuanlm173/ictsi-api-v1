@@ -1,10 +1,15 @@
 package com.justanalytics.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -56,6 +61,13 @@ public class ConversionUtil {
 
     public static <T> List<T> convertTo(Function<String,T> function, List<Object> values) {
         return values.stream().map(value -> function.apply(value.toString())).collect(Collectors.toList());
+    }
+
+    public static <T> List<T> jsonArrayToList(String json, Class<T> elementClass) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CollectionType listType =
+                objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, elementClass);
+        return objectMapper.readValue(json, listType);
     }
 
 }

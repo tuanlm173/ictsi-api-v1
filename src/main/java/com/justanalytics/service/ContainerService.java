@@ -6,6 +6,7 @@ import com.justanalytics.dto.ExportContainerDto;
 import com.justanalytics.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public interface ContainerService {
             String bolNumber,
             String containerUniqueKey,
             String shipper,
+            String msBooking,
+            String msBillOfLading,
+            String msUniqueKey,
             String lastVisitFlag,
             String impedType,
             String operationType,
@@ -112,6 +116,9 @@ public interface ContainerService {
             Query query,
             String searchParam,
             String facilityId,
+            String msBooking,
+            String msBillOfLading,
+            String msUniqueKey,
             String lastVisitFlag,
             String operationType
     );
