@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({"unique_key", "facility_id", "terminal_customer_id", "terminal_account_name", "terminal_customer_role", "account_number",
-        "account_name", "account_type", "parent_account_name", "parent_account_number", "industry", "tax_id1", "tax_id2", "address", "update_ts"})
+        "account_name", "account_type", "parent_account_name", "parent_account_number", "industry", "tax_id1", "tax_id2", "address", "credit_status", "bizu_unique_key", "update_ts"})
 public class CustomerDto {
 
     @JsonProperty(value = "unique_key")
@@ -42,6 +42,10 @@ public class CustomerDto {
     private String taxId2;
     @JsonProperty(value = "address")
     private String address;
+    @JsonProperty(value = "credit_status")
+    private String creditStatus;
+    @JsonProperty(value = "bizu_unique_key")
+    private String bizuUniqueKey;
     @JsonProperty(value = "update_ts")
     private String updateTs;
 

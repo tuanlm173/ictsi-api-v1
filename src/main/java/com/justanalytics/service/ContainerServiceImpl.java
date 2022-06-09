@@ -193,6 +193,8 @@ public class ContainerServiceImpl implements ContainerService {
 
         for (JSONObject data: rawData) {
 
+            Integer maskData = 1;
+
             String facilityId = String.valueOf(data.get("facility_id"));
 
             String test1 = String.valueOf(data.get("master_bl_nbr"));
@@ -395,6 +397,9 @@ public class ContainerServiceImpl implements ContainerService {
                                     checkCommonElement(customerUniqueKeys, bizuConsigneeGkeys))
                     )) {
 
+                // set maskData = 0 (no masking)
+                maskData = 0;
+
                 goodsAndCtrWtKg = Objects.nonNull(data.get("goods_and_ctr_wt_kg")) ? Float.parseFloat(String.valueOf(data.get("goods_and_ctr_wt_kg"))) : null;
                 goodsCtrWtKgAdvised = Objects.nonNull(data.get("goods_ctr_wt_kg_advised")) ? Float.parseFloat(String.valueOf(data.get("goods_ctr_wt_kg_advised"))) : null;
                 goodsCtrWtKgGateMeasured = Objects.nonNull(data.get("goods_ctr_wt_kg_gate_measured")) ? Float.parseFloat(String.valueOf(data.get("goods_ctr_wt_kg_gate_measured"))) : null;
@@ -537,6 +542,7 @@ public class ContainerServiceImpl implements ContainerService {
                     .obOutboundVyg(obOutboundVyg)
                     .remarks(remarks)
                     .transitStateDescriptions(transitStateDescriptions)
+                    .maskData(maskData)
                     .build());
 
         }
@@ -807,6 +813,7 @@ public class ContainerServiceImpl implements ContainerService {
         return results;
     }
 
+    // Use this function for PROD API as not yet deploy masking conditions to PROD
     private List<ContainerDto> getSimpleGlobalContainerDto(List<JSONObject> rawData) {
 
         List<ContainerDto> results = new ArrayList<>(rawData.size());

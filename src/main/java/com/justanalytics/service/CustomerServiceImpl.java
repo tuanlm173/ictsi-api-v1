@@ -92,6 +92,8 @@ public class CustomerServiceImpl implements CustomerService {
             String taxId1 = String.valueOf(data.get("tax_id1"));
             String taxId2 = String.valueOf(data.get("tax_id2"));
             String address = String.valueOf(data.get("address"));
+            String creditStatus = String.valueOf(data.get("credit_status"));
+            String bizuUniqueKey = String.valueOf(data.get("bizu_unique_key"));
             String updateTs = String.valueOf(data.get("update_ts"));
 
             results.add(CustomerDto.builder()
@@ -109,6 +111,8 @@ public class CustomerServiceImpl implements CustomerService {
                     .taxId1(taxId1)
                     .taxId2(taxId2)
                     .address(address)
+                    .creditStatus(creditStatus)
+                    .bizuUniqueKey(bizuUniqueKey)
                     .updateTs(updateTs)
                     .build());
 

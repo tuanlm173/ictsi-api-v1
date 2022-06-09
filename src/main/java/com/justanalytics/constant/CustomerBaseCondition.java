@@ -17,6 +17,8 @@ public final class CustomerBaseCondition {
             "c.tax_id1,\n" +
             "c.tax_id2,\n" +
             "c.address,\n" +
+            "c.credit_status,\n" +
+            "c.bizu_unique_key,\n" +
             "c.update_ts \n" +
             "FROM api_customer c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
