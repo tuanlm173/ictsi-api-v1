@@ -380,6 +380,11 @@ public class ContainerServiceImpl implements ContainerService {
 
 //            boolean test2 = msBolList.stream().anyMatch(e -> String.valueOf(data.get("master_bl_nbr")).replace("+", "").equalsIgnoreCase(e));
 //            System.out.println(test2);
+            String bizuLineoperGkey = String.valueOf(data.get("bizu_lineoper_gkey"));
+            String bizuIbcarrierGkey = String.valueOf(data.get("bizu_ibcarrier_gkey"));
+            String bizuObcarrierGkey = String.valueOf(data.get("bizu_obcarrier_gkey"));
+            boolean boolean_bizu_lineoper_gkey = customerUniqueKeys.contains(bizuIbcarrierGkey); // for debug
+
 
             List<LanguageDescription> transitStateDescriptions = new ArrayList<>();
             List<LanguageDescription> rawTransitStateDescriptions = (List<LanguageDescription>) data.get("transit_state_descriptions");
@@ -390,9 +395,9 @@ public class ContainerServiceImpl implements ContainerService {
                     (msBolList.size() != 0 && (msBolList.stream().anyMatch(e -> String.valueOf(data.get("master_bl_nbr")).replace("+", "").equalsIgnoreCase(e))
                                                 || checkCommonElement(msBolList, houseBlsNbrs))) ||
                     (customerUniqueKeys.size() != 0 &&
-                            (customerUniqueKeys.contains(String.valueOf(data.get("bizu_lineoper_gkey"))) ||
-                                    customerUniqueKeys.contains(String.valueOf(data.get("bizu_ibcarrier_gkey"))) ||
-                                    customerUniqueKeys.contains(String.valueOf(data.get("bizu_obcarrier_gkey"))) ||
+                            (customerUniqueKeys.contains(bizuLineoperGkey) ||
+                                    customerUniqueKeys.contains(bizuIbcarrierGkey) ||
+                                    customerUniqueKeys.contains(bizuObcarrierGkey) ||
                                     checkCommonElement(customerUniqueKeys, bizuShipperGkeys) ||
                                     checkCommonElement(customerUniqueKeys, bizuConsigneeGkeys))
                     )) {
@@ -540,6 +545,9 @@ public class ContainerServiceImpl implements ContainerService {
                     .obOperatorName(obOperatorName)
                     .obInboundVyg(obInboundVyg)
                     .obOutboundVyg(obOutboundVyg)
+                    .bizuLineoperGkey(bizuLineoperGkey)
+                    .bizuIbcarrierGkey(bizuIbcarrierGkey)
+                    .bizuObcarrierGkey(bizuObcarrierGkey)
                     .remarks(remarks)
                     .transitStateDescriptions(transitStateDescriptions)
                     .maskData(maskData)

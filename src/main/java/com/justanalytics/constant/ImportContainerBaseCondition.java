@@ -91,6 +91,9 @@ public final class ImportContainerBaseCondition {
             "c.ib_operator_name,\n" +
             "c.ib_inbound_vyg,\n" +
             "c.ib_outbound_vyg,\n" +
+            "c.bizu_lineoper_gkey,\n" +
+            "c.bizu_ibcarrier_gkey,\n" +
+            "c.bizu_obcarrier_gkey,\n" +
             "c.ob_id,\n" +
             "c.ob_cv_mode,\n" +
             "c.ob_carrier_name,\n" +

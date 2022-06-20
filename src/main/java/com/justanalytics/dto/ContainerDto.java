@@ -26,7 +26,7 @@ import java.util.List;
         "requires_xray", "custom_tag", "ib_appointment_start_date", "ib_appointment_end_date", "ob_appointment_start_date", "ob_appointment_end_date",
         "shipper", "consignee", "show_tvarrival_status", "tv_arrival_status", "tv_arrival_remarks", "ib_tv_arrival_status", "ob_tv_arrival_status", "ib_tv_arrival_remarks", "ob_tv_arrival_remarks", "house_bls",
         "ib_id", "ib_cv_mode", "ib_carrier_name", "ib_operator_name", "ib_inbound_vyg", "ib_outbound_vyg", "ob_id", "ob_cv_mode", "ob_carrier_name",
-        "ob_operator_name", "ob_inbound_vyg", "ob_outbound_vyg", "remarks", "transit_state_descriptions", "mask_data"})
+        "ob_operator_name", "ob_inbound_vyg", "ob_outbound_vyg", "bizu_lineoper_gkey", "bizu_ibcarrier_gkey", "bizu_obcarrier_gkey", "remarks", "transit_state_descriptions", "mask_data"})
 public class ContainerDto {
 
     @JsonProperty(value = "unique_key")
@@ -219,6 +219,12 @@ public class ContainerDto {
     private String obInboundVyg;
     @JsonProperty(value = "ob_outbound_vyg")
     private String obOutboundVyg;
+    @JsonProperty(value = "bizu_lineoper_gkey")
+    private String bizuLineoperGkey;
+    @JsonProperty(value = "bizu_ibcarrier_gkey")
+    private String bizuIbcarrierGkey;
+    @JsonProperty(value = "bizu_obcarrier_gkey")
+    private String bizuObcarrierGkey;
     @JsonProperty(value = "remarks")
     private String remarks;
     @JsonProperty(value = "transit_state_descriptions")
