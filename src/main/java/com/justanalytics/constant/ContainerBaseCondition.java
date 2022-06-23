@@ -94,6 +94,8 @@ public final class ContainerBaseCondition {
             "c.bizu_lineoper_gkey,\n" +
             "c.bizu_ibcarrier_gkey,\n" +
             "c.bizu_obcarrier_gkey,\n" +
+            "c.bizu_shipper_gkey,\n" +
+            "c.bizu_consignee_gkey,\n" +
             "c.ob_id,\n" +
             "c.ob_cv_mode,\n" +
             "c.ob_carrier_name,\n" +
@@ -229,6 +231,8 @@ public final class ContainerBaseCondition {
             "c.bizu_lineoper_gkey,\n" +
             "c.bizu_ibcarrier_gkey,\n" +
             "c.bizu_obcarrier_gkey,\n" +
+            "c.bizu_shipper_gkey,\n" +
+            "c.bizu_consignee_gkey,\n" +
             "c.ob_id,\n" +
             "c.ob_cv_mode,\n" +
             "c.ob_carrier_name,\n" +

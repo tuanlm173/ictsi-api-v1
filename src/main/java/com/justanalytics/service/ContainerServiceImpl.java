@@ -383,6 +383,8 @@ public class ContainerServiceImpl implements ContainerService {
             String bizuLineoperGkey = String.valueOf(data.get("bizu_lineoper_gkey"));
             String bizuIbcarrierGkey = String.valueOf(data.get("bizu_ibcarrier_gkey"));
             String bizuObcarrierGkey = String.valueOf(data.get("bizu_obcarrier_gkey"));
+            String bizuShipperGkey = String.valueOf(data.get("bizu_shipper_gkey"));
+            String bizuConsigneeGkey = String.valueOf(data.get("bizu_consignee_gkey"));
             boolean boolean_bizu_lineoper_gkey = customerUniqueKeys.contains(bizuIbcarrierGkey); // for debug
 
 
@@ -399,7 +401,9 @@ public class ContainerServiceImpl implements ContainerService {
                                     customerUniqueKeys.contains(bizuIbcarrierGkey) ||
                                     customerUniqueKeys.contains(bizuObcarrierGkey) ||
                                     checkCommonElement(customerUniqueKeys, bizuShipperGkeys) ||
-                                    checkCommonElement(customerUniqueKeys, bizuConsigneeGkeys))
+                                    checkCommonElement(customerUniqueKeys, bizuConsigneeGkeys) ||
+                                    customerUniqueKeys.contains(bizuShipperGkey) ||
+                                    customerUniqueKeys.contains(bizuConsigneeGkey))
                     )) {
 
                 // set maskData = 0 (no masking)
@@ -548,6 +552,8 @@ public class ContainerServiceImpl implements ContainerService {
                     .bizuLineoperGkey(bizuLineoperGkey)
                     .bizuIbcarrierGkey(bizuIbcarrierGkey)
                     .bizuObcarrierGkey(bizuObcarrierGkey)
+                    .bizuShipperGkey(bizuShipperGkey)
+                    .bizuConsigneeGkey(bizuConsigneeGkey)
                     .remarks(remarks)
                     .transitStateDescriptions(transitStateDescriptions)
                     .maskData(maskData)
