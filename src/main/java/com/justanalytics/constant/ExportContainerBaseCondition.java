@@ -97,6 +97,11 @@ public final class ExportContainerBaseCondition {
                     "c.ob_operator_name,\n" +
                     "c.ob_inbound_vyg,\n" +
                     "c.ob_outbound_vyg,\n" +
+                    "c.bizu_lineoper_gkey,\n" +
+                    "c.bizu_ibcarrier_gkey,\n" +
+                    "c.bizu_obcarrier_gkey,\n" +
+                    "c.bizu_shipper_gkey,\n" +
+                    "c.bizu_consignee_gkey,\n" +
                     "c.remarks,\n" +
                     "c.transit_state_descriptions " +
                     "FROM api_container c " +
