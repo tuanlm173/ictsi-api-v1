@@ -99,9 +99,14 @@ public final class EmptyContainerBaseCondition {
             "c.ob_operator_name,\n" +
             "c.ob_inbound_vyg,\n" +
             "c.ob_outbound_vyg,\n" +
+            "c.bizu_lineoper_gkey,\n" +
+            "c.bizu_ibcarrier_gkey,\n" +
+            "c.bizu_obcarrier_gkey,\n" +
+            "c.bizu_shipper_gkey,\n" +
+            "c.bizu_consignee_gkey,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container c " +
+            "FROM api_container_all c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) " +
             "AND ((c.freight_kind = 'MTY' " +
             "AND IS_DEFINED(c.freight_kind)))) " +
@@ -110,7 +115,7 @@ public final class EmptyContainerBaseCondition {
 //            "AND ((isnull(c.time_out) = false AND c.time_out >= %s) OR (isnull(c.time_out) = true)) " +
             "AND c.facility_id NOT IN ('CGT') " +
             "AND c.freight_kind != 'BBK'";
-    public static final String EMPTY_CONTAINER_NAME = "api_container";
+    public static final String EMPTY_CONTAINER_NAME = "api_container_all";
 
     public static final String EMPTY_CONTAINER_FACILITY = "(c.facility_id IN (%s) AND IS_DEFINED(c.facility_id))";
     public static final String EMPTY_CONTAINER_VISIT_STATE = "(c.visit_state IN (%s) AND IS_DEFINED(c.visit_state))";
