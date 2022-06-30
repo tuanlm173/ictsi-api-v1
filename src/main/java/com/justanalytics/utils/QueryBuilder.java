@@ -37,7 +37,7 @@ public class QueryBuilder {
 
     private String buildINCosmosFilter(INFilter inFilter) {
         String values = inFilter.getValues().stream()
-                .map(value -> "'" + value.toString() + "'")
+                .map(value -> "\"" + value.toString() + "\"")
                 .collect(Collectors.joining(", ", "(", ")"));
         Boolean negate = inFilter.getNegate();
         String negateCondition = "";
@@ -60,7 +60,7 @@ public class QueryBuilder {
     //TODO: buildComparisonCosmosFilter
     private String buildComparisonCosmosFilter(ComparisonFilter comparisonFilter) {
         String comparedValue = comparisonFilter.getValue().toString();
-        return String.format("%s %s %s", "c." + comparisonFilter.getField().toLowerCase(), comparisonFilter.getCondition().value, "'" + comparedValue + "'");
+        return String.format("%s %s %s", "c." + comparisonFilter.getField().toLowerCase(), comparisonFilter.getCondition().value, "\"" + comparedValue + "\"");
     }
 
     private Function<String, String> getConversionFunction(String dataType) {
