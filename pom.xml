@@ -132,7 +132,7 @@
 			<plugin>
 				<groupId>com.microsoft.azure</groupId>
 				<artifactId>azure-webapp-maven-plugin</artifactId>
-				<version>1.11.0</version>
+				<version>1.14.0</version>
 				<configuration>
 					<schemaVersion>v2</schemaVersion>
 					<subscriptionId>f861304e-ffeb-4207-8a96-13523c6185d7</subscriptionId>

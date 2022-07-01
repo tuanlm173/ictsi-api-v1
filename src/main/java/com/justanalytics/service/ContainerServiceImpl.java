@@ -1783,6 +1783,7 @@ public class ContainerServiceImpl implements ContainerService {
         facilities.add("MNHP");
         facilities.add("ZLO");
         facilities.add("MGT");
+        facilities.add("BICT");
 
         for (JSONObject data: rawData) {
 
