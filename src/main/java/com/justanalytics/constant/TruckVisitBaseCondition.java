@@ -21,7 +21,7 @@ public final class TruckVisitBaseCondition {
             "c.exited_yard,\n" +
             "c.stage_id,\n" +
             "c.visit_statuses \n" +
-            "FROM api_truck_visit_all c " +
+            "FROM c " +
             "WHERE (1=1) AND c.facility_id <> '0' AND c.delete_flag = 'N' " +
             "AND %s " +
 //            "AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) " +
@@ -52,7 +52,7 @@ public final class TruckVisitBaseCondition {
             "c.exited_yard,\n" +
             "c.stage_id,\n" +
             "c.visit_statuses \n" +
-            "FROM api_truck_visit_all c " +
+            "FROM c " +
             "WHERE (1=1) AND c.facility_id <> '0' AND c.delete_flag = 'N' " +
             "AND %s " + // last visit flag
 //            "AND ((isnull(c.exited_yard) = false AND c.exited_yard >= %s) OR (isnull(c.exited_yard) = true)) " + // exited yard

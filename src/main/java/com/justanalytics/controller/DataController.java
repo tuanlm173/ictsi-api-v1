@@ -67,7 +67,7 @@ public class DataController {
             @RequestHeader(SUBSCRIPTION_ID_HEADER) String subscriptionId,
             @RequestParam(value = "container-type") String containerType,
             @RequestParam(value = "unique-key", required = false) String uniqueKey,
-            @RequestParam(value = "facility-id", required = false, defaultValue = "MICTSI,SBITC,AGCT,MICT,OMT,PLP,MNHP,ZLO,MGT") String facilityId,
+            @RequestParam(value = "facility-id", required = false, defaultValue = "MICTSI,SBITC,AGCT,MICT,OMT,PLP,MNHP,ZLO,MGT,BICT") String facilityId,
             @RequestParam(value = "container-number", required = false) String containerNumber,
             @RequestParam(value = "operation-line-id", required = false) String containerOperationLineId,
             @RequestParam(value = "arrive-from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime arriveFrom,

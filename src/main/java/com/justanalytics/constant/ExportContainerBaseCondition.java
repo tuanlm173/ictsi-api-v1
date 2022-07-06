@@ -104,7 +104,7 @@ public final class ExportContainerBaseCondition {
                     "c.bizu_consignee_gkey,\n" +
                     "c.remarks,\n" +
                     "c.transit_state_descriptions " +
-                    "FROM api_container_all c " +
+                    "FROM c " +
                     "WHERE (c.category = 'EXPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) " +
                     "AND c.delete_flag = 'N'" +
                     "AND %s " +

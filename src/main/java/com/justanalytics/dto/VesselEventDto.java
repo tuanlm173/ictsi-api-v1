@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({"unique_key", "operator_id", "complex_id", "facility_id", "yard_id", "placed_by", "placed_time", "event_type",
-        "event_descriptions", "notifiable", "vessel_gkey", "applied_to_id", "notes", "field_changes", "category", "sub_category"})
+        "event_descriptions", "notifiable", "vessel_gkey", "applied_to_id", "notes", "field_changes", "category", "sub_category", "sequence"})
 public class VesselEventDto {
 
     @JsonProperty(value = "unique_key")
@@ -48,5 +48,7 @@ public class VesselEventDto {
     private String category;
     @JsonProperty(value = "sub_category")
     private String subCategory;
+    @JsonProperty(value = "sequence")
+    private Integer sequence;
 
 }

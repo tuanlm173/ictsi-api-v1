@@ -18,7 +18,8 @@ public final class TruckEventBaseCondition {
             "c.notes,\n" +
             "c.field_changes,\n" +
             "c.category,\n" +
-            "c.sub_category \n" +
+            "c.sub_category, \n" +
+            "c.sequence \n" +
             "FROM api_truck_event c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
 

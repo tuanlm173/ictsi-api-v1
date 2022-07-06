@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.config.CosmosDbProperties;
 import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.dto.TruckTransactionsDto;
 import com.justanalytics.query.Query;
@@ -30,6 +31,9 @@ public class TruckingTransactionsServiceImpl implements TruckingTransactionsServ
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private CosmosDbProperties cosmosDbProperties;
 
     private String buildSimpleTimeframeVesselParam(String filter, LocalDateTime from, LocalDateTime to) {
         if ((from != null && !from.toString().isBlank()) && (to != null && !to.toString().isBlank())) {
@@ -207,7 +211,8 @@ public class TruckingTransactionsServiceImpl implements TruckingTransactionsServ
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetTruckTransactionsCnt(), sql);
         return getTruckTransactionsDto(rawData);
     }
 }

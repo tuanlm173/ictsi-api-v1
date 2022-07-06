@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.config.CosmosDbProperties;
 import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.utils.QueryBuilder;
 import com.justanalytics.dto.TruckVisitDto;
@@ -32,6 +33,9 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private CosmosDbProperties cosmosDbProperties;
 
     private String filterLastVisitFlag(String lastVisitFlag) {
         String results = "1=1";
@@ -210,7 +214,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetTruckVisitDetailsCnt(), sql);
         return getTruckVisitDto(rawData);
 
     }
@@ -269,7 +274,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetTruckVisitDetailsCnt(), sql);
         return getTruckVisitDto(rawData);
     }
 
@@ -309,7 +315,8 @@ public class TruckVisitServiceImpl implements TruckVisitService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetTruckVisitDetailsCnt(), sql);
         return getTruckVisitDto(rawData);
     }
 }

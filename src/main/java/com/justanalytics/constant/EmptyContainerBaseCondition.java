@@ -106,7 +106,7 @@ public final class EmptyContainerBaseCondition {
             "c.bizu_consignee_gkey,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_all c " +
+            "FROM c " +
             "WHERE ((c.category = 'STRGE' AND IS_DEFINED(c.category)) " +
             "AND ((c.freight_kind = 'MTY' " +
             "AND IS_DEFINED(c.freight_kind)))) " +

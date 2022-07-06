@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.config.CosmosDbProperties;
 import com.justanalytics.dto.FieldChanges;
 import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.dto.TruckEventDto;
@@ -16,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.justanalytics.constant.TruckEventBaseCondition.*;
@@ -30,6 +32,9 @@ public class TruckEventServiceImpl implements TruckEventService {
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private CosmosDbProperties cosmosDbProperties;
 
     private String parseParams(String params) {
         if (params != null && !params.isBlank())
@@ -66,6 +71,7 @@ public class TruckEventServiceImpl implements TruckEventService {
             String notes = String.valueOf(data.get("notes"));
             String category = String.valueOf(data.get("category"));
             String subCategory = String.valueOf(data.get("sub_category"));
+            Integer sequence = Objects.nonNull(data.get("sequence")) ? Integer.parseInt(String.valueOf(data.get("sequence"))) : null;
 
             List<FieldChanges> fieldChanges = new ArrayList<>();
             List<FieldChanges> rawFieldChanges = (List<FieldChanges>) data.get("field_changes");
@@ -92,6 +98,7 @@ public class TruckEventServiceImpl implements TruckEventService {
                     .fieldChanges(fieldChanges)
                     .category(category)
                     .subCategory(subCategory)
+                    .sequence(sequence)
                     .build());
 
         }
@@ -155,7 +162,8 @@ public class TruckEventServiceImpl implements TruckEventService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(TRUCK_EVENT_CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(TRUCK_EVENT_CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetTruckEventCnt(), sql);
         return getTruckEventDto(rawData);
     }
 }

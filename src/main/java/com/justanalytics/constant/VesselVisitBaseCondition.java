@@ -62,7 +62,7 @@ public final class VesselVisitBaseCondition {
             "c.etb_lct,\n" +
             "c.vessel_registry_number,\n" +
             "c.vessel_statuses \n" +
-            "FROM api_vessel_visit c " +
+            "FROM c " +
             "WHERE (1=1) AND c.delete_flag = 'N' " +
             "AND %s " + // visit flag
 //            "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd
@@ -152,7 +152,7 @@ public final class VesselVisitBaseCondition {
             "c.etb_lct,\n" +
             "c.vessel_registry_number,\n" +
             "c.vessel_statuses \n" +
-            "FROM api_vessel_visit c " +
+            "FROM c " +
             "WHERE (1=1) AND c.delete_flag = 'N' " +
             "AND %s " +  // visit flag
 //            "AND ((isnull(c.atd) = false AND c.atd >= %s) OR (isnull(c.atd) = true)) " + // atd

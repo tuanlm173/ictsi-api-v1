@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.justanalytics.config.CosmosDbProperties;
 import com.justanalytics.dto.LanguageDescription;
 import com.justanalytics.dto.VesselVisitDto;
 import com.justanalytics.query.Query;
@@ -37,6 +38,9 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private CosmosDbProperties cosmosDbProperties;
 
     private String filterLastVisitFlag(String lastVisitFlag) {
         String results = "1=1";
@@ -361,7 +365,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetVesselVisitDetailsCnt(), sql);
         return getVesselVisitDto(rawData);
 
     }
@@ -422,7 +427,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetVesselVisitDetailsCnt(), sql);
         return getVesselVisitDto(rawData);
     }
 
@@ -462,7 +468,8 @@ public class VesselVisitServiceImpl implements VesselVisitService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetVesselVisitDetailsCnt(), sql);
         return getVesselVisitDto(rawData);
     }
 

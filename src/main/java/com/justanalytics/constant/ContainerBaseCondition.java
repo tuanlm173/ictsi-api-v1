@@ -104,7 +104,7 @@ public final class ContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_all c " +
+            "FROM c " +
             "WHERE (1=1) AND IS_DEFINED(c.teu) AND (c.category NOT IN ('THRGH') AND IS_DEFINED(c.category)) " +
             "AND c.delete_flag = 'N' " +
             "AND %s " +
@@ -241,7 +241,7 @@ public final class ContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_all c " +
+            "FROM c " +
             "WHERE (1=1) AND IS_DEFINED(c.teu) " +
             "AND (c.category NOT IN ('THRGH') AND IS_DEFINED(c.category)) " +
             "AND c.delete_flag = 'N' " +

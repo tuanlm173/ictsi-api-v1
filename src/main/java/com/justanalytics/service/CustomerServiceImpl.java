@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.config.CosmosDbProperties;
 import com.justanalytics.dto.CustomerDto;
 import com.justanalytics.query.Query;
 import com.justanalytics.repository.DataRepository;
@@ -28,6 +29,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private CosmosDbProperties cosmosDbProperties;
 
     private Integer getNumberOfAccountName() {
         return accountNameSet.size();
@@ -239,7 +243,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CUSTOMER_CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CUSTOMER_CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetCustomerCnt(), sql);
         return getCustomerDto(rawData);
     }
 
@@ -304,7 +309,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CUSTOMER_CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CUSTOMER_CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetCustomerCnt(), sql);
         return getCustomerDtov2(rawData);
     }
 }

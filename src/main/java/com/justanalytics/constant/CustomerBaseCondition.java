@@ -20,7 +20,7 @@ public final class CustomerBaseCondition {
             "c.credit_status,\n" +
             "c.bizu_unique_key,\n" +
             "c.update_ts \n" +
-            "FROM api_customer c " +
+            "FROM c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
 
     public static final String CUSTOMER_CONTAINER_NAME = "api_customer";

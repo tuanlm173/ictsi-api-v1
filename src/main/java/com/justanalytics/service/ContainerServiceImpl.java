@@ -4,6 +4,7 @@ package com.justanalytics.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import com.justanalytics.config.CosmosDbProperties;
 import com.justanalytics.constant.ImportContainerBaseCondition;
 import com.justanalytics.dto.*;
 import com.justanalytics.query.Query;
@@ -43,6 +44,9 @@ public class ContainerServiceImpl implements ContainerService {
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private CosmosDbProperties cosmosDbProperties;
 
     private String filterLastVisitFlag(String lastVisitFlag) {
         String results = "1=1";
@@ -2439,7 +2443,9 @@ public class ContainerServiceImpl implements ContainerService {
 
             String sql = queryBuilder.toString();
             logger.info("Cosmos SQL statement: {}", sql);
-            results = dataRepository.getSimpleDataFromCosmos(IMPORT_CONTAINER_NAME, sql);
+            logger.info("Cosmos container: {}", cosmosDbProperties.getGetContainerDetailsCnt());
+//            results = dataRepository.getSimpleDataFromCosmos(IMPORT_CONTAINER_NAME, sql);
+            results = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetContainerDetailsCnt(), sql);
         }
 
         else if (ContainerType.ALL.getContainerType().equalsIgnoreCase(containerType)) {
@@ -2518,7 +2524,8 @@ public class ContainerServiceImpl implements ContainerService {
 
             String sql = queryBuilder.toString();
             logger.info("Cosmos SQL statement: {}", sql);
-            results = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+//            results = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+            results = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetContainerDetailsCnt(), sql);
 
         }
 
@@ -2636,7 +2643,8 @@ public class ContainerServiceImpl implements ContainerService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        results = dataRepository.getSimpleDataFromCosmos(EXPORT_CONTAINER_NAME, sql);
+//        results = dataRepository.getSimpleDataFromCosmos(EXPORT_CONTAINER_NAME, sql);
+        results = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetContainerDetailsCnt(), sql);
 
 //        return getExportContainerDto(results, facilityId, shipper, bolNumber);
         return getExportContainerDtoV2(results, msBooking, msBillOfLading, msUniqueKey);
@@ -2746,7 +2754,8 @@ public class ContainerServiceImpl implements ContainerService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        results = dataRepository.getSimpleDataFromCosmos(EMPTY_CONTAINER_NAME, sql);
+//        results = dataRepository.getSimpleDataFromCosmos(EMPTY_CONTAINER_NAME, sql);
+        results = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetContainerDetailsCnt(), sql);
         return getEmptyContainerDtoV2(results, msBooking, msBillOfLading, msUniqueKey);
     }
 
@@ -2814,7 +2823,8 @@ public class ContainerServiceImpl implements ContainerService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetContainerDetailsCnt(), sql);
         return getContainerDto(rawData, facilityId, bolNumber, bolNumber);
     }
 
@@ -2858,7 +2868,8 @@ public class ContainerServiceImpl implements ContainerService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(ALL_CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetContainerDetailsCnt(), sql);
         return getContainerDtoV2(rawData, msBooking, msBillOfLading, msUniqueKey);
 
     }

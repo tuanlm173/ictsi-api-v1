@@ -15,7 +15,7 @@ public final class FacilityBaseCondition {
             "c.terminal_portcd,\n" +
             "c.local_currency,\n" +
             "c.region\n" +
-            "FROM facility c " +
+            "FROM c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
 
     public static final String FACILITY_CONTAINER_NAME = "facility";

@@ -20,8 +20,9 @@ public final class ContainerEventBaseCondition {
             "c.notes,\n" +
             "c.field_changes,\n" +
             "c.category,\n" +
-            "c.sub_category \n" +
-            "FROM api_container_event_all c " +
+            "c.sub_category, \n" +
+            "c.sequence \n" +
+            "FROM c " +
             "WHERE (1=1) AND c.delete_flag = 'N' AND c.facility_id NOT IN ('CGT')";
 
     public static final String CONTAINER_EVENT_CONTAINER_NAME = "api_container_event_all";

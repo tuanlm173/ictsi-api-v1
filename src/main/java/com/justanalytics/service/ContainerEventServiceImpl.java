@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.config.CosmosDbProperties;
 import com.justanalytics.dto.ContainerEventDto;
 import com.justanalytics.dto.FieldChanges;
 import com.justanalytics.dto.LanguageDescription;
@@ -30,6 +31,9 @@ public class ContainerEventServiceImpl implements ContainerEventService {
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private CosmosDbProperties cosmosDbProperties;
 
     private String parseParams(String params) {
         if (params != null && !params.isBlank())
@@ -66,6 +70,7 @@ public class ContainerEventServiceImpl implements ContainerEventService {
             String notes = String.valueOf(data.get("notes"));
             String category = String.valueOf(data.get("category"));
             String subCategory = String.valueOf(data.get("sub_category"));
+            Integer sequence = Objects.nonNull(data.get("sequence")) ? Integer.parseInt(String.valueOf(data.get("sequence"))) : null;
 
             List<FieldChanges> fieldChanges = new ArrayList<>();
             List<FieldChanges> rawFieldChanges = (List<FieldChanges>) data.get("field_changes");
@@ -92,6 +97,7 @@ public class ContainerEventServiceImpl implements ContainerEventService {
                     .fieldChanges(fieldChanges)
                     .category(category)
                     .subCategory(subCategory)
+                    .sequence(sequence)
                     .build());
         }
 
@@ -152,7 +158,7 @@ public class ContainerEventServiceImpl implements ContainerEventService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(CONTAINER_EVENT_CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetContainerEventCnt(), sql);
         return getContainerEventDto(rawData);
     }
 }

@@ -104,7 +104,7 @@ public final class ImportContainerBaseCondition {
             "c.ob_outbound_vyg,\n" +
             "c.remarks,\n" +
             "c.transit_state_descriptions " +
-            "FROM api_container_all c " +
+            "FROM c " +
             "WHERE (c.category = 'IMPRT' AND IS_DEFINED(c.category)) AND IS_DEFINED(c.teu) " +
             "AND c.delete_flag = 'N' " +
             "AND %s " +

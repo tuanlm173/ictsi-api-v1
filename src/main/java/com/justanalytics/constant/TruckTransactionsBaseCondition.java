@@ -36,7 +36,7 @@ public final class TruckTransactionsBaseCondition {
             "c.show_tvarrival_status,\n" +
             "c.tv_arrival_status,\n" +
             "c.tv_arrival_remarks \n" +
-            "FROM api_truck_transactions c " +
+            "FROM c " +
             "WHERE (1=1) AND c.delete_flag = 'N'";
 
     public static final String CONTAINER_NAME = "api_truck_transactions";

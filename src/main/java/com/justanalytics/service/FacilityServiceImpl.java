@@ -1,5 +1,6 @@
 package com.justanalytics.service;
 
+import com.justanalytics.config.CosmosDbProperties;
 import com.justanalytics.dto.FacilityDto;
 import com.justanalytics.query.Query;
 import com.justanalytics.repository.DataRepository;
@@ -26,6 +27,9 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private CosmosDbProperties cosmosDbProperties;
 
     private List<FacilityDto> getFacilityDto(List<JSONObject> rawData) {
 
@@ -91,7 +95,8 @@ public class FacilityServiceImpl implements FacilityService {
 
         String sql = queryBuilder.toString();
         logger.info("Cosmos SQL statement: {}", sql);
-        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(FACILITY_CONTAINER_NAME, sql);
+//        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(FACILITY_CONTAINER_NAME, sql);
+        List<JSONObject> rawData = dataRepository.getSimpleDataFromCosmos(cosmosDbProperties.getGetFacilityCnt(), sql);
         return getFacilityDto(rawData);
     }
 }
